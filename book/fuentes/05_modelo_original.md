@@ -280,7 +280,9 @@ import subprocess
 salida = subprocess.run([sys.executable, "-m", "pytest", "tests", "-q", "--color=no", "-p", "no:cacheprovider"],
                         capture_output=True, text=True, cwd="..")
 print(salida.stdout[-2500:])
-glue("pytest_resumen", salida.stdout.strip().splitlines()[-1], display=False)
+import re
+_r = re.search(r"(\d+) passed", salida.stdout); _f = re.search(r"(\d+) failed", salida.stdout)
+glue("pytest_resumen", f"{_r.group(1) if _r else 0} pruebas superadas y {_f.group(1) if _f else 0} fallidas", display=False)
 ```
 
 La batería de pruebas (resultado: {glue:text}`pytest_resumen`) cubre los cuatro requisitos
