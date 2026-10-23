@@ -107,8 +107,12 @@ def wilcoxon_holm(tabla: pd.DataFrame, referencia: str, alternativa: str = "grea
         if c == referencia:
             continue
         dif = tabla[referencia] - tabla[c]
-        res = st.wilcoxon(tabla[referencia], tabla[c], alternative=alternativa, zero_method="zsplit")
-        filas.append({"modelo": c, "dif_media": dif.mean(), "W": res.statistic, "p": res.pvalue,
+        if np.allclose(dif, 0):           # variantes idénticas: no hay evidencia de diferencia
+            w_stat, p_val = np.nan, 1.0
+        else:
+            res = st.wilcoxon(tabla[referencia], tabla[c], alternative=alternativa, zero_method="zsplit")
+            w_stat, p_val = res.statistic, res.pvalue
+        filas.append({"modelo": c, "dif_media": dif.mean(), "W": w_stat, "p": p_val,
                       "delta_cliff": delta_cliff(tabla[referencia], tabla[c]),
                       "victorias": int((dif > 0).sum()), "n": len(dif)})
     out = pd.DataFrame(filas)
@@ -346,10 +350,17 @@ def model_confidence_set(perdidas: pd.DataFrame, alpha: float = 0.10, bloque: in
     """
     from arch.bootstrap import MCS
     bloque = bloque or longitud_bloque(perdidas.mean(axis=1).values)
-    mcs = MCS(perdidas, size=alpha, reps=reps, block_size=bloque, method="R",
+    # Combinaciones con predicciones idénticas (p. ej., dos optimizadores que eligieron el mismo
+    # α) dejan diferencias de pérdida nulas y varianza cero; el MCS se calcula sobre las columnas
+    # únicas y cada duplicada recibe el p-valor de su gemela.
+    unicas = perdidas.T.drop_duplicates().T
+    gemela = {c: next(u for u in unicas.columns if perdidas[c].equals(perdidas[u])) for c in perdidas.columns}
+    mcs = MCS(unicas, size=alpha, reps=reps, block_size=bloque, method="R",
               bootstrap="stationary", seed=seed)
     mcs.compute()
-    pv = mcs.pvalues.rename(columns={"Pvalue": "p_mcs"})
+    pv_u = mcs.pvalues.rename(columns={"Pvalue": "p_mcs"})
+    pv = pd.DataFrame({"p_mcs": [pv_u.loc[gemela[c], "p_mcs"] for c in perdidas.columns]},
+                      index=pd.Index(perdidas.columns, name=pv_u.index.name))
     pv["en_conjunto"] = pv.p_mcs >= alpha
     pv["perdida_media"] = perdidas.mean().reindex(pv.index)
     pv["rango_perdida"] = perdidas.rank(axis=1).mean().reindex(pv.index)

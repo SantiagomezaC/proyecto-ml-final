@@ -4,6 +4,7 @@ author: "Kevin Clemente Rosario y Manuel Santiago Meza Castro"
 copyright: "2026"
 logo: figuras/logo.png
 only_build_toc_files: true
+exclude_patterns: [fuentes/*, _build/*]
 
 execute:
   execute_notebooks: "off"      # los cuadernos se ejecutan antes con scripts/ejecutar_libro.py

@@ -11,6 +11,7 @@ import plotly.graph_objects as go
 import plotly.io as pio
 
 from .config import PALETA
+from .data import es
 
 RIO, SED, CAU, ALE, NEU = (PALETA[k] for k in ("rio", "sedimento", "caudal", "alerta", "neutro"))
 SECUENCIA = [RIO, SED, CAU, ALE, NEU]
@@ -115,7 +116,7 @@ def balance_anual(d: pd.DataFrame) -> go.Figure:
     f.add_bar(x=a.fecha, y=100 * a["mean"], marker_color=SED,
               customdata=a["size"], hovertemplate="%{x}: %{y:.1f} % de %{customdata} días<extra></extra>")
     f.add_hline(y=100 * d.y.mean(), line_dash="dot", line_color=RIO,
-                annotation_text=f"media {100 * d.y.mean():.1f} %", annotation_font_color=RIO)
+                annotation_text=es(f"media {100 * d.y.mean():.1f} %"), annotation_font_color=RIO)
     f.update_xaxes(title="Año")
     f.update_yaxes(title="Días en la banda (%)", rangemode="tozero")
     return f
@@ -164,9 +165,9 @@ def faltantes(d: pd.DataFrame, estaciones: list[str], nombres: dict) -> go.Figur
     f = _fig("Días sin registro por estación en el periodo filtrado", 320)
     f.add_bar(y=[nombres.get(e, e) for e in pct.index], x=pct.values, orientation="h",
               marker_color=[ALE if v > 10 else CAU for v in pct.values],
-              text=[f"{v:.1f} %" for v in pct.values], textposition="outside",
+              text=[es(f"{v:.1f} %") for v in pct.values], textposition="outside", cliponaxis=False,
               hovertemplate="%{y}: %{x:.2f} % sin dato<extra></extra>")
-    f.update_xaxes(title="Días sin dato (%)", rangemode="tozero")
+    f.update_xaxes(title="Días sin dato (%)", range=[0, max(1.0, float(pct.max())) * 1.18])
     f.update_layout(margin=dict(l=110, r=40, t=46, b=48))
     return f
 
@@ -222,7 +223,7 @@ def curva_roc(curvas: dict, auc: dict) -> go.Figure:
     f = _fig("Curva ROC en la prueba (2010-2026)", 380)
     f.add_scatter(x=[0, 1], y=[0, 1], mode="lines", line=dict(dash="dot", color=NEU), name="Azar")
     for i, (nombre, (fpr, tpr)) in enumerate(curvas.items()):
-        f.add_scatter(x=fpr, y=tpr, mode="lines", name=f"{nombre} (AUC {auc[nombre]:.3f})",
+        f.add_scatter(x=fpr, y=tpr, mode="lines", name=es(f"{nombre} (AUC {auc[nombre]:.3f})"),
                       line=dict(width=2.6 if i == 0 else 1.6, color=SECUENCIA[i % 5]))
     f.update_xaxes(title="Tasa de falsos positivos", range=[0, 1])
     f.update_yaxes(title="Tasa de verdaderos positivos (exhaustividad)", range=[0, 1.02])
@@ -232,9 +233,9 @@ def curva_roc(curvas: dict, auc: dict) -> go.Figure:
 def curva_pr(curvas: dict, ap: dict, prevalencia: float) -> go.Figure:
     f = _fig("Curva precisión-exhaustividad en la prueba", 380)
     f.add_hline(y=prevalencia, line_dash="dot", line_color=NEU,
-                annotation_text=f"azar = prevalencia ({prevalencia:.2f})")
+                annotation_text=es(f"azar = prevalencia ({prevalencia:.2f})"))
     for i, (nombre, (rec, prec)) in enumerate(curvas.items()):
-        f.add_scatter(x=rec, y=prec, mode="lines", name=f"{nombre} (AP {ap[nombre]:.3f})",
+        f.add_scatter(x=rec, y=prec, mode="lines", name=es(f"{nombre} (AP {ap[nombre]:.3f})"),
                       line=dict(width=2.6 if i == 0 else 1.6, color=SECUENCIA[i % 5]))
     f.update_xaxes(title="Exhaustividad (recall)", range=[0, 1])
     f.update_yaxes(title="Precisión", range=[0, 1.02])
@@ -289,7 +290,7 @@ def shap_barras(df: pd.DataFrame, titulo: str, n: int = 15) -> go.Figure:
 def shap_cascada(phi: np.ndarray, nombres: list[str], base: float, valores: list, n: int = 10) -> go.Figure:
     orden = np.argsort(-np.abs(phi))
     top, resto = orden[:n], orden[n:]
-    etiquetas = [f"{nombres[i]} = {valores[i]}" for i in top]
+    etiquetas = [f"{nombres[i][:42]} = {valores[i]}" for i in top]
     medidas = list(phi[top])
     if len(resto):
         etiquetas.append(f"Otras {len(resto)} variables")
@@ -302,7 +303,8 @@ def shap_cascada(phi: np.ndarray, nombres: list[str], base: float, valores: list
         totals=dict(marker=dict(color=CAU)), connector=dict(line=dict(color="#c9d3d8")),
         hovertemplate="%{y}: %{x:+.3f}<extra></extra>"))
     f.update_xaxes(title="Probabilidad de estar en la banda")
-    f.update_layout(margin=dict(l=260, r=20, t=46, b=48), showlegend=False)
+    f.update_layout(margin=dict(l=330, r=20, t=60, b=48), showlegend=False)
+    f.update_yaxes(automargin=True)
     return f
 
 
@@ -340,6 +342,8 @@ def diagrama_cd(rangos: pd.Series, cd: float, destacado: str | None = None, titu
 def convergencia(hist: pd.DataFrame, titulo: str, x: str, ys: dict) -> go.Figure:
     f = _fig(titulo, 340)
     for i, (col, nombre) in enumerate(ys.items()):
+        if col not in hist:
+            continue
         f.add_scatter(x=hist[x], y=hist[col], mode="lines", name=nombre,
                       line=dict(color=SECUENCIA[i % 5], width=2))
     return f

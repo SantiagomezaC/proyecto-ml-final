@@ -1,1 +1,22 @@
 == 22:59:23 INICIO clf
+== 03:36:03 INICIO reg
+== 05:46:51 INICIO run_original 10
+== 07:12:53 FIN run_original 10 (código 0)
+== 07:12:53 INICIO final_models clf
+== 07:15:17 FIN final_models clf (código 0)
+== 07:15:17 INICIO final_models reg
+== 07:23:07 FIN final_models reg (código 0)
+== 07:23:07 INICIO final_models original
+== 07:29:43 FIN final_models original (código 0)
+== 07:29:43 INICIO run_extra 10
+== 07:44:39 FIN run_extra 10 (código 0)
+== 07:44:39 INICIO robustez 10
+== 07:56:22 INICIO robustez 10
+== 08:27:51 FIN robustez 10 (código 0)
+== 08:27:51 INICIO computational
+== 08:28:55 FIN computational (código 0)
+== 08:28:55 INICIO estadistica
+== 08:29:36 FIN estadistica (código 0)
+== 08:29:36 INICIO exportar_dashboard
+== 08:30:53 FIN exportar_dashboard (código 0)
+== CADENA COMPLETA

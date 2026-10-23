@@ -172,7 +172,8 @@ def act_hist(anios, var):
         return vacia(), ""
     m1, m0 = d.loc[d.y == 1, var].median(), d.loc[d.y == 0, var].median()
     sk = d[var].skew()
-    txt = (f"Mediana de {m1:,.2f} en los días en la banda frente a {m0:,.2f} fuera de ella; asimetría "
+    fm = (lambda v: f"{v:,.0f}") if max(abs(m1), abs(m0)) >= 100 else (lambda v: f"{v:,.2f}")
+    txt = (f"Mediana de {fm(m1)} en los días en la banda frente a {fm(m0)} fuera de ella; asimetría "
            f"de {sk:.2f}. Una separación parcial entre clases y su solapamiento indican que la variable "
            "aporta información pero no basta por sí sola.")
     return histograma(d, var, ETQ[var]), es(txt)

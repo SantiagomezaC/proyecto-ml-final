@@ -1,4 +1,6 @@
 """Sección 3: modelos, predicción en vivo, diagnóstico, comparación estadística y modelo original."""
+import os
+
 import dash
 import dash_bootstrap_components as dbc
 import numpy as np
@@ -165,7 +167,7 @@ def precargar(fecha):
           Output("p-intervalo-txt", "children"), Output("p-shap", "figure"), Output("p-shap-txt", "children"),
           Output("p-alertas", "children"),
           Input("p-boton", "n_clicks"), Input("p-modelo", "value"),
-          State({"tipo": "entrada", "col": dash.ALL}, "value"), State("p-fecha", "date"))
+          Input({"tipo": "entrada", "col": dash.ALL}, "value"), State("p-fecha", "date"))
 def predecir(_, nombre, valores, fecha):
     orden = [c for c in PRINCIPALES] + [c for c in COLS if c not in PRINCIPALES]
     if not valores or all(v is None for v in valores):
@@ -197,10 +199,10 @@ def predecir(_, nombre, valores, fecha):
     en = p >= 0.5
     res = html.Div([
         html.Div("Probabilidad de estar en la banda dentro de 15 días", className="lbl"),
-        html.Div(f"{100 * p:.1f} %", className="prob my-2"),
+        html.Div(es(f"{100 * p:.1f} %"), className="prob my-2"),
         html.Div(("Se anticipa transporte dominante" if en else "No se anticipa transporte dominante")
                  + f" · {NOMBRES_MODELO.get(nombre, nombre)}", className="fw-semibold"),
-        html.Div(f"Caudal actual: {q_act:,.0f} m³/s · banda {P['LIM'][0]:,.0f}–{P['LIM'][1]:,.0f} m³/s",
+        html.Div(es(f"Caudal actual: {q_act:,.0f} m³/s · banda {P['LIM'][0]:,.0f}–{P['LIM'][1]:,.0f} m³/s"),
                  className="small mt-2", style={"opacity": .9}),
     ], className=f"resultado {'si' if en else 'no'}")
     fig_int = intervalo_caudal(q_act, float(dist["mediana"][0]), float(dist["inferior"][0]),
@@ -213,8 +215,8 @@ def predecir(_, nombre, valores, fecha):
     Xi = X.fillna(med)
     phi, base = shapley_permutaciones(lambda Z: probabilidad(nombre, pd.DataFrame(Z, columns=COLS)),
                                       Xi.values[0], fondo.fillna(med).values, n_perm=40)
-    vals = [f"{v:,.2f}" for v in Xi.values[0]]
-    fig_shap = shap_cascada(phi, [etiqueta(c) for c in COLS], base, vals)
+    vals = [es(f"{v:,.0f}" if abs(v) >= 100 else f"{v:,.2f}") for v in Xi.values[0]]
+    fig_shap = shap_cascada(phi, [etiqueta(c).split(" (")[0] for c in COLS], base, vals)
     i = int(np.argmax(np.abs(phi)))
     txt_shap = (f"Partiendo de la probabilidad media {100 * base:.1f} %, la variable que más mueve esta "
                 f"predicción es «{etiqueta(COLS[i])}» ({100 * phi[i]:+.1f} puntos). Las barras ocres empujan "
@@ -294,7 +296,7 @@ def tab_comparacion():
     rangos = pd.Series(cd["rangos"])
     rangos.index = [NOMBRES_MODELO.get(m, m) for m in rangos.index]
     cd112 = json_dash("cd_112.json")
-    mcs = tabla("mcs_regresion.csv")
+    mcs = _es_tabla(tabla("mcs_regresion.csv").astype({"RMSE (m³/s)": str, "Rango medio de pérdida": str, "p-valor MCS": str}))
     return html.Div([
         dbc.Row([
             dbc.Col(tarjeta("Diagrama de diferencia crítica", dcc.Graph(
@@ -346,9 +348,29 @@ Salida: ensambles F_μ y F_s;  p(x) = Φ((u−μ)/σ) − Φ((l−μ)/σ)
 11 devolver F_μ, F_s (truncados en la mejor ronda de validación)"""
 
 
+def _fig_convergencia(conv):
+    from plotly.subplots import make_subplots
+    from src.plots import RIO, SED
+    f = make_subplots(specs=[[{"secondary_y": True}]])
+    f.add_scatter(x=conv["iter"], y=conv["perdida_train"], name="Pérdida híbrida de entrenamiento",
+                  line=dict(color=RIO, width=2), secondary_y=False)
+    if "bce_validacion" in conv:
+        f.add_scatter(x=conv["iter"], y=conv["bce_validacion"], name="Entropía cruzada de validación",
+                      line=dict(color=SED, width=2), secondary_y=True)
+    f.update_layout(title="Pérdida por ronda (fase con parada temprana)", height=340)
+    f.update_xaxes(title="Ronda de boosting")
+    f.update_yaxes(title_text="Pérdida híbrida", secondary_y=False)
+    f.update_yaxes(title_text="Entropía cruzada", secondary_y=True, showgrid=False)
+    return f
+
+
+def _es_tabla(df):
+    return df.apply(lambda c: c.map(es) if c.dtype == object else c)
+
+
 def tab_original():
-    pr = tabla("pruebas_original.csv")
-    ab = tabla("ablacion.csv")
+    pr = _es_tabla(tabla("pruebas_original.csv"))
+    ab = _es_tabla(tabla("ablacion.csv"))
     lit = tabla("literatura_cercana.csv")
     conv = tabla("conv_boosting.csv")
     anytime = tabla("anytime_original.csv")
@@ -372,7 +394,7 @@ def tab_original():
             ])), lg=6),
             dbc.Col(tarjeta("Pseudocódigo", html.Pre(PSEUDO, className="pseudo mb-0")), lg=6),
         ], className="g-3 mb-3"),
-        html.Div(ver["texto"], className=f"veredicto {'ok' if ver['superior'] else 'no'} mb-3"),
+        html.Div(es(ver["texto"]), className=f"veredicto {'ok' if ver['superior'] else 'no'} mb-3"),
         tarjeta("Pruebas de hipótesis frente al mejor benchmark", dash_table.DataTable(
             data=pr.to_dict("records"), columns=[{"name": c, "id": c} for c in pr.columns],
             style_cell={"padding": "6px 10px", "whiteSpace": "normal", "textAlign": "left",
@@ -381,11 +403,7 @@ def tab_original():
         html.Div(className="mb-3"),
         dbc.Row([
             dbc.Col(tarjeta("Convergencia del boosting", dcc.Graph(
-                figure=convergencia(conv, "Pérdida por ronda (modelo final)", "iter",
-                                    {"perdida_train": "Pérdida híbrida de entrenamiento",
-                                     "bce_validacion": "Entropía cruzada de validación"}).update_xaxes(
-                    title="Ronda de boosting").update_yaxes(title="Pérdida", type="log"),
-                config={"displayModeBar": False}),
+                figure=_fig_convergencia(conv), config={"displayModeBar": False}),
                 insight="La pérdida de entrenamiento decrece de forma monótona, como garantiza la búsqueda de "
                         "Armijo; la parada temprana corta donde la entropía cruzada de validación deja de "
                         "mejorar."), lg=6),
@@ -421,5 +439,5 @@ def layout():
             dbc.Tab(tab_diagnostico(), label="Diagnóstico", tab_id="t3", className="pt-3"),
             dbc.Tab(tab_comparacion(), label="Comparación estadística", tab_id="t4", className="pt-3"),
             dbc.Tab(tab_original(), label="Modelo original", tab_id="t5", className="pt-3"),
-        ], active_tab="t1"),
+        ], active_tab=os.environ.get("TAB_INICIAL", "t1")),
     ])

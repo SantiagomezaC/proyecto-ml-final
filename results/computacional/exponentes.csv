@@ -1,0 +1,16 @@
+modelo,variable,exponente_empirico,teoria_entrenamiento,teoria_inferencia
+arbol,n,1.1185528985335522,O(p·n log n),O(profundidad)
+arbol,p,1.1677428434391495,O(p·n log n),O(profundidad)
+knn,n,0.4257959953446982,O(1) (almacena),O(n·p) por consulta
+knn,p,0.7704598592128488,O(1) (almacena),O(n·p) por consulta
+logistica,n,1.1159140719616782,O(n·p) por iteración,O(p)
+logistica,p,1.509862250816894,O(n·p) por iteración,O(p)
+naive_bayes,n,0.7819399916514381,O(n·p),O(p) por consulta
+naive_bayes,p,0.9215421643759164,O(n·p),O(p) por consulta
+original,n,1.0917779184148837,O(T·(n·k + 2^d·k·B)) ×2 ensambles,O(T·d) + O(p log B)
+random_forest,n,0.9793807792914049,O(T·p'·n' log n'),O(T·profundidad)
+random_forest,p,0.5576528742112512,O(T·p'·n' log n'),O(T·profundidad)
+svm,n,1.951390517904491,O(n²·p) a O(n³),O(n_sv·p)
+svm,p,0.011809117715228112,O(n²·p) a O(n³),O(n_sv·p)
+xgboost,n,0.4774159569142531,O(T·(n·p + 2^d·p·B)) con hist,O(T·d)
+xgboost,p,0.8496618806483335,O(T·(n·p + 2^d·p·B)) con hist,O(T·d)

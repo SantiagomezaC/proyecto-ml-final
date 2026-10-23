@@ -32,7 +32,7 @@ def _diccionario():
                         else "Dominio (descarga efectiva)" if c.startswith("dist")
                         else "Estaciones aguas arriba")} for c in cols]
     filas = [{"Variable": "y", "Descripción": "Objetivo: 1 si Q(t+15) en Calamar cae en la banda "
-              es("[{:,.0f}; {:,.0f}] m³/s".format(*P["LIM"])), "Grupo": "Variable objetivo"}] + filas
+              + es("[{:,.0f}; {:,.0f}] m³/s".format(*P["LIM"])), "Grupo": "Variable objetivo"}] + filas
     return dash_table.DataTable(
         data=filas, columns=[{"name": c, "id": c} for c in ("Variable", "Descripción", "Grupo")],
         page_size=10, sort_action="native", filter_action="native",

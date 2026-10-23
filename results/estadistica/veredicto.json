@@ -1,0 +1,19 @@
+{
+  "superior": true,
+  "texto": "Veredicto R3: SUPERIOR. PR-AUC externa media 0.9428 frente a 0.9101 del mejor benchmark (Random Forest); 3 pruebas confirmatorias rechazan la igualdad con p ajustado < 0,05; δ de Cliff = 0.347 y d de Cohen pareado = 0.99.",
+  "cond_media": true,
+  "n_rechazos": 3,
+  "delta_cliff": 0.3472222222222222,
+  "d_cohen": 0.9906994108119155,
+  "ref": "random_forest",
+  "medias": {
+    "random_forest": 0.9100962323553771,
+    "xgboost": 0.9046785521024704,
+    "knn": 0.8881445220575547,
+    "svm": 0.8859803930961482,
+    "arbol": 0.8657828827666384,
+    "logistica": 0.8502334038091036,
+    "naive_bayes": 0.7054857671748254,
+    "original": 0.9428034437097538
+  }
+}

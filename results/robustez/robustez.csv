@@ -1,0 +1,349 @@
+tipo,variante,pliegue,valor,seed,pr_auc,modelo
+ablacion,completo,0,,42,0.9584399967103368,
+ablacion,completo,1,,42,0.9291541469221072,
+ablacion,completo,2,,42,0.9134878510252662,
+ablacion,completo,3,,42,0.9556804770909195,
+ablacion,completo,4,,42,0.981789139532929,
+ablacion,completo,5,,42,0.9904768062635045,
+ablacion,completo,6,,42,0.9734856361588193,
+ablacion,completo,7,,42,0.9598765251039993,
+ablacion,completo,8,,42,0.9860277933151751,
+ablacion,completo,9,,42,0.9057176566083666,
+ablacion,completo,10,,42,0.962600493394472,
+ablacion,completo,11,,42,0.7969048023911486,
+ablacion,sin supervisión continua (λ = 0),0,,42,0.9151387898481553,
+ablacion,sin supervisión continua (λ = 0),1,,42,0.9425760146533753,
+ablacion,sin supervisión continua (λ = 0),2,,42,0.8969304181201747,
+ablacion,sin supervisión continua (λ = 0),3,,42,0.943645596850023,
+ablacion,sin supervisión continua (λ = 0),4,,42,0.978614289070131,
+ablacion,sin supervisión continua (λ = 0),5,,42,0.9901311246669419,
+ablacion,sin supervisión continua (λ = 0),6,,42,0.9634027716525626,
+ablacion,sin supervisión continua (λ = 0),7,,42,0.9652441704543844,
+ablacion,sin supervisión continua (λ = 0),8,,42,0.9304117025488121,
+ablacion,sin supervisión continua (λ = 0),9,,42,0.8955615218945445,
+ablacion,sin supervisión continua (λ = 0),10,,42,0.9558213459411236,
+ablacion,sin supervisión continua (λ = 0),11,,42,0.6656210490635818,
+ablacion,σ constante (homocedástico),0,,42,0.9501236113865864,
+ablacion,σ constante (homocedástico),1,,42,0.9040576751307975,
+ablacion,σ constante (homocedástico),2,,42,0.9073622020649732,
+ablacion,σ constante (homocedástico),3,,42,0.947954485513713,
+ablacion,σ constante (homocedástico),4,,42,0.9857159054202285,
+ablacion,σ constante (homocedástico),5,,42,0.9868582161139756,
+ablacion,σ constante (homocedástico),6,,42,0.9754141173403438,
+ablacion,σ constante (homocedástico),7,,42,0.9501738986647045,
+ablacion,σ constante (homocedástico),8,,42,0.9872445778234288,
+ablacion,σ constante (homocedástico),9,,42,0.8973290468259157,
+ablacion,σ constante (homocedástico),10,,42,0.9664854143219622,
+ablacion,σ constante (homocedástico),11,,42,0.8465239819370767,
+ablacion,sin búsqueda lineal de Armijo,0,,42,0.9584399967103368,
+ablacion,sin búsqueda lineal de Armijo,1,,42,0.9291541469221072,
+ablacion,sin búsqueda lineal de Armijo,2,,42,0.9134878510252662,
+ablacion,sin búsqueda lineal de Armijo,3,,42,0.9556804770909195,
+ablacion,sin búsqueda lineal de Armijo,4,,42,0.981789139532929,
+ablacion,sin búsqueda lineal de Armijo,5,,42,0.9904768062635045,
+ablacion,sin búsqueda lineal de Armijo,6,,42,0.9734856361588193,
+ablacion,sin búsqueda lineal de Armijo,7,,42,0.9598765251039993,
+ablacion,sin búsqueda lineal de Armijo,8,,42,0.9860277933151751,
+ablacion,sin búsqueda lineal de Armijo,9,,42,0.9057176566083666,
+ablacion,sin búsqueda lineal de Armijo,10,,42,0.962600493394472,
+ablacion,sin búsqueda lineal de Armijo,11,,42,0.7969048023911486,
+ablacion,solo verosimilitud (λ = 100),0,,42,0.9557438514173783,
+ablacion,solo verosimilitud (λ = 100),1,,42,0.9302560656490116,
+ablacion,solo verosimilitud (λ = 100),2,,42,0.9073744259107288,
+ablacion,solo verosimilitud (λ = 100),3,,42,0.9510709207837531,
+ablacion,solo verosimilitud (λ = 100),4,,42,0.9839862279756804,
+ablacion,solo verosimilitud (λ = 100),5,,42,0.9894435428376569,
+ablacion,solo verosimilitud (λ = 100),6,,42,0.977050456853797,
+ablacion,solo verosimilitud (λ = 100),7,,42,0.9576779081434912,
+ablacion,solo verosimilitud (λ = 100),8,,42,0.9845017237452336,
+ablacion,solo verosimilitud (λ = 100),9,,42,0.9038190008234888,
+ablacion,solo verosimilitud (λ = 100),10,,42,0.9601210831732491,
+ablacion,solo verosimilitud (λ = 100),11,,42,0.7624734113297875,
+ablacion,sin reajuste tras parada temprana,0,,42,0.9633456706737176,
+ablacion,sin reajuste tras parada temprana,1,,42,0.9338456794443022,
+ablacion,sin reajuste tras parada temprana,2,,42,0.9134306155946618,
+ablacion,sin reajuste tras parada temprana,3,,42,0.9638377983928738,
+ablacion,sin reajuste tras parada temprana,4,,42,0.9825402420428425,
+ablacion,sin reajuste tras parada temprana,5,,42,0.9916370357861561,
+ablacion,sin reajuste tras parada temprana,6,,42,0.9781991295835469,
+ablacion,sin reajuste tras parada temprana,7,,42,0.9588660668004244,
+ablacion,sin reajuste tras parada temprana,8,,42,0.9860960007159624,
+ablacion,sin reajuste tras parada temprana,9,,42,0.9085697789912255,
+ablacion,sin reajuste tras parada temprana,10,,42,0.9650369549398565,
+ablacion,sin reajuste tras parada temprana,11,,42,0.7939915685553915,
+lambda,λ,0,0.0,42,0.9151387898481553,
+lambda,λ,0,0.1,42,0.9279216711311535,
+lambda,λ,0,0.3,42,0.9372869558703515,
+lambda,λ,0,1.0,42,0.9541859525479454,
+lambda,λ,0,3.0,42,0.9564602777527641,
+lambda,λ,0,10.0,42,0.9566104873742864,
+lambda,λ,1,0.0,42,0.9425760146533753,
+lambda,λ,1,0.1,42,0.9362110781441354,
+lambda,λ,1,0.3,42,0.9259538221212942,
+lambda,λ,1,1.0,42,0.9237360028816731,
+lambda,λ,1,3.0,42,0.9284330511156131,
+lambda,λ,1,10.0,42,0.9306752910947539,
+lambda,λ,2,0.0,42,0.8969304181201747,
+lambda,λ,2,0.1,42,0.9215963090531771,
+lambda,λ,2,0.3,42,0.9194593310637506,
+lambda,λ,2,1.0,42,0.9145343245465505,
+lambda,λ,2,3.0,42,0.911109219870234,
+lambda,λ,2,10.0,42,0.9104848208501315,
+lambda,λ,3,0.0,42,0.943645596850023,
+lambda,λ,3,0.1,42,0.9586792401444996,
+lambda,λ,3,0.3,42,0.9483797551581309,
+lambda,λ,3,1.0,42,0.9606394506927022,
+lambda,λ,3,3.0,42,0.9566273099922097,
+lambda,λ,3,10.0,42,0.9482839941706823,
+lambda,λ,4,0.0,42,0.978614289070131,
+lambda,λ,4,0.1,42,0.983777858150015,
+lambda,λ,4,0.3,42,0.9825755867403186,
+lambda,λ,4,1.0,42,0.9820849461305964,
+lambda,λ,4,3.0,42,0.9830908624781994,
+lambda,λ,4,10.0,42,0.9830891704738433,
+lambda,λ,5,0.0,42,0.9901311246669419,
+lambda,λ,5,0.1,42,0.9926856744789784,
+lambda,λ,5,0.3,42,0.9940327997670575,
+lambda,λ,5,1.0,42,0.9913324401153651,
+lambda,λ,5,3.0,42,0.9902332870627487,
+lambda,λ,5,10.0,42,0.9902642731652558,
+lambda,λ,6,0.0,42,0.9634027716525626,
+lambda,λ,6,0.1,42,0.9730198451181076,
+lambda,λ,6,0.3,42,0.9743611085684226,
+lambda,λ,6,1.0,42,0.9733987821533017,
+lambda,λ,6,3.0,42,0.9759090045225688,
+lambda,λ,6,10.0,42,0.9753256715380674,
+lambda,λ,7,0.0,42,0.9652441704543844,
+lambda,λ,7,0.1,42,0.9581088571914049,
+lambda,λ,7,0.3,42,0.9613752626506281,
+lambda,λ,7,1.0,42,0.9616523375100413,
+lambda,λ,7,3.0,42,0.9573821818254238,
+lambda,λ,7,10.0,42,0.9577668137065282,
+lambda,λ,8,0.0,42,0.9304117025488121,
+lambda,λ,8,0.1,42,0.9644800118960515,
+lambda,λ,8,0.3,42,0.980709955513128,
+lambda,λ,8,1.0,42,0.9851133924739299,
+lambda,λ,8,3.0,42,0.9849841498077779,
+lambda,λ,8,10.0,42,0.9847252426841646,
+lambda,λ,9,0.0,42,0.8955615218945445,
+lambda,λ,9,0.1,42,0.9092853083008685,
+lambda,λ,9,0.3,42,0.9145400719951904,
+lambda,λ,9,1.0,42,0.9100103426677281,
+lambda,λ,9,3.0,42,0.9094538303025538,
+lambda,λ,9,10.0,42,0.9042387940825574,
+lambda,λ,10,0.0,42,0.9558213459411236,
+lambda,λ,10,0.1,42,0.9588908279538492,
+lambda,λ,10,0.3,42,0.9606042152896526,
+lambda,λ,10,1.0,42,0.9636327203500821,
+lambda,λ,10,3.0,42,0.9616793734535692,
+lambda,λ,10,10.0,42,0.9639853689061124,
+lambda,λ,11,0.0,42,0.6656210490635818,
+lambda,λ,11,0.1,42,0.6484058115882945,
+lambda,λ,11,0.3,42,0.6732830855019172,
+lambda,λ,11,1.0,42,0.7618709116155619,
+lambda,λ,11,3.0,42,0.7687691356968551,
+lambda,λ,11,10.0,42,0.7758760714762774,
+semilla,original,0,,1,0.9554774065422398,original
+semilla,benchmark,0,,1,0.8903625023009959,benchmark
+semilla,original,1,,1,0.9299130478612601,original
+semilla,benchmark,1,,1,0.9273091707139979,benchmark
+semilla,original,2,,1,0.910116165248719,original
+semilla,benchmark,2,,1,0.9053278520481294,benchmark
+semilla,original,3,,1,0.9589830969238838,original
+semilla,benchmark,3,,1,0.8681134263545323,benchmark
+semilla,original,4,,1,0.9832107752118858,original
+semilla,benchmark,4,,1,0.9760344395577092,benchmark
+semilla,original,5,,1,0.9894498474696425,original
+semilla,benchmark,5,,1,0.9868393180764337,benchmark
+semilla,original,6,,1,0.9737363771400984,original
+semilla,benchmark,6,,1,0.9701134277926755,benchmark
+semilla,original,7,,1,0.9597002110670557,original
+semilla,benchmark,7,,1,0.9473390665363486,benchmark
+semilla,original,8,,1,0.9837484406066993,original
+semilla,benchmark,8,,1,0.9281335730457244,benchmark
+semilla,original,9,,1,0.9049597471864501,original
+semilla,benchmark,9,,1,0.864162762896976,benchmark
+semilla,original,10,,1,0.9627183795156056,original
+semilla,benchmark,10,,1,0.955654256971709,benchmark
+semilla,original,11,,1,0.7758924709272664,original
+semilla,benchmark,11,,1,0.7148711110579091,benchmark
+semilla,original,0,,7,0.9567224905024846,original
+semilla,benchmark,0,,7,0.8962031082977514,benchmark
+semilla,original,1,,7,0.9276397244778747,original
+semilla,benchmark,1,,7,0.9229389076150718,benchmark
+semilla,original,2,,7,0.9104939093004728,original
+semilla,benchmark,2,,7,0.8981574632728794,benchmark
+semilla,original,3,,7,0.9568467069461313,original
+semilla,benchmark,3,,7,0.8763352113644596,benchmark
+semilla,original,4,,7,0.9838693240133672,original
+semilla,benchmark,4,,7,0.977978901604667,benchmark
+semilla,original,5,,7,0.990454926624458,original
+semilla,benchmark,5,,7,0.9865677709124352,benchmark
+semilla,original,6,,7,0.9735016406054491,original
+semilla,benchmark,6,,7,0.9691098341500556,benchmark
+semilla,original,7,,7,0.9577718470025134,original
+semilla,benchmark,7,,7,0.9428700480023768,benchmark
+semilla,original,8,,7,0.9851131407062171,original
+semilla,benchmark,8,,7,0.933383385221209,benchmark
+semilla,original,9,,7,0.902619896590444,original
+semilla,benchmark,9,,7,0.8555658487043153,benchmark
+semilla,original,10,,7,0.9651249918711687,original
+semilla,benchmark,10,,7,0.9531766250221516,benchmark
+semilla,original,11,,7,0.7440139249318252,original
+semilla,benchmark,11,,7,0.7028749795791313,benchmark
+semilla,original,0,,42,0.9584399967103368,original
+semilla,benchmark,0,,42,0.9050448754414363,benchmark
+semilla,original,1,,42,0.9291541469221072,original
+semilla,benchmark,1,,42,0.922249649843883,benchmark
+semilla,original,2,,42,0.9134878510252662,original
+semilla,benchmark,2,,42,0.9013379266587853,benchmark
+semilla,original,3,,42,0.9556804770909195,original
+semilla,benchmark,3,,42,0.859206850984883,benchmark
+semilla,original,4,,42,0.981789139532929,original
+semilla,benchmark,4,,42,0.9759645537853824,benchmark
+semilla,original,5,,42,0.9904768062635045,original
+semilla,benchmark,5,,42,0.9863890806132204,benchmark
+semilla,original,6,,42,0.9734856361588193,original
+semilla,benchmark,6,,42,0.9725729188113059,benchmark
+semilla,original,7,,42,0.9598765251039993,original
+semilla,benchmark,7,,42,0.9314784404087538,benchmark
+semilla,original,8,,42,0.9860277933151751,original
+semilla,benchmark,8,,42,0.9405527151780388,benchmark
+semilla,original,9,,42,0.9057176566083666,original
+semilla,benchmark,9,,42,0.861737303972672,benchmark
+semilla,original,10,,42,0.962600493394472,original
+semilla,benchmark,10,,42,0.9545996004862591,benchmark
+semilla,original,11,,42,0.7969048023911486,original
+semilla,benchmark,11,,42,0.7100208720799032,benchmark
+semilla,original,0,,123,0.9581770926172279,original
+semilla,benchmark,0,,123,0.8993478886681274,benchmark
+semilla,original,1,,123,0.9261964336255819,original
+semilla,benchmark,1,,123,0.9254739256318318,benchmark
+semilla,original,2,,123,0.910184908278552,original
+semilla,benchmark,2,,123,0.9094944535554882,benchmark
+semilla,original,3,,123,0.9620307769198542,original
+semilla,benchmark,3,,123,0.8724194674877033,benchmark
+semilla,original,4,,123,0.9811200003622434,original
+semilla,benchmark,4,,123,0.9756360430606884,benchmark
+semilla,original,5,,123,0.9889984086314613,original
+semilla,benchmark,5,,123,0.9862955612416019,benchmark
+semilla,original,6,,123,0.9753231746885237,original
+semilla,benchmark,6,,123,0.9689407645773496,benchmark
+semilla,original,7,,123,0.9585377188683439,original
+semilla,benchmark,7,,123,0.9317588531610626,benchmark
+semilla,original,8,,123,0.9859515955813404,original
+semilla,benchmark,8,,123,0.9178534371636741,benchmark
+semilla,original,9,,123,0.9074615817496792,original
+semilla,benchmark,9,,123,0.8605418217203096,benchmark
+semilla,original,10,,123,0.9618307567514819,original
+semilla,benchmark,10,,123,0.9563486027502002,benchmark
+semilla,original,11,,123,0.7740536380276075,original
+semilla,benchmark,11,,123,0.6582762740231437,benchmark
+semilla,original,0,,2024,0.9547565935694642,original
+semilla,benchmark,0,,2024,0.9008351059812,benchmark
+semilla,original,1,,2024,0.924852843580326,original
+semilla,benchmark,1,,2024,0.9253508930300834,benchmark
+semilla,original,2,,2024,0.9120957842712163,original
+semilla,benchmark,2,,2024,0.9003301558103559,benchmark
+semilla,original,3,,2024,0.960368312445085,original
+semilla,benchmark,3,,2024,0.8859690607451773,benchmark
+semilla,original,4,,2024,0.9829203293422002,original
+semilla,benchmark,4,,2024,0.9743814590172015,benchmark
+semilla,original,5,,2024,0.9894799548735053,original
+semilla,benchmark,5,,2024,0.986597120189946,benchmark
+semilla,original,6,,2024,0.9753372121345983,original
+semilla,benchmark,6,,2024,0.9671629550440328,benchmark
+semilla,original,7,,2024,0.9586785824775244,original
+semilla,benchmark,7,,2024,0.9428321511535025,benchmark
+semilla,original,8,,2024,0.9853093797576467,original
+semilla,benchmark,8,,2024,0.931456908207351,benchmark
+semilla,original,9,,2024,0.9095658691231724,original
+semilla,benchmark,9,,2024,0.8549778936716684,benchmark
+semilla,original,10,,2024,0.9627964890628194,original
+semilla,benchmark,10,,2024,0.9582636226439287,benchmark
+semilla,original,11,,2024,0.7694131048642163,original
+semilla,benchmark,11,,2024,0.6929260992771304,benchmark
+ruido,original,6,0.02,42,0.9743584402508871,original
+ruido,benchmark,6,0.02,42,0.9664566825288919,benchmark
+ruido,original,6,0.05,42,0.9688422602036899,original
+ruido,benchmark,6,0.05,42,0.9678075572800968,benchmark
+ruido,original,6,0.1,42,0.9694651831695703,original
+ruido,benchmark,6,0.1,42,0.9641585968768679,benchmark
+ruido,original,7,0.02,42,0.9552426393681838,original
+ruido,benchmark,7,0.02,42,0.9417806167127583,benchmark
+ruido,original,7,0.05,42,0.9538505529297632,original
+ruido,benchmark,7,0.05,42,0.9406363949542171,benchmark
+ruido,original,7,0.1,42,0.9558454363434896,original
+ruido,benchmark,7,0.1,42,0.9371983835731849,benchmark
+ruido,original,8,0.02,42,0.9873838858328089,original
+ruido,benchmark,8,0.02,42,0.9536690112109734,benchmark
+ruido,original,8,0.05,42,0.9832320629939223,original
+ruido,benchmark,8,0.05,42,0.9623574545831992,benchmark
+ruido,original,8,0.1,42,0.9831795581459531,original
+ruido,benchmark,8,0.1,42,0.9536723392665685,benchmark
+ruido,original,9,0.02,42,0.8901062903243667,original
+ruido,benchmark,9,0.02,42,0.8536136110612169,benchmark
+ruido,original,9,0.05,42,0.8754128086519946,original
+ruido,benchmark,9,0.05,42,0.8571305357291604,benchmark
+ruido,original,9,0.1,42,0.8717968587286468,original
+ruido,benchmark,9,0.1,42,0.8394440889912508,benchmark
+ruido,original,10,0.02,42,0.9608984385741035,original
+ruido,benchmark,10,0.02,42,0.9516955092318936,benchmark
+ruido,original,10,0.05,42,0.9528405838197633,original
+ruido,benchmark,10,0.05,42,0.9460377304941661,benchmark
+ruido,original,10,0.1,42,0.9467843031756398,original
+ruido,benchmark,10,0.1,42,0.9378659170519181,benchmark
+ruido,original,11,0.02,42,0.7453331264638253,original
+ruido,benchmark,11,0.02,42,0.7108965547176892,benchmark
+ruido,original,11,0.05,42,0.676748107948932,original
+ruido,benchmark,11,0.05,42,0.7012425029991467,benchmark
+ruido,original,11,0.1,42,0.6879326288134925,original
+ruido,benchmark,11,0.1,42,0.6683095029758053,benchmark
+desbalance,original,6,0.15,42,0.973867558746506,original
+desbalance,benchmark,6,0.15,42,0.9681739513020322,benchmark
+desbalance,original,6,0.08,42,0.9755645621877503,original
+desbalance,benchmark,6,0.08,42,0.9652888434147966,benchmark
+desbalance,original,7,0.15,42,0.9583232530056327,original
+desbalance,benchmark,7,0.15,42,0.9468286657591999,benchmark
+desbalance,original,7,0.08,42,0.9560070311101543,original
+desbalance,benchmark,7,0.08,42,0.9384333174552739,benchmark
+desbalance,original,8,0.15,42,0.9864550197529689,original
+desbalance,benchmark,8,0.15,42,0.9504437203849548,benchmark
+desbalance,original,8,0.08,42,0.9854766102416954,original
+desbalance,benchmark,8,0.08,42,0.9179985240861798,benchmark
+desbalance,original,9,0.15,42,0.9063443368630693,original
+desbalance,benchmark,9,0.15,42,0.8464781006692106,benchmark
+desbalance,original,9,0.08,42,0.9026965493804886,original
+desbalance,benchmark,9,0.08,42,0.8288521571477885,benchmark
+desbalance,original,10,0.15,42,0.9650307566925977,original
+desbalance,benchmark,10,0.15,42,0.9453190846502215,benchmark
+desbalance,original,10,0.08,42,0.9579357752263012,original
+desbalance,benchmark,10,0.08,42,0.9317418432523958,benchmark
+desbalance,original,11,0.15,42,0.7637755402004052,original
+desbalance,benchmark,11,0.15,42,0.686953638354546,benchmark
+desbalance,original,11,0.08,42,0.7493621937676902,original
+desbalance,benchmark,11,0.08,42,0.7185220319554615,benchmark
+muestra,original,6,0.25,42,0.9679541657669224,original
+muestra,benchmark,6,0.25,42,0.913846291491567,benchmark
+muestra,original,6,0.5,42,0.961998861111003,original
+muestra,benchmark,6,0.5,42,0.9458284359212897,benchmark
+muestra,original,7,0.25,42,0.9516544032094736,original
+muestra,benchmark,7,0.25,42,0.9172235414097021,benchmark
+muestra,original,7,0.5,42,0.9503391130946229,original
+muestra,benchmark,7,0.5,42,0.9403392340485592,benchmark
+muestra,original,8,0.25,42,0.982141267661602,original
+muestra,benchmark,8,0.25,42,0.9469480018099763,benchmark
+muestra,original,8,0.5,42,0.9864055292014212,original
+muestra,benchmark,8,0.5,42,0.930807581925533,benchmark
+muestra,original,9,0.25,42,0.8109777901804571,original
+muestra,benchmark,9,0.25,42,0.8080937639761321,benchmark
+muestra,original,9,0.5,42,0.8891783768694532,original
+muestra,benchmark,9,0.5,42,0.8435721914421201,benchmark
+muestra,original,10,0.25,42,0.9502790875952932,original
+muestra,benchmark,10,0.25,42,0.8857894368613817,benchmark
+muestra,original,10,0.5,42,0.9633794867227731,original
+muestra,benchmark,10,0.5,42,0.9492243948551808,benchmark
+muestra,original,11,0.25,42,0.8250368654282183,original
+muestra,benchmark,11,0.25,42,0.5572911839782212,benchmark
+muestra,original,11,0.5,42,0.7985876879801014,original
+muestra,benchmark,11,0.5,42,0.7196990132545793,benchmark

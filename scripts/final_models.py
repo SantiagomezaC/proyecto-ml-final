@@ -136,7 +136,8 @@ def final_original(presupuesto: int, metodo: str = "bayes") -> dict:
             "puntaje_interno": interno, "t_opt": t_opt, "t_fit": t_fit, "t_inf_ms_fila": t_inf,
             "pred_test": pred, "metricas_test": met, "ece_test": ece(datos.y_clf_test, pred),
             "q_mediana_test": dist["mediana"], "q_inf_test": dist["inferior"],
-            "q_sup_test": dist["superior"], "historial_boosting": est.historial_}
+            "q_sup_test": dist["superior"], "historial_boosting": est.historial_parada_,
+            "historial_reajuste": est.historial_}
 
 
 def main():

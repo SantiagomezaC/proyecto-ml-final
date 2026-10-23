@@ -330,7 +330,7 @@
     "n_filas": 500,
     "max_dif_abs": 0.0
   },
-  "tamano_mb": 0.062,
+  "tamano_mb": 0.064,
   "tarea": "clasificacion",
   "balanceo": "ninguno",
   "optimizador": "genetico",
@@ -352,7 +352,7 @@
     "accuracy": 0.9453414059872183,
     "brier": 0.03942607023632925
   },
-  "t_inferencia_ms_fila": 0.014877379752082824,
+  "t_inferencia_ms_fila": 0.019289455095873303,
   "n_iter": 85,
   "banda": [
     8461.290798418506,

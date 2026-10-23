@@ -383,5 +383,6 @@
     "accuracy": 0.9286915573494786,
     "brier": 0.05145252657628185
   },
-  "t_inferencia_ms_fila": 0.4249946518659481
+  "t_inferencia_ms_fila": 0.4249946518659481,
+  "usar_recalibrado": true
 }

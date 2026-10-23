@@ -1,0 +1,6 @@
+{
+  "lower": 0.0005,
+  "consistent": 0.0005,
+  "upper": 0.09,
+  "bloque": 61
+}

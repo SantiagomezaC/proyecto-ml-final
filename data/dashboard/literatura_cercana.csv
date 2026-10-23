@@ -1,0 +1,9 @@
+Método afín,Qué conserva BLGB,Qué añade BLGB
+NGBoost,Distribución paramétrica por boosting,Pérdida del evento + límites por observación
+DGBM / XGBoostLSS,Newton multiparámetro en árboles,Entropía cruzada de la banda; búsqueda de Armijo
+GAMLSS por boosting,Escala en logaritmo,Interacciones por árboles; pérdida híbrida
+XGBoost AFT (intervalos),Verosimilitud de intervalo,Complemento de la banda (dos semirrectas)
+Regresión ordinal,Latente gaussiana cortada,Umbrales móviles según Q_ref
+EMOS / BFS,Distribución predictiva calibrada,Sin pronóstico físico previo; pérdida del evento
+Multitarea,Tarea auxiliar continua,Ambas tareas comparten una distribución; regla estrictamente propia
+Dos etapas (regresión + umbral),Supervisión continua,Dispersión heterocedástica y ajuste conjunto

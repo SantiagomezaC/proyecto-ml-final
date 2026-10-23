@@ -11,7 +11,23 @@ Maestría · Universidad del Norte · Machine Learning, 2026-30
 
 ## Resumen ejecutivo
 
-RESUMEN_EJECUTIVO
+Este libro documenta los entregables 2 y 3 del proyecto. A partir de 28.558 días de registro del
+IDEAM (1947-2026) en Calamar y Puerto Salgar, se predice si el caudal del día *t* + 15 caerá en
+la banda de ±15 % alrededor de la descarga efectiva de Calamar (9.954 m³/s), una tarea de
+clasificación con 26 % de casos positivos, y como tarea auxiliar se predice el propio caudal.
+
+Se entrenaron y compararon 140 combinaciones de modelos, técnicas de balanceo y métodos de
+optimización de hiperparámetros con validación anidada cronológica en doce bloques de dos años.
+El mejor benchmark es Random Forest (PR-AUC externa de 0,910 ± 0,075), estadísticamente
+indistinguible de XGBoost, SVM y KNN. El modelo original, Band-Likelihood Gradient Boosting,
+programado en numpy, modela la distribución del caudal futuro y optimiza una pérdida
+estrictamente propia que combina la probabilidad del evento con la verosimilitud del caudal.
+Supera a todos los benchmarks en los doce bloques (0,943 ± 0,053) y en la prueba reservada
+2010-2026 (0,965 frente a 0,950), con significancia en tres pruebas (Wilcoxon-Holm, t corregida de
+Nadeau-Bengio y bootstrap estacionario) y un efecto mediano a grande, aunque queda empatado con
+métodos distribucionales recientes como NGBoost. Los modelos se ponen a disposición de usuarios
+no expertos en un dashboard con predicción en vivo, intervalo del caudal previsto y explicación
+local de cada predicción.
 
 ## Problema
 

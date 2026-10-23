@@ -368,6 +368,8 @@ class BandLikelihoodBoosting(ClassifierMixin, BaseEstimator):
             idx_tr, idx_va = np.arange(n), np.array([], dtype=int)
 
         estado = self._boosting(Xb, y, z, l, u, idx_tr, idx_va, self.n_estimadores)
+        # Historial de la fase con parada temprana (incluye la entropía cruzada de validación)
+        self.historial_parada_ = estado["historial"]
         if self.reajustar and len(idx_va) and estado["mejor_iter"] > 0:
             estado = self._boosting(Xb, y, z, l, u, np.arange(n), np.array([], dtype=int),
                                     estado["mejor_iter"])

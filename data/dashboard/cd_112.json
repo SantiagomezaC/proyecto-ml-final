@@ -1,0 +1,25 @@
+{
+  "chi2": 751.5325517036608,
+  "gl": 111,
+  "p": 9.443059899104408e-96,
+  "cd": 57.68944795808719,
+  "pares_signif": 685,
+  "pares_total": 6216,
+  "rangos_top": {
+    "random_forest | ninguno | grid": 18.916666666666668,
+    "random_forest | ninguno | bayes": 21.666666666666668,
+    "random_forest | ninguno | genetico": 21.916666666666668,
+    "random_forest | ninguno | random": 22.333333333333332,
+    "random_forest | smote | grid": 22.583333333333332,
+    "random_forest | smote | genetico": 23.583333333333332,
+    "random_forest | balanced | grid": 24.5,
+    "xgboost | smote | genetico": 24.833333333333332,
+    "random_forest | smote | random": 24.833333333333332,
+    "random_forest | balanced | random": 26.583333333333332,
+    "random_forest | balanced | bayes": 26.833333333333332,
+    "xgboost | smote | random": 28.583333333333332,
+    "xgboost | balanced | genetico": 29.0,
+    "random_forest | balanced | genetico": 29.666666666666668,
+    "xgboost | balanced | random": 30.0
+  }
+}

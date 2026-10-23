@@ -125,7 +125,7 @@ def escalamiento(X, y, Xt, prev):
         t_inf = cronometrar(lambda: m.predict_proba(Xot), rep=2)
         filas.append({"modelo": "original", "n": len(idx), "p": X.shape[1], "t_fit": t_fit,
                       "t_inf_2000": t_inf, "variable": "n"})
-    for p in (5, 10, 20, 43):
+    for p in sorted({5, 10, 20, X.shape[1]}):
         cols = np.arange(p)
         for nombre, fab in modelos_escalamiento(prev).items():
             m = fab()

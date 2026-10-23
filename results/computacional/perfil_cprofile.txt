@@ -1,0 +1,33 @@
+         800596 function calls (794703 primitive calls) in 12.935 seconds
+
+   Ordered by: cumulative time
+   List reduced from 1200 to 25 due to restriction <25>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000   12.935   12.935 C:\Users\User\Desktop\GEOLOGÍA\MAESTRÍA\Semestre 2\MachineLearning\proyecto\MACHINE_LEARNING\proyecto-ml-final\src\experiment.py:85(ejecutar_tarea)
+    76/19    0.003    0.000   12.486    0.657 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\sklearn\base.py:1456(wrapper)
+       19    0.001    0.000   12.483    0.657 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\imblearn\pipeline.py:280(fit)
+        1    0.000    0.000   12.270   12.270 C:\Users\User\Desktop\GEOLOGÍA\MAESTRÍA\Semestre 2\MachineLearning\proyecto\MACHINE_LEARNING\proyecto-ml-final\src\optim.py:198(optimizar)
+        1    0.000    0.000   12.270   12.270 C:\Users\User\Desktop\GEOLOGÍA\MAESTRÍA\Semestre 2\MachineLearning\proyecto\MACHINE_LEARNING\proyecto-ml-final\src\optim.py:103(bayes_search)
+        1    0.000    0.000   12.269   12.269 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\optuna\study\study.py:373(optimize)
+        1    0.000    0.000   12.269   12.269 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\optuna\study\_optimize.py:34(_optimize)
+        1    0.001    0.001   12.269   12.269 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\optuna\study\_optimize.py:122(_optimize_sequential)
+        6    0.000    0.000   12.268    2.045 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\optuna\study\_optimize.py:180(_run_trial)
+        6    0.000    0.000   12.264    2.044 C:\Users\User\Desktop\GEOLOGÍA\MAESTRÍA\Semestre 2\MachineLearning\proyecto\MACHINE_LEARNING\proyecto-ml-final\src\optim.py:118(<lambda>)
+        6    0.000    0.000   12.257    2.043 C:\Users\User\Desktop\GEOLOGÍA\MAESTRÍA\Semestre 2\MachineLearning\proyecto\MACHINE_LEARNING\proyecto-ml-final\src\optim.py:76(f)
+        6    0.000    0.000   12.257    2.043 C:\Users\User\Desktop\GEOLOGÍA\MAESTRÍA\Semestre 2\MachineLearning\proyecto\MACHINE_LEARNING\proyecto-ml-final\src\experiment.py:107(objetivo)
+        6    0.005    0.001   12.256    2.043 C:\Users\User\Desktop\GEOLOGÍA\MAESTRÍA\Semestre 2\MachineLearning\proyecto\MACHINE_LEARNING\proyecto-ml-final\src\optim.py:33(evaluar_config)
+   228/38    0.002    0.000   11.365    0.299 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\xgboost\core.py:707(inner_f)
+       19    0.001    0.000   11.364    0.598 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\xgboost\sklearn.py:1450(fit)
+       19    0.011    0.001    9.976    0.525 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\xgboost\training.py:51(train)
+     4136    9.568    0.002    9.702    0.002 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\xgboost\core.py:2079(update)
+       19    0.000    0.000    1.349    0.071 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\xgboost\sklearn.py:576(_wrap_evaluation_matrices)
+       19    0.000    0.000    1.349    0.071 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\xgboost\sklearn.py:999(_create_dmatrix)
+       19    0.000    0.000    1.349    0.071 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\xgboost\core.py:1515(__init__)
+       19    1.279    0.067    1.349    0.071 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\xgboost\core.py:1589(_init)
+       19    0.006    0.000    1.117    0.059 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\imblearn\pipeline.py:228(_fit)
+       57    0.000    0.000    1.108    0.019 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\joblib\memory.py:311(__call__)
+   114/76    0.001    0.000    0.615    0.008 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\sklearn\utils\_set_output.py:314(wrapped)
+       19    0.000    0.000    0.593    0.031 C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\imblearn\pipeline.py:1055(_fit_resample_one)
+
+

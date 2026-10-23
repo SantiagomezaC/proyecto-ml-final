@@ -1,0 +1,7 @@
+Variante,PR-AUC media,Δ frente al completo,p (Wilcoxon)
+completo,0.9428 ± 0.0534,+0.0000,
+sin búsqueda lineal de Armijo,0.9428 ± 0.0534,+0.0000,1.0000 (idéntico)
+sin reajuste tras parada temprana,0.9449 ± 0.0547,+0.0021,0.9829
+sin supervisión continua (λ = 0),0.9203 ± 0.0856,-0.0225,0.0134
+solo verosimilitud (λ = 100),0.9386 ± 0.0624,-0.0042,0.0386
+σ constante (homocedástico),0.9421 ± 0.0443,-0.0007,0.1331

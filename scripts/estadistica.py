@@ -203,7 +203,10 @@ def main():
                 "Δ frente al completo": f"{dd.mean():+.4f}"}
         if v != "completo":
             from scipy.stats import wilcoxon
-            fila["p (Wilcoxon)"] = f"{wilcoxon(ab['completo'], ab[v], alternative='greater', zero_method='zsplit').pvalue:.4f}"
+            if np.allclose(dd, 0):
+                fila["p (Wilcoxon)"] = "1.0000 (idéntico)"
+            else:
+                fila["p (Wilcoxon)"] = f"{wilcoxon(ab['completo'], ab[v], alternative='greater', zero_method='zsplit').pvalue:.4f}"
         filas.append(fila)
     pd.DataFrame(filas).to_csv(E / "ablacion.csv", index=False)
 
