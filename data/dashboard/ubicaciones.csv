@@ -1,0 +1,8 @@
+estacion,codigo,departamento,municipio,lat,lon,altitud,clave,nombre
+ARRANCAPLUMAS - AUT,21237020,Cundinamarca,Guaduas,5.20241667,-74.72761111,222,arrancaplumas,Arrancaplumas
+PUERTO SALGAR - AUT,23037010,Cundinamarca,Puerto Salgar,5.46966667,-74.66216667,168,pto_salgar,Puerto Salgar
+TRES CRUCES,25027640,Bolivar,Achí,8.70308333,-74.51730556,31,tres_cruces,Tres Cruces
+COYONGAL,25027930,Bolivar,Magangué,8.91513,-74.48554,20,coyongal,Coyongal
+EL BANCO - AUT,25027020,Magdalena,El Banco,8.99252778,-73.96944444,29,el_banco,El Banco
+SAN ROQUE,25027320,Magdalena,El Banco,9.071622,-74.157176,24,san_roque,San Roque
+CALAMAR,29037020,Bolivar,Calamar,10.244042,-74.914705,8,calamar,Calamar

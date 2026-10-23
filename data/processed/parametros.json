@@ -1,0 +1,319 @@
+{
+  "calamar": {
+    "Q_EF": 9954.459762845301,
+    "LIM": [
+      8461.290798418506,
+      11447.628727272095
+    ],
+    "CLASE_MODAL": [
+      9486.153638629059,
+      10445.884912362311
+    ],
+    "A_OF": 0.0005688878476171155,
+    "B_OF": 1.4993331149338307,
+    "Q_EF_ROBUSTEZ": [
+      9954.459762845301,
+      9954.459762845301,
+      9954.459762845301,
+      9954.459762845301,
+      9954.459762845301,
+      9954.459762845301,
+      9954.459762845301,
+      9954.459762845301
+    ],
+    "PREDICTORAS": [
+      "coyongal",
+      "el_banco",
+      "pto_salgar",
+      "san_roque",
+      "tres_cruces"
+    ],
+    "TRANSITOS": {
+      "arrancaplumas": 20,
+      "coyongal": 7,
+      "el_banco": 12,
+      "pto_salgar": 21,
+      "san_roque": 10,
+      "tres_cruces": 16
+    },
+    "BASE_COLS": [
+      "calamar_lag1",
+      "calamar_lag2",
+      "calamar_lag3",
+      "calamar_lag5",
+      "calamar_lag7",
+      "calamar_lag10",
+      "calamar_lag15",
+      "calamar_lag30",
+      "calamar_lag60",
+      "calamar_media7",
+      "calamar_desv7",
+      "calamar_media30",
+      "calamar_desv30",
+      "calamar_media90",
+      "calamar_desv90",
+      "calamar_media365",
+      "calamar_desv365",
+      "calamar_d1",
+      "calamar_d7",
+      "coyongal_t7",
+      "coyongal_d3",
+      "coyongal_rel",
+      "el_banco_t12",
+      "el_banco_d3",
+      "el_banco_rel",
+      "pto_salgar_t21",
+      "pto_salgar_d3",
+      "pto_salgar_rel",
+      "san_roque_t10",
+      "san_roque_d3",
+      "san_roque_rel",
+      "tres_cruces_t16",
+      "tres_cruces_d3",
+      "tres_cruces_rel",
+      "sen_anual",
+      "cos_anual",
+      "sen_semi",
+      "cos_semi"
+    ],
+    "DOM_COLS": [
+      "dist_qef",
+      "dist_qef_rel",
+      "calamar_cuad",
+      "dist_qef_lag7",
+      "dist_qef_lag15"
+    ],
+    "n_train": 12383,
+    "n_test": 5946,
+    "prevalencia_train": 0.2516353064685456,
+    "prevalencia_test": 0.25243861419441643,
+    "n_pliegues_externos": 12
+  },
+  "el_banco": {
+    "Q_EF": 4765.717762630893,
+    "LIM": [
+      4050.860098236259,
+      5480.575427025527
+    ],
+    "CLASE_MODAL": [
+      4545.784659524949,
+      4996.291618316362
+    ],
+    "A_OF": 0.0032532905747542397,
+    "B_OF": 1.3411332532287625,
+    "Q_EF_ROBUSTEZ": [
+      4765.717762630893,
+      4765.717762630893,
+      4765.717762630893,
+      4765.717762630893
+    ],
+    "transitos_ccf": {
+      "tres_cruces": 2,
+      "pto_salgar": 5
+    },
+    "PREDICTORAS": [
+      "tres_cruces",
+      "pto_salgar"
+    ],
+    "TRANSITOS": {
+      "tres_cruces": 4,
+      "pto_salgar": 9
+    },
+    "BASE_COLS": [
+      "el_banco_lag1",
+      "el_banco_lag2",
+      "el_banco_lag3",
+      "el_banco_lag5",
+      "el_banco_lag7",
+      "el_banco_lag10",
+      "el_banco_lag15",
+      "el_banco_lag30",
+      "el_banco_lag60",
+      "el_banco_media7",
+      "el_banco_desv7",
+      "el_banco_media30",
+      "el_banco_desv30",
+      "el_banco_media90",
+      "el_banco_desv90",
+      "el_banco_media365",
+      "el_banco_desv365",
+      "el_banco_d1",
+      "el_banco_d7",
+      "tres_cruces_t4",
+      "tres_cruces_d3",
+      "tres_cruces_rel",
+      "pto_salgar_t9",
+      "pto_salgar_d3",
+      "pto_salgar_rel",
+      "sen_anual",
+      "cos_anual",
+      "sen_semi",
+      "cos_semi"
+    ],
+    "DOM_COLS": [
+      "dist_qef",
+      "dist_qef_rel",
+      "el_banco_cuad",
+      "dist_qef_lag7",
+      "dist_qef_lag15"
+    ],
+    "n_train": 12413,
+    "n_test": 5435,
+    "prevalencia_train": 0.299283009747845,
+    "prevalencia_test": 0.2701011959521619,
+    "n_pliegues_externos": 12
+  },
+  "coyongal": {
+    "Q_EF": 6275.014215694517,
+    "LIM": [
+      5333.762083340339,
+      7216.2663480486935
+    ],
+    "CLASE_MODAL": [
+      5993.970150912203,
+      6569.2358179621215
+    ],
+    "A_OF": 0.053478777947732474,
+    "B_OF": 1.0031095813247004,
+    "Q_EF_ROBUSTEZ": [
+      6275.014215694517,
+      6275.014215694517,
+      6275.014215694517,
+      5725.513430737304,
+      6275.014215694517,
+      6275.014215694517
+    ],
+    "transitos_ccf": {
+      "el_banco": 1,
+      "tres_cruces": 2,
+      "pto_salgar": 5
+    },
+    "PREDICTORAS": [
+      "el_banco",
+      "tres_cruces",
+      "pto_salgar"
+    ],
+    "TRANSITOS": {
+      "el_banco": 5,
+      "tres_cruces": 9,
+      "pto_salgar": 14
+    },
+    "BASE_COLS": [
+      "coyongal_lag1",
+      "coyongal_lag2",
+      "coyongal_lag3",
+      "coyongal_lag5",
+      "coyongal_lag7",
+      "coyongal_lag10",
+      "coyongal_lag15",
+      "coyongal_lag30",
+      "coyongal_lag60",
+      "coyongal_media7",
+      "coyongal_desv7",
+      "coyongal_media30",
+      "coyongal_desv30",
+      "coyongal_media90",
+      "coyongal_desv90",
+      "coyongal_media365",
+      "coyongal_desv365",
+      "coyongal_d1",
+      "coyongal_d7",
+      "el_banco_t5",
+      "el_banco_d3",
+      "el_banco_rel",
+      "tres_cruces_t9",
+      "tres_cruces_d3",
+      "tres_cruces_rel",
+      "pto_salgar_t14",
+      "pto_salgar_d3",
+      "pto_salgar_rel",
+      "sen_anual",
+      "cos_anual",
+      "sen_semi",
+      "cos_semi"
+    ],
+    "DOM_COLS": [
+      "dist_qef",
+      "dist_qef_rel",
+      "coyongal_cuad",
+      "dist_qef_lag7",
+      "dist_qef_lag15"
+    ],
+    "n_train": 10937,
+    "n_test": 4873,
+    "prevalencia_train": 0.36993691140166407,
+    "prevalencia_test": 0.2920172378411656,
+    "n_pliegues_externos": 12
+  },
+  "tres_cruces": {
+    "Q_EF": 3529.1905194872647,
+    "LIM": [
+      2999.811941564175,
+      4058.569097410354
+    ],
+    "CLASE_MODAL": [
+      3377.2668168132714,
+      3687.9483909391797
+    ],
+    "A_OF": 0.0005431894219281412,
+    "B_OF": 1.5625846111847128,
+    "Q_EF_ROBUSTEZ": [
+      3529.1905194872647,
+      3529.1905194872647,
+      3529.1905194872647,
+      3529.1905194872647,
+      3529.1905194872647,
+      3529.1905194872647,
+      3529.1905194872647
+    ],
+    "transitos_ccf": {
+      "pto_salgar": 3
+    },
+    "PREDICTORAS": [
+      "pto_salgar"
+    ],
+    "TRANSITOS": {
+      "pto_salgar": 5
+    },
+    "BASE_COLS": [
+      "tres_cruces_lag1",
+      "tres_cruces_lag2",
+      "tres_cruces_lag3",
+      "tres_cruces_lag5",
+      "tres_cruces_lag7",
+      "tres_cruces_lag10",
+      "tres_cruces_lag15",
+      "tres_cruces_lag30",
+      "tres_cruces_lag60",
+      "tres_cruces_media7",
+      "tres_cruces_desv7",
+      "tres_cruces_media30",
+      "tres_cruces_desv30",
+      "tres_cruces_media90",
+      "tres_cruces_desv90",
+      "tres_cruces_media365",
+      "tres_cruces_desv365",
+      "tres_cruces_d1",
+      "tres_cruces_d7",
+      "pto_salgar_t5",
+      "pto_salgar_d3",
+      "pto_salgar_rel",
+      "sen_anual",
+      "cos_anual",
+      "sen_semi",
+      "cos_semi"
+    ],
+    "DOM_COLS": [
+      "dist_qef",
+      "dist_qef_rel",
+      "tres_cruces_cuad",
+      "dist_qef_lag7",
+      "dist_qef_lag15"
+    ],
+    "n_train": 10661,
+    "n_test": 5224,
+    "prevalencia_train": 0.26770471813150737,
+    "prevalencia_test": 0.1332312404287902,
+    "n_pliegues_externos": 12
+  }
+}

@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.pytest_cache/
+book/_build/
+data/raw/
+results/clf_calamar/
+results/reg_calamar/
+results/original_calamar/
+results/extra_*/
+*.log
+.DS_Store

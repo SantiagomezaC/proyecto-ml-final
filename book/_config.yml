@@ -1,0 +1,48 @@
+# Configuración del Jupyter Book (jupyter-book 1.x)
+title: "Descarga efectiva en el río Magdalena"
+author: "Kevin Clemente Rosario y Manuel Santiago Meza Castro"
+copyright: "2026"
+logo: figuras/logo.png
+only_build_toc_files: true
+
+execute:
+  execute_notebooks: "off"      # los cuadernos se ejecutan antes con scripts/ejecutar_libro.py
+  timeout: 1800
+
+parse:
+  myst_enable_extensions:
+    - amsmath
+    - dollarmath
+    - colon_fence
+    - deflist
+    - substitution
+
+bibtex_bibfiles:
+  - references.bib
+sphinx:
+  config:
+    bibtex_reference_style: author_year
+    language: es
+    numfig: true
+    math_number_all: true
+    numfig_secnum_depth: 1
+    html_show_copyright: false
+    html_last_updated_fmt: "%Y-%m-%d"
+    mathjax3_config:
+      tex:
+        tags: "ams"
+
+repository:
+  url: https://github.com/SantiagomezaC/proyecto-ml-final
+  path_to_book: book
+  branch: main
+
+html:
+  use_repository_button: true
+  use_issues_button: false
+  home_page_in_navbar: true
+  favicon: figuras/logo.png
+  extra_footer: "Universidad del Norte · Maestría · Machine Learning 2026-30"
+
+launch_buttons:
+  notebook_interface: classic

@@ -1,0 +1,3 @@
+modelo,nombre,pr_auc_test
+original,BLGB,0.96
+xgboost,XGBoost,0.9

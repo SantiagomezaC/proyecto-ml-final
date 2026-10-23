@@ -1,0 +1,155 @@
+/* Identidad visual del dashboard: paleta de cinco colores, tipografía Inter y
+   componentes de Bootstrap ajustados. Los colores se definen una sola vez. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap");
+
+:root {
+  --rio: #0B4F6C;
+  --rio-90: #0d5b7c;
+  --rio-10: #e7f0f4;
+  --sedimento: #C8813A;
+  --sedimento-10: #f8efe5;
+  --caudal: #20A39E;
+  --caudal-10: #e4f4f3;
+  --alerta: #B23A48;
+  --alerta-10: #f6e6e8;
+  --neutro: #5C6B73;
+  --tinta: #13232c;
+  --fondo: #f5f7f8;
+  --tarjeta: #ffffff;
+  --borde: #e2e7ea;
+  --sombra: 0 1px 2px rgba(19, 35, 44, .06), 0 4px 16px rgba(19, 35, 44, .06);
+  --radio: 14px;
+}
+
+html, body {
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Barra de navegación fija ---------- */
+.barra {
+  background: var(--rio) !important;
+  box-shadow: 0 2px 12px rgba(11, 79, 108, .25);
+  padding: .55rem 0;
+}
+.barra .navbar-brand { font-weight: 700; letter-spacing: -.01em; display: flex; align-items: center; gap: .6rem; }
+.barra .navbar-brand img { height: 30px; }
+.barra .nav-link { color: rgba(255,255,255,.78) !important; font-weight: 500; padding: .45rem .95rem !important;
+  border-radius: 999px; transition: background .15s, color .15s; }
+.barra .nav-link:hover { color: #fff !important; background: rgba(255,255,255,.10); }
+.barra .nav-link.active { color: var(--rio) !important; background: #fff; }
+.barra .version { font-family: "JetBrains Mono", monospace; font-size: .72rem; color: rgba(255,255,255,.7);
+  border: 1px solid rgba(255,255,255,.3); border-radius: 999px; padding: .1rem .55rem; }
+
+.contenido { padding-top: 84px; padding-bottom: 48px; }
+
+/* ---------- Encabezado de página (hero) ---------- */
+.hero {
+  background: linear-gradient(120deg, var(--rio) 0%, #0e6a8a 55%, var(--caudal) 120%);
+  color: #fff;
+  border-radius: 22px;
+  padding: 2.6rem 2.6rem 2.2rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+}
+.hero::after {
+  content: ""; position: absolute; right: -60px; bottom: -80px; width: 420px; height: 260px;
+  background: radial-gradient(closest-side, rgba(200,129,58,.45), transparent);
+}
+.hero h1 { font-weight: 800; letter-spacing: -.025em; font-size: clamp(1.7rem, 3.2vw, 2.6rem); line-height: 1.12; }
+.hero .lead { color: rgba(255,255,255,.88); max-width: 760px; font-size: 1.06rem; }
+.hero .etiqueta { text-transform: uppercase; letter-spacing: .12em; font-size: .72rem; font-weight: 700;
+  color: #ffd9b3; }
+.pagina-titulo h2 { font-weight: 800; letter-spacing: -.02em; margin-bottom: .2rem; }
+.pagina-titulo p { color: var(--neutro); max-width: 860px; }
+
+/* ---------- Tarjetas ---------- */
+.tarjeta {
+  background: var(--tarjeta);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 1.25rem 1.35rem;
+  height: 100%;
+}
+.tarjeta h5, .tarjeta .titulo { font-weight: 700; font-size: 1.02rem; letter-spacing: -.01em; margin-bottom: .2rem; }
+.tarjeta .subtitulo { color: var(--neutro); font-size: .86rem; margin-bottom: .6rem; }
+.insight {
+  border-left: 3px solid var(--sedimento);
+  background: var(--sedimento-10);
+  padding: .65rem .85rem;
+  border-radius: 0 10px 10px 0;
+  font-size: .9rem;
+  color: #4a3a2b;
+  margin-top: .6rem;
+}
+.insight b { color: #7a4a1c; }
+
+.kpi { background: var(--tarjeta); border: 1px solid var(--borde); border-radius: var(--radio);
+  padding: 1rem 1.2rem; box-shadow: var(--sombra); height: 100%; }
+.kpi .valor { font-size: 1.75rem; font-weight: 800; letter-spacing: -.02em; color: var(--rio); line-height: 1.1; }
+.kpi .valor small { font-size: .9rem; font-weight: 600; color: var(--neutro); }
+.kpi .nombre { color: var(--neutro); font-size: .82rem; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; }
+.kpi .nota { font-size: .8rem; color: var(--neutro); margin-top: .25rem; }
+.kpi.acento .valor { color: var(--sedimento); }
+.kpi.alerta .valor { color: var(--alerta); }
+
+/* ---------- Diagrama de la metodología ---------- */
+.flujo { display: flex; flex-wrap: wrap; gap: .5rem; align-items: stretch; }
+.flujo .paso { flex: 1 1 130px; background: var(--rio-10); border: 1px solid #cfe0e8; border-radius: 12px;
+  padding: .7rem .8rem; position: relative; }
+.flujo .paso .n { font-family: "JetBrains Mono", monospace; font-size: .72rem; color: var(--caudal); font-weight: 600; }
+.flujo .paso .t { font-weight: 700; font-size: .92rem; color: var(--rio); }
+.flujo .paso .d { font-size: .78rem; color: var(--neutro); }
+.flujo .paso.destacado { background: var(--sedimento-10); border-color: #ecd3b8; }
+.flujo .paso.destacado .t { color: #8a5320; }
+
+/* ---------- Filtros ---------- */
+.panel-filtros { position: sticky; top: 76px; z-index: 5; background: rgba(245,247,248,.92);
+  backdrop-filter: blur(6px); padding: .75rem 0 .5rem; border-bottom: 1px solid var(--borde); margin-bottom: 1rem; }
+.panel-filtros label { font-size: .78rem; font-weight: 600; color: var(--neutro); text-transform: uppercase; letter-spacing: .05em; }
+
+/* ---------- Tablas ---------- */
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner th {
+  background: var(--rio) !important; color: #fff !important; font-weight: 600 !important;
+  font-family: "Inter", sans-serif !important; font-size: .82rem !important; border: none !important;
+}
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner td {
+  font-family: "Inter", sans-serif !important; font-size: .85rem !important; border-color: var(--borde) !important;
+}
+.tabla-simple { font-size: .86rem; }
+.tabla-simple thead th { background: var(--rio-10); color: var(--rio); font-weight: 700; border-bottom: 2px solid #cfe0e8; }
+
+/* ---------- Pestañas internas ---------- */
+.nav-tabs { border-bottom: 1px solid var(--borde); gap: .25rem; }
+.nav-tabs .nav-link { border: none; color: var(--neutro); font-weight: 600; border-radius: 10px 10px 0 0; }
+.nav-tabs .nav-link.active { color: var(--rio); border-bottom: 3px solid var(--sedimento); background: transparent; }
+
+/* ---------- Predicción ---------- */
+.resultado { border-radius: var(--radio); padding: 1.2rem 1.3rem; color: #fff; }
+.resultado.si { background: linear-gradient(135deg, var(--sedimento), #a9692c); }
+.resultado.no { background: linear-gradient(135deg, var(--rio), #083a50); }
+.resultado .prob { font-size: 2.6rem; font-weight: 800; letter-spacing: -.03em; line-height: 1; }
+.resultado .lbl { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; opacity: .85; }
+
+.veredicto { border-radius: 12px; padding: .9rem 1.1rem; font-weight: 600; }
+.veredicto.ok { background: var(--caudal-10); color: #0d5f5b; border: 1px solid #b9e3e0; }
+.veredicto.no { background: var(--alerta-10); color: #7d2330; border: 1px solid #ecc5ca; }
+
+pre.pseudo { background: #0f2530; color: #d9e7ee; border-radius: 12px; padding: 1rem 1.1rem;
+  font-family: "JetBrains Mono", monospace; font-size: .8rem; line-height: 1.55; white-space: pre-wrap; }
+
+.pie { color: var(--neutro); font-size: .8rem; border-top: 1px solid var(--borde); margin-top: 2.5rem; padding-top: 1rem; }
+.badge-suave { background: var(--rio-10); color: var(--rio); font-weight: 600; border-radius: 999px;
+  padding: .2rem .6rem; font-size: .75rem; }
+
+@media (max-width: 768px) {
+  .hero { padding: 1.6rem 1.3rem; border-radius: 16px; }
+  .contenido { padding-top: 76px; }
+  .kpi .valor { font-size: 1.4rem; }
+  .panel-filtros { position: static; }
+}

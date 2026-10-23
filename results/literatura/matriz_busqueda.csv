@@ -1,0 +1,33 @@
+fecha_consulta,base,cadena,criterio,resultados,revisados,estado
+2026-10-22,OpenAlex,"""effective discharge"" machine learning",Problema + aprendizaje automático,457.0,15,ok
+2026-10-22,Crossref,"""effective discharge"" machine learning",Problema + aprendizaje automático,3645217.0,15,ok
+2026-10-22,arXiv,"""effective discharge"" machine learning",Problema + aprendizaje automático,123.0,15,ok
+2026-10-22,Semantic Scholar,"""effective discharge"" machine learning",Problema + aprendizaje automático,,0,error: RuntimeError
+2026-10-22,OpenAlex,"""effective discharge"" prediction OR forecasting OR classification",Problema + tarea,6249.0,15,ok
+2026-10-22,Crossref,"""effective discharge"" prediction OR forecasting OR classification",Problema + tarea,2108006.0,15,ok
+2026-10-22,arXiv,"""effective discharge"" prediction OR forecasting OR classification",Problema + tarea,1.0,1,ok
+2026-10-22,Semantic Scholar,"""effective discharge"" prediction OR forecasting OR classification",Problema + tarea,,0,error: ConnectionError
+2026-10-22,OpenAlex,"""distributional gradient boosting"" streamflow OR discharge",Familia del modelo + hidrología,45.0,15,ok
+2026-10-22,Crossref,"""distributional gradient boosting"" streamflow OR discharge",Familia del modelo + hidrología,381736.0,15,ok
+2026-10-22,arXiv,"""distributional gradient boosting"" streamflow OR discharge",Familia del modelo + hidrología,0.0,0,ok
+2026-10-22,Semantic Scholar,"""distributional gradient boosting"" streamflow OR discharge",Familia del modelo + hidrología,130.0,15,ok
+2026-10-22,OpenAlex,NGBoost streamflow OR discharge OR river,Método afín (NGBoost) + hidrología,1256.0,15,ok
+2026-10-22,Crossref,NGBoost streamflow OR discharge OR river,Método afín (NGBoost) + hidrología,501638.0,15,ok
+2026-10-22,arXiv,NGBoost streamflow OR discharge OR river,Método afín (NGBoost) + hidrología,0.0,0,ok
+2026-10-22,Semantic Scholar,NGBoost streamflow OR discharge OR river,Método afín (NGBoost) + hidrología,,0,error: ConnectionError
+2026-10-22,OpenAlex,gradient boosting interval probability threshold exceedance river discharge,Mecanismo (probabilidad de intervalo) + aplicación,1203.0,15,ok
+2026-10-22,Crossref,gradient boosting interval probability threshold exceedance river discharge,Mecanismo (probabilidad de intervalo) + aplicación,1085928.0,15,ok
+2026-10-22,arXiv,gradient boosting interval probability threshold exceedance river discharge,Mecanismo (probabilidad de intervalo) + aplicación,0.0,0,ok
+2026-10-22,Semantic Scholar,gradient boosting interval probability threshold exceedance river discharge,Mecanismo (probabilidad de intervalo) + aplicación,,0,error: ConnectionError
+2026-10-22,OpenAlex,hybrid loss proper scoring rule boosting classification continuous auxiliary target,Mecanismo (pérdida híbrida) sin restricción de aplicación,2163.0,15,ok
+2026-10-22,Crossref,hybrid loss proper scoring rule boosting classification continuous auxiliary target,Mecanismo (pérdida híbrida) sin restricción de aplicación,36659.0,15,ok
+2026-10-22,arXiv,hybrid loss proper scoring rule boosting classification continuous auxiliary target,Mecanismo (pérdida híbrida) sin restricción de aplicación,0.0,0,ok
+2026-10-22,Semantic Scholar,hybrid loss proper scoring rule boosting classification continuous auxiliary target,Mecanismo (pérdida híbrida) sin restricción de aplicación,,0,error: RuntimeError
+2026-10-22,OpenAlex,"""Magdalena River"" machine learning discharge",Cuenca de estudio + aprendizaje automático,132.0,15,ok
+2026-10-22,Crossref,"""Magdalena River"" machine learning discharge",Cuenca de estudio + aprendizaje automático,3535783.0,15,ok
+2026-10-22,arXiv,"""Magdalena River"" machine learning discharge",Cuenca de estudio + aprendizaje automático,0.0,0,ok
+2026-10-22,Semantic Scholar,"""Magdalena River"" machine learning discharge",Cuenca de estudio + aprendizaje automático,,0,error: ConnectionError
+2026-10-22,OpenAlex,"""descarga efectiva"" aprendizaje automático OR ""caudal dominante""",Sinónimos en español,12.0,12,ok
+2026-10-22,Crossref,"""descarga efectiva"" aprendizaje automático OR ""caudal dominante""",Sinónimos en español,65508.0,15,ok
+2026-10-22,arXiv,"""descarga efectiva"" aprendizaje automático OR ""caudal dominante""",Sinónimos en español,0.0,0,ok
+2026-10-22,Semantic Scholar,"""descarga efectiva"" aprendizaje automático OR ""caudal dominante""",Sinónimos en español,,0,error: ConnectionError

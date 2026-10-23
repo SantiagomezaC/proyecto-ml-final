@@ -1,0 +1,11 @@
+services:
+  - type: web                       # tipo de servicio: aplicación web
+    name: descarga-efectiva-magdalena
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:server --workers 1 --threads 4 --timeout 120
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION         # misma versión con la que se serializaron los artefactos
+        value: 3.11.9
