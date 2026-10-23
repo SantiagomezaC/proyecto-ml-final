@@ -277,7 +277,7 @@ print(fuente)
 tags: [hide-input]
 ---
 import subprocess
-salida = subprocess.run([sys.executable, "-m", "pytest", "../tests", "-q", "-p", "no:cacheprovider"],
+salida = subprocess.run([sys.executable, "-m", "pytest", "tests", "-q", "--color=no", "-p", "no:cacheprovider"],
                         capture_output=True, text=True, cwd="..")
 print(salida.stdout[-2500:])
 glue("pytest_resumen", salida.stdout.strip().splitlines()[-1], display=False)
