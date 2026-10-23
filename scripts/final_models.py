@@ -144,7 +144,11 @@ def main():
     tarea = sys.argv[1]
     presupuesto = 16
     if tarea == "original":
-        res = [final_original(presupuesto)]
+        # Mismo criterio que en los benchmarks: el optimizador con mayor PR-AUC externa media
+        from src.analysis import tabla_pliegues
+        o = tabla_pliegues("original_calamar")
+        metodo = o[o.modelo == "blgb"].groupby("optimizador").pr_auc.mean().idxmax()
+        res = [final_original(presupuesto, metodo)]
         sal = RESULTADOS / "final_original.pkl"
     else:
         maestra = pd.read_parquet(RESULTADOS / f"maestra_{tarea}.parquet")

@@ -54,12 +54,12 @@ def exportar_eda():
     from statsmodels.tsa.seasonal import STL
     from statsmodels.tsa.stattools import acf, adfuller, kpss, pacf
     c = pd.read_csv(DATOS_PROC / "caudales.csv", parse_dates=["fecha"])
-    s = c[(c.fecha >= "1976-01-01") & (c.fecha < "2010-01-01")].set_index("fecha").calamar
+    s = c[(c.fecha >= "1947-01-01") & (c.fecha < "2010-01-01")].set_index("fecha").calamar
     s = s.interpolate(limit=5).dropna()
     est = {"acf": acf(s, nlags=60, fft=True).tolist(), "pacf": pacf(s, nlags=30).tolist(), "n": int(len(s)),
            "p_adf": float(adfuller(s, autolag="AIC")[1]), "p_kpss": float(kpss(s, regression="c", nlags="auto")[1])}
     (DASH / "estacionariedad.json").write_text(json.dumps(est), encoding="utf-8")
-    m = s.resample("MS").mean()
+    m = s.resample("MS").mean().interpolate(limit_direction="both")
     stl = STL(m, period=12, robust=True).fit()
     pd.DataFrame({"fecha": m.index, "observado": m.values, "tendencia": stl.trend.values,
                   "estacional": stl.seasonal.values, "residuo": stl.resid.values}).to_csv(DASH / "stl.csv", index=False)

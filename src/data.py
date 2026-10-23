@@ -34,6 +34,15 @@ def es(texto):
 def etiqueta(col: str) -> str:
     """Nombre legible y unidad de cada predictor, para formularios, ejes y tablas."""
     est = {k: v for k, v in NOMBRES_LEGIBLES.items()}
+    otros = {"sen_anual": "Seno del ciclo anual (–)", "cos_anual": "Coseno del ciclo anual (–)",
+             "sen_semi": "Seno del ciclo semianual (–)", "cos_semi": "Coseno del ciclo semianual (–)",
+             "dist_qef": "Distancia del caudal actual a Q_ef (m³/s)",
+             "dist_qef_rel": "Distancia relativa a Q_ef (–)",
+             "calamar_cuad": "Caudal actual en Calamar al cuadrado (m⁶/s²)",
+             "dist_qef_lag7": "Distancia a Q_ef hace 7 días (m³/s)",
+             "dist_qef_lag15": "Distancia a Q_ef hace 15 días (m³/s)"}
+    if col in otros:
+        return otros[col]
     if col == "y":
         return "Clase (1 = en la banda)"
     if col == "q_futuro":
@@ -56,14 +65,7 @@ def etiqueta(col: str) -> str:
     m = re.match(r"(\w+?)_rel$", col)
     if m:
         return f"Caudal relativo a la media anual en {est.get(m.group(1), m.group(1))} (–)"
-    otros = {"sen_anual": "Seno del ciclo anual (–)", "cos_anual": "Coseno del ciclo anual (–)",
-             "sen_semi": "Seno del ciclo semianual (–)", "cos_semi": "Coseno del ciclo semianual (–)",
-             "dist_qef": "Distancia del caudal actual a Q_ef (m³/s)",
-             "dist_qef_rel": "Distancia relativa a Q_ef (–)",
-             "calamar_cuad": "Caudal actual en Calamar al cuadrado (m⁶/s²)",
-             "dist_qef_lag7": "Distancia a Q_ef hace 7 días (m³/s)",
-             "dist_qef_lag15": "Distancia a Q_ef hace 15 días (m³/s)"}
-    return otros.get(col, col)
+    return col
 
 
 def _leer_csv(nombre, **kw):

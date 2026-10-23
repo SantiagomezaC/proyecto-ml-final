@@ -90,7 +90,24 @@ tags: [hide-input]
 tab_prue.round(4)
 ```
 
-INTERPRETACION_REGRESION
+La mejor combinación en el bucle externo es {glue:text}`reg_mejor` con optimización bayesiana,
+seguida de cerca por XGBoost. En la prueba reservada ambas alcanzan un RMSE cercano a 640 m³/s y
+un R² de 0,946, frente a un RMSE de {glue:text}`reg_rmse_pers:,.0f` m³/s de la persistencia: los
+modelos reducen el error de predicción a quince días en alrededor de un tercio. Los modelos
+lineales (Ridge y Lasso) quedan cerca, a unos 40 m³/s, lo que indica que buena parte de la
+señal del caudal futuro es lineal en el estado reciente; la no linealidad pesa mucho más en la
+clasificación de la banda que en la regresión del caudal, y esa asimetría es la que motiva el
+modelo original.
+
+Las pruebas de supuestos rechazan la homocedasticidad (White), la independencia (BDS y
+Ljung-Box) y la normalidad (Jarque-Bera) en todos los modelos, y la autocorrelación de orden uno
+del residuo del mejor modelo es {glue:text}`reg_acf1:.2f`. Ese resultado no es, por sí mismo,
+señal de mala especificación: con un horizonte de quince días, los errores de días consecutivos
+comparten catorce de sus quince días de evolución no observada, de modo que el residuo tiene por
+construcción una estructura de media móvil de orden catorce. La consecuencia práctica es que
+ninguna comparación entre modelos de regresión puede tratar los errores diarios como
+independientes, y por eso la sección de comparación estadística usa estadísticos con varianza
+de largo plazo y bootstrap estacionario.
 
 ## Entrenamiento, validación y prueba
 
@@ -154,4 +171,15 @@ glue("corr_het", float(corr_het), display=False)
 glue("kurt_res", float(st.kurtosis(e)), display=False)
 ```
 
-INTERPRETACION_RESIDUOS
+La autocorrelación del residuo decae hasta anularse hacia los rezagos 20 a 25
+({numref}`fig-residuos`c), como corresponde a la estructura de media móvil descrita. El diagrama
+de residuo frente a predicción no muestra un sesgo sistemático en la mayor parte del rango, salvo
+por encima de unos 12.500 m³/s, donde los residuos son mayoritariamente negativos: el modelo
+sobreestima las crecidas mayores, que en el entrenamiento son pocas. Muestra también
+heterocedasticidad: la correlación de Spearman entre el error absoluto y la predicción es
+{glue:text}`corr_het:.2f`, de modo que los errores grandes se concentran en caudales previstos
+bajos e intermedios, que corresponden a los ascensos rápidos desde el estiaje que el estado actual
+anticipa mal. La curtosis en exceso del residuo es {glue:text}`kurt_res:.2f`, con colas algo más
+pesadas que la normal. Ambos rasgos son relevantes para el modelo original: una dispersión que
+cambia con el estado del río es justamente lo que BLGB modela con su segundo ensamble, el del
+logaritmo de σ.

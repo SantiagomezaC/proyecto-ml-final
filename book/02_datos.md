@@ -155,11 +155,16 @@ estación en años en que no existía y dispone de {glue:text}`n_a47:,` observac
 comparación empírica lo respalda. Con XGBoost, la PR-AUC en la prueba es
 {glue:text}`xg_a47:.3f` con Calamar y Puerto Salgar desde 1947, frente a {glue:text}`xg_r76:.3f`
 con las seis estaciones desde 1976 y {glue:text}`xg_e1:.3f` con el diseño del Entregable 1; con
-la regresión logística los valores son {glue:text}`lr_a47:.3f`, {glue:text}`lr_r76:.3f` y
-{glue:text}`lr_e1:.3f`. Treinta años adicionales de registro, que abarcan más ciclos de El Niño
-y La Niña, aportan más que las estaciones del bajo Magdalena, cuya información anticipada está
-en buena parte contenida en el estado reciente de Calamar: la más informativa, Coyongal, tiene
-un tiempo de tránsito de siete días, inferior al horizonte de predicción. Las seis estaciones no
+la regresión logística, menos sensible al tamaño de la muestra, los tres valores
+({glue:text}`lr_a47:.3f`, {glue:text}`lr_r76:.3f` y {glue:text}`lr_e1:.3f`) difieren en menos de
+una centésima. La lectura conjunta es clara: lo que da ventaja al modelo no lineal son los treinta
+años adicionales de registro, que abarcan más ciclos de El Niño y La Niña, y no las estaciones
+del bajo Magdalena. El diseño del Entregable 1 alcanzaba casi el mismo desempeño que el adoptado
+porque también usaba el periodo largo, pero lo hacía alimentando cuatro predictores con medianas
+durante tres décadas; el diseño adoptado obtiene el mismo resultado sin esa imputación. La
+información anticipada de las estaciones del bajo Magdalena está en buena parte contenida en el
+estado reciente de Calamar: la más informativa, Coyongal, tiene un tiempo de tránsito de siete
+días, inferior al horizonte de predicción. Las seis estaciones no
 se descartan del proyecto: intervienen en las tres tareas adicionales con las que se evalúa el
 modelo original (capítulo 6), que empiezan en 1976. El análisis magnitud-frecuencia de la
 descarga efectiva se mantiene sobre 1940-2009, porque solo usa la serie de Calamar.
@@ -202,9 +207,9 @@ los de Puerto Salgar ({glue:text}`falt_ps:.1f` %). Para establecer su mecanismo 
 caudal de Calamar en los días con y sin registro de cada estación mediante la prueba de
 Mann-Whitney y el tamaño de efecto A de Vargha y Delaney, con corrección de Holm. Con muestras de
 este tamaño casi toda diferencia resulta significativa, de modo que la lectura se apoya en A: un
-valor de 0,5 indica que la ausencia no se relaciona con el caudal. En Puerto Salgar A vale
-{glue:text}`a_ps:.3f`; Coyongal, que interviene en las tareas adicionales, se aparta más
-(A = {glue:text}`a_coyongal:.3f`), con huecos concentrados en aguas bajas. El mecanismo es, por
+valor de 0,5 indica que la ausencia no se relaciona con el caudal. Puerto Salgar
+(A = {glue:text}`a_ps:.3f`) y Coyongal (A = {glue:text}`a_coyongal:.3f`), esta última en las
+tareas adicionales, tienen sus huecos concentrados en aguas bajas. El mecanismo es, por
 tanto, MAR respecto del caudal observado en Calamar y no MCAR: la probabilidad de faltar depende
 de una variable observada. De ese diagnóstico se siguen dos consecuencias: la imputación debe
 ajustarse solo con el entrenamiento y dentro del pipeline, y su efecto sobre el desempeño debe
@@ -390,7 +395,7 @@ s = caudales[(caudales.fecha >= INICIO_MODELADO) & (caudales.fecha < FECHA_CORTE
 s = s.interpolate(limit=5).dropna()
 p_adf = adfuller(s, autolag="AIC")[1]; p_kpss = kpss(s, regression="c", nlags="auto")[1]
 ac, pac = acf(s, nlags=90, fft=True), pacf(s, nlags=40)
-mens = s.resample("MS").mean()
+mens = s.resample("MS").mean().interpolate(limit_direction="both")  # meses sin dato en las décadas tempranas
 stl = STL(mens, period=12, robust=True).fit()
 glue("p_adf", p_adf, display=False); glue("p_kpss", p_kpss, display=False)
 glue("acf1", ac[1], display=False); glue("acf15", ac[15], display=False); glue("acf30", ac[30], display=False)
@@ -634,9 +639,12 @@ base_tab.round(3)
 ```
 
 El parámetro de regularización se elige ahora por búsqueda en rejilla con validación
-cronológica de cinco pliegues y separación de 30 días sobre el entrenamiento; el óptimo es
-C = {glue:text}`c_opt:.3g` con penalización {glue:text}`pen`. En el capítulo siguiente este
-ajuste se generaliza a la validación anidada de los 140 modelos. Los intervalos de confianza se
+cronológica de cinco pliegues y separación de 30 días sobre el entrenamiento, entre once
+valores de C de $10^{-3}$ a $10^{2}$ y las penalizaciones L1 y L2. El óptimo es
+C = {glue:text}`c_opt:.3g` con penalización {glue:text}`pen`, que con el diseño corregido coincide
+con el valor por defecto empleado en el Entregable 1: la diferencia está en que ahora la
+elección se sustenta en la validación y no en la omisión del ajuste. En el capítulo siguiente
+este ajuste se generaliza a la validación anidada de los 140 modelos. Los intervalos de confianza se
 recalculan con bootstrap estacionario {cite}`politis1994`, cuya longitud media de bloque
 ({glue:text}`L_bloque` días) se elige con el criterio de Politis y White {cite}`politis2004`, y
 con corrección BCa estimada mediante un jackknife que elimina bloques completos. El intervalo

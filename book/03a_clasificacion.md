@@ -93,7 +93,22 @@ glue("peor_bloque", peor_bloque, display=False)
 glue("peor_bloque_pr", float(pl.groupby("bloque").pr_auc.mean().min()), display=False)
 ```
 
-INTERPRETACION_MODELOS
+La mejor combinación es {glue:text}`mejor_modelo` con ponderación por clase y búsqueda
+aleatoria, con una PR-AUC externa de {glue:text}`mejor_pr:.3f` ± {glue:text}`mejor_pr_sd:.3f`, y
+las diez primeras posiciones de la tabla maestra son variantes de Random Forest separadas por
+menos de una centésima. XGBoost aparece como el segundo algoritmo, con la combinación ADASYN y
+búsqueda aleatoria, y su desviación entre bloques es la menor de las mejores combinaciones. En el
+otro extremo, {glue:text}`peor_modelo` ({glue:text}`peor_pr:.3f`) paga el supuesto de
+independencia condicional entre predictores que son, en buena parte, rezagos casi idénticos de la
+misma serie.
+
+La {numref}`fig-cajas-modelos` muestra que la variabilidad entre bloques supera con amplitud la
+diferencia entre los mejores modelos. El bloque {glue:text}`peor_bloque` es el más difícil para
+todos (PR-AUC media de {glue:text}`peor_bloque_pr:.2f` entre las 112 combinaciones): coincide con
+el ascenso hacia la crecida de 2008, uno de los máximos anuales del registro, y con la transición
+hacia La Niña de 2010-2011, de modo que el río atraviesa la banda en ascensos rápidos que el
+estado actual anticipa mal. Esa dispersión es la razón de que las conclusiones de este capítulo
+se apoyen en pruebas sobre bloques pareados y no en las medias.
 
 ## Efecto del balanceo de clases
 
@@ -141,7 +156,18 @@ for b in ("SMOTE", "ADASYN", "class_weight"):
 tab_b.round(4)
 ```
 
-INTERPRETACION_BALANCEO
+El balanceo no mejora la discriminación. La PR-AUC, que evalúa el orden de los puntajes y no
+depende del umbral, apenas cambia con SMOTE ({glue:text}`bal_SMOTE_pr_auc:+.4f`, no
+significativo) o con la ponderación por clase ({glue:text}`bal_class_weight_pr_auc:+.4f`), y
+empeora con ADASYN ({glue:text}`bal_ADASYN_pr_auc:+.4f`, significativo tras Holm). Lo que sí
+cambia es el punto de operación con el umbral de 0,5: la exhaustividad sube entre
+{glue:text}`bal_SMOTE_recall:.2f` y {glue:text}`bal_ADASYN_recall:.2f` puntos a costa de la
+precisión, y el F1 queda igual o baja. La lectura es la esperada para un desbalance moderado (26 %
+de positivos): las tres técnicas desplazan el umbral efectivo hacia la clase minoritaria, lo
+que equivale a cambiar el costo relativo de los errores, pero no aportan información nueva sobre
+qué días están en la banda. ADASYN resulta perjudicial porque concentra los sintéticos cerca de la
+frontera, justamente donde la autocorrelación hace que los vecinos de un día positivo sean sus
+propios días contiguos, de modo que interpola casi duplicados de los casos más ambiguos.
 
 ## Desempeño en la prueba reservada
 
@@ -209,7 +235,14 @@ axs[0].set_ylabel("Real"); fig.supxlabel("Predicho", fontsize=10)
 plt.tight_layout(); plt.show()
 ```
 
-INTERPRETACION_PRUEBA
+En la prueba reservada, Random Forest y SVM empatan en PR-AUC ({glue:text}`test_mejor_pr:.3f`),
+seguidos de XGBoost y KNN; Random Forest obtiene además el mejor F1 y el menor Brier. Los valores
+de la prueba superan a las medias externas porque el periodo 2010-2026 no contiene un tramo tan
+desfavorable como el bloque 2008-2009, lo que refuerza la conveniencia de evaluar sobre muchos
+bloques y no sobre una única partición. Todos los modelos superan con amplitud a la persistencia
+(PR-AUC de 0,65 en el capítulo 2), que es la referencia exigente en una serie con autocorrelación
+de 0,92 a quince días. Los tiempos de inferencia son del orden de milésimas de milisegundo por
+día, salvo KNN, que debe calcular distancias a todo el entrenamiento.
 
 ### Justificación de la métrica principal
 
@@ -264,7 +297,19 @@ glue("cal_peor_ece_platt", float(peor["ECE Platt"]), display=False)
 cal.round(4)
 ```
 
-INTERPRETACION_CALIBRACION
+La calibración separa a los modelos con más claridad que la discriminación. La SVM produce
+puntajes sin calibrar, porque su función de decisión se transforma con una logística fija, y su
+error de calibración esperado es alto; lo mismo ocurre con {glue:text}`cal_peor`
+(ECE = {glue:text}`cal_peor_ece:.3f`), cuyas probabilidades se concentran en los extremos por el
+supuesto de independencia. La recalibración de Platt, ajustada con las predicciones fuera de
+muestra del bucle externo y nunca con la prueba, reduce el ECE de {glue:text}`cal_peor` a
+{glue:text}`cal_peor_ece_platt:.3f` y el de la SVM por debajo de 0,011, y mejora el Brier de todos
+los modelos salvo la regresión logística, que ya estaba bien calibrada por construcción: su
+pérdida logarítmica es una regla propia y la decisión tomada en las predicciones fuera de muestra
+fue, correctamente, no recalibrarla. La regresión isotónica logra reducciones similares; se
+prefirió Platt por tener solo dos parámetros, menos propensos a sobreajustar con la dependencia
+temporal de las predicciones. El dashboard usa la versión recalibrada cuando la decisión en las
+predicciones fuera de muestra fue favorable.
 
 ## Robustez y estabilidad
 

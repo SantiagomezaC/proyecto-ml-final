@@ -78,7 +78,17 @@ tags: [hide-input]
 ne["pares"].assign(modelo_a=lambda d: d.modelo_a.map(NOMBRES_OPT), modelo_b=lambda d: d.modelo_b.map(NOMBRES_OPT)).round(4)
 ```
 
-INTERPRETACION_GLOBAL_OPT
+La prueba global apenas rechaza la igualdad al 5 % y ningún par supera la diferencia crítica: el
+mayor contraste, entre el algoritmo genético y TPE, queda en p = 0,056 según Nemenyi. Las
+PR-AUC externas medias de los cuatro métodos difieren en menos de una milésima, y el tiempo por
+evaluación es prácticamente el mismo (entre 7,1 y 8,0 segundos), porque lo domina el ajuste de
+los modelos y no la lógica del optimizador. La conclusión es que, con 16 evaluaciones por
+pliegue, la calidad final de la solución no depende del método de búsqueda. Esto es coherente
+con la dimensión de los espacios: entre uno y seis hiperparámetros, de los cuales uno o dos
+dominan la respuesta (el número de vecinos, la profundidad, la tasa de aprendizaje), de modo que
+cualquier método razonable encuentra una configuración cercana al óptimo dentro del
+presupuesto. La pregunta relevante deja de ser cuál método llega más lejos y pasa a ser cuál
+llega antes, que responde la curva de convergencia.
 
 ## Convergencia: desempeño en cualquier momento
 
@@ -117,6 +127,7 @@ area = curva.mean()
 for o in OPT:
     glue(f"auc_any_{o}", float(area[o]), display=False)
     glue(f"prog8_{o}", float(curva.loc[8, o]), display=False)
+    glue(f"fin_{o}", float(curva.loc[16, o]), display=False)
 # Evidencia cuantitativa: progreso a mitad de presupuesto (t = 8), pareado por problema
 p8 = h2[h2["eval"] == 8].pivot_table(index=clave, columns="optimizador", values="progreso")
 filas = []
@@ -128,7 +139,35 @@ ef = pd.DataFrame(filas); ef["p (Holm)"] = holm(ef["p (Wilcoxon, unilateral)"].v
 ef.round(4)
 ```
 
-INTERPRETACION_ANYTIME
+La guía pide demostrar con evidencia cuantitativa, y no solo visual, que los métodos bayesiano y
+genético pueden ser más eficientes que la rejilla y la búsqueda aleatoria. La evidencia es
+mixta. Frente a la rejilla, la ventaja es clara y grande: a mitad de presupuesto (t = 8), TPE ha
+recorrido el {glue:text}`prog8_bayes:.1%` de la mejora alcanzable y el algoritmo genético el
+{glue:text}`prog8_genetico:.1%`, frente al {glue:text}`prog8_grid:.1%` de la rejilla, con
+diferencias significativas tras la corrección de Holm y tamaños de efecto de Cliff grandes
+(0,58 y 0,49). El área bajo la curva anytime, que resume la calidad alcanzada por unidad de
+presupuesto, ordena los métodos de la misma forma: {glue:text}`auc_any_bayes:.3f` para TPE,
+{glue:text}`auc_any_random:.3f` para la búsqueda aleatoria, {glue:text}`auc_any_genetico:.3f`
+para el genético y {glue:text}`auc_any_grid:.3f` para la rejilla. La rejilla pierde porque
+recorre el espacio en un orden sistemático y gasta sus primeras evaluaciones en un extremo del
+dominio; además, con varios parámetros asigna pocos niveles a cada uno, la debilidad descrita
+por Bergstra y Bengio {cite}`bergstra2012`.
+
+Frente a la búsqueda aleatoria, en cambio, la ventaja de TPE es pequeña (0,6 puntos de progreso
+a mitad de presupuesto, δ de Cliff de 0,09) y no sobrevive a la corrección de Holm, y el
+algoritmo genético no la supera. La explicación está en el presupuesto: TPE dedica sus seis
+primeras evaluaciones, el 37 % del total, a muestreo aleatorio para construir las densidades
+$\ell(x)$ y $g(x)$, y solo explota el modelo sustituto en las diez restantes; el genético, con una
+población de seis y dos generaciones, apenas alcanza a recombinar. Con presupuestos mayores o
+espacios de más dimensiones, donde la búsqueda aleatoria pierde cobertura, la ventaja teórica
+de los métodos guiados por el historial debería ampliarse; en este problema, su eficiencia
+superior se demuestra con claridad frente a la rejilla y solo de forma marginal frente al
+muestreo aleatorio. La forma de las curvas ({numref}`fig-anytime`) confirma esa lectura: la
+búsqueda aleatoria y el genético coinciden en las primeras seis evaluaciones porque ambos parten
+de configuraciones extraídas con la misma semilla, y a partir de la sexta, cuando TPE empieza a
+explotar su modelo sustituto, su curva se separa de las demás y termina en
+{glue:text}`fin_bayes:.1%` de la mejora alcanzable, frente a {glue:text}`fin_random:.1%` de la
+búsqueda aleatoria.
 
 ## Diversidad genética y convergencia prematura
 
@@ -152,7 +191,15 @@ red = (1 - div.iloc[-1] / div.iloc[0]).mean()
 glue("red_div", float(red), display=False)
 ```
 
-INTERPRETACION_DIVERSIDAD
+La diversidad de la población cae en promedio un {glue:text}`red_div:.0%` entre la población
+inicial y la última generación. Es una convergencia rápida, esperable con una población de seis
+individuos, selección por torneo de tamaño tres y elitismo, que en dos generaciones concentran
+la población alrededor de los mejores individuos. En un problema de optimización general sería
+una señal de convergencia prematura; aquí no resultó perjudicial, porque la PR-AUC externa del
+genético es igual a la de los demás métodos, pero indica que el algoritmo funcionó más como un
+explotador local alrededor de la mejor configuración inicial que como un explorador del
+espacio. Una población mayor o una probabilidad de mutación más alta preservarían la diversidad
+a costa de presupuesto.
 
 ## Optimización multifidelidad
 

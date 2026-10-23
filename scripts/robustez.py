@@ -111,7 +111,10 @@ if __name__ == "__main__":
     SAL.mkdir(parents=True, exist_ok=True)
     mejores = pd.read_csv(RESULTADOS / "mejores_clf.csv")
     MEJOR = mejores.sort_values("pr_auc_mean", ascending=False).iloc[0]
-    PARAMS_BLGB = params_pliegue(RESULTADOS / "original_calamar", "blgb__bayes__f*.pkl")
+    from src.analysis import tabla_pliegues
+    _o = tabla_pliegues("original_calamar")
+    OPT_BLGB = _o[_o.modelo == "blgb"].groupby("optimizador").pr_auc.mean().idxmax()
+    PARAMS_BLGB = params_pliegue(RESULTADOS / "original_calamar", f"blgb__{OPT_BLGB}__f*.pkl")
     PARAMS_BENCH = params_pliegue(RESULTADOS / "clf_calamar",
                                   f"{MEJOR.modelo}__{MEJOR.balanceo}__{MEJOR.optimizador}__f*.pkl")
     pl = sorted(PARAMS_BLGB)
