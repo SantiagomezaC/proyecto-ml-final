@@ -105,6 +105,7 @@ python -m scripts.exportar_dashboard       # tablas del dashboard
 python -m pytest                           # pruebas unitarias
 python -m scripts.ejecutar_libro           # ejecuta los cuadernos del libro
 jupyter-book build book/
+python -m scripts.formato_es              # cifras del libro en formato español
 ```
 
 Los resultados por pliegue se guardan uno por archivo, de modo que una corrida interrumpida se

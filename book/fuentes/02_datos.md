@@ -157,8 +157,8 @@ comparación empírica lo respalda. Con XGBoost, la PR-AUC en la prueba es
 con las seis estaciones desde 1976 y {glue:text}`xg_e1:.3f` con el diseño del Entregable 1; con
 la regresión logística, menos sensible al tamaño de la muestra, los tres valores
 ({glue:text}`lr_a47:.3f`, {glue:text}`lr_r76:.3f` y {glue:text}`lr_e1:.3f`) difieren en menos de
-una centésima. La lectura conjunta es clara: lo que da ventaja al modelo no lineal son los treinta
-años adicionales de registro, que abarcan más ciclos de El Niño y La Niña, y no las estaciones
+una centésima. En conjunto, los resultados indican que la ventaja del modelo no lineal proviene
+de los treinta años adicionales de registro, que abarcan más ciclos de El Niño y La Niña, y no las estaciones
 del bajo Magdalena. El diseño del Entregable 1 alcanzaba casi el mismo desempeño que el adoptado
 porque también usaba el periodo largo, pero lo hacía alimentando cuatro predictores con medianas
 durante tres décadas; el diseño adoptado obtiene el mismo resultado sin esa imputación. La
@@ -231,7 +231,7 @@ aud.rename(columns={"bloque": "Bloque", "a": "a", "b": "Exponente b", "r2": "R²
     {"Exponente b": 3, "R²": 5})
 ```
 
-El hallazgo central del Entregable 1 se mantiene. En {glue:text}`n_r2_alto` de los
+La auditoría confirma el resultado del Entregable 1. En {glue:text}`n_r2_alto` de los
 {glue:text}`n_bloques_aud` bloques quinquenales la relación entre el transporte publicado y el
 caudal es una potencia con R² superior a 0,997; el bloque restante ({glue:text}`bloque_r2_min`,
 R² = {glue:text}`r2_min:.3f`) es aquel en que el exponente pasa de 1,44 a 1,94, de modo que
@@ -383,7 +383,7 @@ inflación de varianza supera 10 en {glue:text}`vif_altos` variables, y es infin
 por $Q_{ef}$); esa redundancia exacta, heredada del Entregable 1, es inocua para los árboles y
 la absorbe la regularización en los modelos lineales. El resto de la multicolinealidad es física (rezagos sucesivos de una serie con autocorrelación de 0,999 y estaciones vecinas
 sobre el mismo cauce) y no se elimina por selección de variables; se trata con regularización
-en los modelos lineales, que es precisamente la segunda corrección solicitada.
+en los modelos lineales, cuyo parámetro se ajusta en la sección de correcciones 2 y 3.
 
 ## Componente temporal
 
@@ -562,9 +562,10 @@ atípicos multivariados, y el {glue:text}`iso_extremos:.0f` % de ellos correspon
 caudal de Calamar en el decil superior o inferior: son crecidas y estiajes, eventos
 hidrológicamente válidos que se conservan. La distancia de Mahalanobis robusta (determinante de
 covarianza mínima sobre las primeras 20 variables, umbral χ² al 99,9 %) marca el
-{glue:text}`pct_mah:.1f` %, una proporción incompatible con un umbral del 0,1 %: el resultado no
-señala atípicos sino que la distribución conjunta, con colas pesadas y relaciones no lineales
-entre rezagos, se aparta de la normalidad multivariada que ese umbral supone. Por esa razón la
+{glue:text}`pct_mah:.1f` %, una proporción incompatible con un umbral del 0,1 %. Ese resultado
+indica que la distribución conjunta, con colas pesadas y relaciones no lineales entre rezagos, se
+aparta de la normalidad multivariada que el umbral supone, y no que una cuarta parte de los días
+sea atípica. Por esa razón la
 detección de atípicos se apoya en Isolation Forest, que no requiere ese supuesto.
 
 ## Auditoría de fuga de datos
@@ -650,8 +651,7 @@ recalculan con bootstrap estacionario {cite}`politis1994`, cuya longitud media d
 ({glue:text}`L_bloque` días) se elige con el criterio de Politis y White {cite}`politis2004`, y
 con corrección BCa estimada mediante un jackknife que elimina bloques completos. El intervalo
 por bloques es {glue:text}`ratio_ic:.1f` veces más ancho que el que remuestrea filas
-independientes: el informe original subestimaba la incertidumbre en esa proporción, exactamente
-el problema que señaló la retroalimentación.
+independientes; el informe anterior subestimaba la incertidumbre en esa proporción.
 
 ```{code-cell} ipython3
 :tags: [hide-input]

@@ -139,7 +139,7 @@ $(1/k + n_{\text{test}}/n_{\text{train}})$, con una razón media de {glue:text}`
 autocorrelación de las diferencias entre bloques consecutivos es {glue:text}`ac1_dif:.2f`,
 pequeña y negativa, de modo que no hay arrastre de la ventaja entre bloques vecinos. En
 cambio, DeLong y McNemar suponen independencia entre días, que la autocorrelación del caudal
-viola de forma grave; por eso la Tabla 3 de la guía los restringe en datos temporales, y aquí se
+viola de forma grave; por eso su uso en datos temporales es cuestionable, y aquí se
 reportan como complemento sin contar para el requisito R3. Su lugar lo ocupa el bootstrap
 estacionario sobre la prueba reservada, que respeta la dependencia.
 
@@ -180,7 +180,7 @@ externa media es {glue:text}`orig_media:.4f` ± {glue:text}`orig_sd:.4f`, frente
 {glue:text}`ref_media:.4f` ± {glue:text}`ref_sd:.4f` del mejor benchmark, una diferencia de
 {glue:text}`dif_media:.4f`, y su desviación entre bloques es también menor.
 
-La secuencia de pruebas sigue la ruta que la guía sugiere para clasificación. La prueba global
+La secuencia de pruebas parte de una prueba global y desciende a comparaciones dirigidas. La prueba global
 de Friedman, con el modelo original incluido en el universo de ocho modelos, rechaza la igualdad
 de rangos (χ² = {glue:text}`fr_chi2:.2f`, p = {glue:text}`fr_p:.2g`), y el original ocupa el rango
 medio {glue:text}`rango_orig:.2f`, es decir, el primer lugar en todos los bloques. La diferencia

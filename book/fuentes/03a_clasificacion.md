@@ -102,13 +102,57 @@ otro extremo, {glue:text}`peor_modelo` ({glue:text}`peor_pr:.3f`) paga el supues
 independencia condicional entre predictores que son, en buena parte, rezagos casi idénticos de la
 misma serie.
 
+```{code-cell} ipython3
+---
+tags: [hide-input]
+---
+# Dificultad de cada bloque externo: proporción de días positivos que exigen anticipar una entrada
+# a la banda (caudal fuera de ella en t y dentro en t + 15)
+import json
+from scipy.stats import spearmanr
+from src.config import DATOS_PROC
+LIM = json.loads((DATOS_PROC / "parametros.json").read_text(encoding="utf-8"))["calamar"]["LIM"]
+q_hoy = np.sqrt(D.X.calamar_cuad.values)
+en_hoy = (q_hoy >= LIM[0]) & (q_hoy <= LIM[1])
+yb = D.y_clf.values.astype(int)
+filas = []
+for p in D.pliegues:
+    te = p["test"]
+    filas.append({"pliegue": p["pliegue"], "prevalencia": yb[te].mean(),
+                  "positivos que entran a la banda": yb[te][~en_hoy[te]].sum() / max(yb[te].sum(), 1),
+                  "caudal máximo en t+15 (m³/s)": D.y_reg.values[te].max()})
+dif_blq = (pl.groupby("pliegue").agg(bloque=("bloque", "first"), **{"PR-AUC media (112 combinaciones)": ("pr_auc", "mean")})
+           .join(pd.DataFrame(filas).set_index("pliegue")))
+rho_e, p_e = spearmanr(dif_blq["PR-AUC media (112 combinaciones)"], dif_blq["positivos que entran a la banda"])
+rho_p, p_p = spearmanr(dif_blq["PR-AUC media (112 combinaciones)"], dif_blq.prevalencia)
+peor = dif_blq.loc[dif_blq["PR-AUC media (112 combinaciones)"].idxmin()]
+glue("rho_entrada", rho_e, display=False); glue("p_entrada", p_e, display=False)
+glue("rho_prev", rho_p, display=False); glue("p_prev", p_p, display=False)
+glue("entrada_peor", float(peor["positivos que entran a la banda"]), display=False)
+glue("prev_peor", float(peor.prevalencia), display=False)
+glue("entrada_med", float(dif_blq["positivos que entran a la banda"].median()), display=False)
+glue("qmax_peor", float(peor["caudal máximo en t+15 (m³/s)"]), display=False)
+dif_blq.set_index("bloque").round(3)
+```
+
 La {numref}`fig-cajas-modelos` muestra que la variabilidad entre bloques supera con amplitud la
-diferencia entre los mejores modelos. El bloque {glue:text}`peor_bloque` es el más difícil para
-todos (PR-AUC media de {glue:text}`peor_bloque_pr:.2f` entre las 112 combinaciones): coincide con
-el ascenso hacia la crecida de 2008, uno de los máximos anuales del registro, y con la transición
-hacia La Niña de 2010-2011, de modo que el río atraviesa la banda en ascensos rápidos que el
-estado actual anticipa mal. Esa dispersión es la razón de que las conclusiones de este capítulo
-se apoyen en pruebas sobre bloques pareados y no en las medias.
+diferencia entre los mejores modelos, y la tabla anterior permite identificar su causa. La
+dificultad de un bloque depende menos de cuántos días están en la banda que de cuántos de ellos
+exigen anticipar una entrada: días en que el caudal todavía está fuera de la banda en *t* y la
+alcanza en *t* + 15. La correlación de Spearman entre la PR-AUC media del bloque y la proporción
+de positivos de ese tipo es de {glue:text}`rho_entrada:.2f` (p = {glue:text}`p_entrada:.1e`, doce
+bloques), mientras que la correlación con la prevalencia ({glue:text}`rho_prev:.2f`,
+p = {glue:text}`p_prev:.2f`) no es significativa. El bloque {glue:text}`peor_bloque`, el más
+difícil para todos los modelos (PR-AUC media de {glue:text}`peor_bloque_pr:.2f` entre las 112
+combinaciones), reúne dos condiciones desfavorables: una prevalencia de apenas
+{glue:text}`prev_peor:.1%`, que reduce la PR-AUC alcanzable, y un {glue:text}`entrada_peor:.0%` de
+positivos que son entradas a la banda, frente a una mediana de {glue:text}`entrada_med:.0%` en los
+doce bloques. Hidrológicamente, el bloque contiene la crecida de 2008, cuyo caudal máximo
+({glue:text}`qmax_peor:,.0f` m³/s) es el tercero más alto del periodo de entrenamiento, y el río
+atraviesa la banda en ascensos y descensos rápidos que el estado actual anticipa mal. La
+variabilidad entre bloques tiene, por tanto, un origen físico identificable y no es ruido de
+estimación; por esa razón las conclusiones de este capítulo se apoyan en pruebas sobre bloques
+pareados y no en comparaciones de medias.
 
 ## Efecto del balanceo de clases
 
@@ -168,12 +212,53 @@ significativo) o con la ponderación por clase ({glue:text}`bal_class_weight_pr_
 empeora con ADASYN ({glue:text}`bal_ADASYN_pr_auc:+.4f`, significativo tras Holm). Lo que sí
 cambia es el punto de operación con el umbral de 0,5: la exhaustividad sube entre
 {glue:text}`bal_SMOTE_recall:.2f` y {glue:text}`bal_ADASYN_recall:.2f` puntos a costa de la
-precisión, y el F1 queda igual o baja. La lectura es la esperada para un desbalance moderado (26 %
-de positivos): las tres técnicas desplazan el umbral efectivo hacia la clase minoritaria, lo
+precisión, y el F1 queda igual o baja. Este comportamiento es el esperado para un desbalance
+moderado (26 % de positivos): las tres técnicas desplazan el umbral efectivo hacia la clase minoritaria, lo
 que equivale a cambiar el costo relativo de los errores, pero no aportan información nueva sobre
-qué días están en la banda. ADASYN resulta perjudicial porque concentra los sintéticos cerca de la
-frontera, justamente donde la autocorrelación hace que los vecinos de un día positivo sean sus
-propios días contiguos, de modo que interpola casi duplicados de los casos más ambiguos.
+qué días están en la banda.
+
+```{code-cell} ipython3
+---
+tags: [hide-input]
+---
+# Mecanismo de ADASYN en el entrenamiento del último bloque: cercanía temporal de los vecinos que usa
+# para interpolar y concentración de su peso en los positivos próximos al límite de la banda
+from sklearn.neighbors import NearestNeighbors
+from sklearn.preprocessing import StandardScaler
+p = D.pliegues[-1]; tr = p["train"]
+Xa = D.X.iloc[tr]; Za = StandardScaler().fit_transform(Xa.fillna(Xa.median()))
+ya = D.y_clf.values[tr].astype(int); pos = np.flatnonzero(ya == 1)
+_, iv = NearestNeighbors(n_neighbors=6).fit(Za[pos]).kneighbors(Za[pos])
+dias = np.abs(pos[iv[:, 1:]] - pos[:, None])
+_, ia = NearestNeighbors(n_neighbors=6).fit(Za).kneighbors(Za[pos])
+r_ad = (ya[ia[:, 1:]] == 0).mean(1)                  # dificultad local con que ADASYN pondera cada positivo
+w_ad = r_ad / r_ad.sum()
+q15 = D.y_reg.values[tr][pos]
+QEF = json.loads((DATOS_PROC / "parametros.json").read_text(encoding="utf-8"))["calamar"]["Q_EF"]
+borde = np.minimum(np.abs(q15 - LIM[0]), np.abs(q15 - LIM[1])) / QEF < 0.05
+glue("ad_med_dias", float(np.median(dias)), display=False)
+glue("ad_frac7", float((dias <= 7).mean()), display=False)
+glue("ad_frac_r", float((r_ad > 0).mean()), display=False)
+glue("ad_peso_borde", float(w_ad[borde].sum()), display=False)
+glue("ad_pos_borde", float(borde.mean()), display=False)
+pd.DataFrame({"indicador": ["Mediana de la separación temporal con los 5 vecinos positivos (días)",
+                            "Vecinos positivos a 7 días o menos", "Positivos con al menos un vecino negativo",
+                            "Positivos a menos del 5 % de Q_ef de un límite", "Peso de ADASYN asignado a esos positivos"],
+              "valor": [np.median(dias), (dias <= 7).mean(), (r_ad > 0).mean(), borde.mean(), w_ad[borde].sum()]}).round(3)
+```
+
+El efecto negativo de ADASYN se explica por la interacción entre su regla de muestreo y la
+estructura temporal de los datos. ADASYN genera más sintéticos alrededor de los positivos que
+tienen negativos entre sus vecinos, y solo el {glue:text}`ad_frac_r:.0%` de los positivos cumple
+esa condición; como esos días se ubican cerca de los límites de la banda, el
+{glue:text}`ad_peso_borde:.0%` del peso de muestreo recae en positivos situados a menos del 5 % de
+$Q_{ef}$ de un límite, aunque estos representan solo el {glue:text}`ad_pos_borde:.0%` de la clase.
+Además, los vecinos positivos con que interpola son, en la práctica, días contiguos del mismo
+episodio: la separación temporal mediana es de {glue:text}`ad_med_dias:.0f` días y el
+{glue:text}`ad_frac7:.0%` de los vecinos está a una semana o menos. El método produce, por tanto,
+casi duplicados de los casos más ambiguos de cada episodio y desplaza la frontera hacia la región
+donde la etiqueta es menos fiable. SMOTE, que reparte los sintéticos de manera uniforme entre los
+positivos, no presenta esa concentración, y su efecto sobre la PR-AUC no es significativo.
 
 ## Desempeño en la prueba reservada
 

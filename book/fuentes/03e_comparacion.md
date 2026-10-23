@@ -58,9 +58,10 @@ La prueba de Friedman sobre los doce bloques externos rechaza que las 112 combin
 el mismo rango medio (χ² = {glue:text}`c112_chi2:.1f` con {glue:text}`c112_gl` grados de
 libertad, p = {glue:text}`c112_p:.2g`). La diferencia crítica de Nemenyi con 112 modelos y doce
 bloques es de {glue:text}`c112_cd:.1f` rangos, y solo {glue:text}`c112_pares_signif:,` de los
-{glue:text}`c112_pares_total:,` pares la superan. Esa cifra ilustra el problema de escala que
-plantea la guía: con tantos modelos, el control familiar vuelve indistinguibles casi todas las
-combinaciones vecinas, y la comparación informativa debe hacerse entre finalistas.
+{glue:text}`c112_pares_total:,` pares la superan. Con doce bloques y 112 modelos, el control del
+error familiar vuelve indistinguibles casi todas las combinaciones vecinas; la potencia de la
+prueba se concentra en las diferencias extremas, y la comparación informativa debe hacerse entre
+finalistas.
 
 ### Etapa 2: diagrama de diferencia crítica entre los mejores de cada modelo
 
@@ -93,8 +94,8 @@ Entre las mejores combinaciones de los siete modelos, Friedman rechaza la iguald
 da {glue:text}`fr7_ff:.1f`), pero la diferencia crítica de {glue:text}`cd7:.2f` rangos solo separa
 a Naive Bayes de los cuatro mejores modelos. Random Forest, XGBoost, SVM y KNN forman un grupo
 estadísticamente indistinguible, al que se suman la regresión logística y el árbol en el límite
-de la significancia. En los términos de la guía, el ranking de los benchmarks es robusto en sus
-extremos y difuso en el centro.
+de la significancia. El ordenamiento de los benchmarks es, por tanto, robusto en sus extremos y
+difuso en el centro.
 
 ### Comparaciones dirigidas en la prueba reservada: DeLong con Holm
 
@@ -123,13 +124,12 @@ dt.round(4)
 La prueba de DeLong sobre la prueba reservada no distingue a Random Forest de XGBoost
 (p ajustado de 0,14), pero sí declara significativas sus ventajas sobre KNN, y la de XGBoost
 sobre KNN, tras la corrección de Holm. El intervalo de confianza por bootstrap estacionario de la
-misma diferencia de AUC, en cambio, contiene el cero en los tres casos. La discrepancia no es
-casual: DeLong estima la varianza del AUC suponiendo que los días de prueba son independientes, y
-con una autocorrelación de 0,99 la muestra efectiva es mucho menor que los 5.946 días, de modo
-que sus p-valores resultan optimistas. Esta es la razón por la que la guía restringe DeLong en
-datos temporales, y por la que en este trabajo las conclusiones se apoyan en el bootstrap por
-bloques (con longitud media de {glue:text}`L_test` días) y en las pruebas sobre bloques
-externos.
+misma diferencia de AUC, en cambio, contiene el cero en los tres casos. La discrepancia se debe a
+que DeLong estima la varianza del AUC suponiendo que los días de prueba son independientes; con
+una autocorrelación de 0,99 la muestra efectiva es mucho menor que los 5.946 días, y sus p-valores
+resultan optimistas. Por esa razón DeLong se reporta solo como prueba complementaria, y las
+conclusiones se apoyan en el bootstrap por bloques (con longitud media de {glue:text}`L_test`
+días) y en las pruebas sobre bloques externos.
 
 ### Intervalos de confianza y tamaños del efecto
 

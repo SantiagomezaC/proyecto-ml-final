@@ -139,10 +139,61 @@ ax.plot(s1.index, s1.validacion, color=RIO, lw=1, label="Validación externa (fu
 ax.plot(s2.index, s2.prueba, color=SED, lw=1, label="Prueba reservada")
 import json
 LIM = json.loads((DATOS_PROC / "parametros.json").read_text(encoding="utf-8"))["calamar"]["LIM"]
+yte = np.asarray(yte)
 ax.axhspan(*LIM, color=ALE, alpha=.07, label="Banda de descarga efectiva")
 ax.set(ylabel="Caudal en t+15 (m³/s)", title=f"{NOMBRES_MODELO[mejor_reg]}: observado frente a predicho")
 ax.legend(ncol=4, fontsize=8, loc="upper left"); plt.show()
 ```
+
+```{code-cell} ipython3
+---
+tags: [hide-input]
+---
+# Error por segmento y frente a la persistencia, y acierto del lado de la banda en la prueba
+rmse = lambda a, b: float(np.sqrt(np.mean((np.asarray(a) - np.asarray(b)) ** 2)))
+q_act = np.sqrt(D.X.calamar_cuad.values); q_act_te = np.sqrt(D.X_test.calamar_cuad.values)
+seg = pd.DataFrame([
+    {"segmento": "Entrenamiento 1947-2009 (dentro de muestra)", "RMSE modelo": rmse(D.y_reg.values, r["pred_train"]),
+     "RMSE persistencia": rmse(D.y_reg.values, q_act)},
+    {"segmento": "Validación externa 1986-2009 (fuera de muestra)", "RMSE modelo": rmse(D.y_reg.values[idx_val], p_val),
+     "RMSE persistencia": rmse(D.y_reg.values[idx_val], q_act[idx_val])},
+    {"segmento": "Prueba reservada 2010-2026", "RMSE modelo": rmse(yte, r["pred_test"]),
+     "RMSE persistencia": rmse(yte, q_act_te)}])
+seg["reducción frente a la persistencia"] = 1 - seg["RMSE modelo"] / seg["RMSE persistencia"]
+mej_blq = [1 - rmse(x["y_test"], x["pred"]) / rmse(x["y_test"], q_act[x["idx_test"]]) for x in val]
+dentro = lambda q: (q >= LIM[0]) & (q <= LIM[1])
+d_lim = np.minimum(np.abs(yte - LIM[0]), np.abs(yte - LIM[1])) / json.loads(
+    (DATOS_PROC / "parametros.json").read_text(encoding="utf-8"))["calamar"]["Q_EF"]
+lado = dentro(r["pred_test"]) == dentro(yte)
+for k, v in zip(("tr", "val", "te"), seg["RMSE modelo"]):
+    glue(f"seg_rmse_{k}", v, display=False)
+glue("mejora_blq_min", float(min(mej_blq)), display=False); glue("mejora_blq_max", float(max(mej_blq)), display=False)
+glue("lado_global", float(lado.mean()), display=False)
+glue("lado_borde", float(lado[d_lim < .05].mean()), display=False)
+glue("lado_lejos", float(lado[d_lim > .20].mean()), display=False)
+seg.round(3)
+```
+
+La {numref}`fig-reg-series` y la tabla anterior permiten evaluar el sobreajuste y la estabilidad
+temporal del mejor regresor. El error dentro de muestra en el entrenamiento
+({glue:text}`seg_rmse_tr:,.0f` m³/s) es del mismo orden que el error fuera de muestra en la
+validación externa ({glue:text}`seg_rmse_val:,.0f` m³/s) y en la prueba reservada
+({glue:text}`seg_rmse_te:,.0f` m³/s), lo que descarta un sobreajuste apreciable: la
+regularización del modelo, elegida en la validación anidada, limita su capacidad a la estructura
+que se repite entre décadas. La reducción del error frente a la persistencia se mantiene en todos
+los bloques externos, entre el {glue:text}`mejora_blq_min:.0%` y el
+{glue:text}`mejora_blq_max:.0%`, y no se degrada en la prueba, de modo que la relación aprendida no
+depende de un periodo particular. En la figura, las mayores desviaciones coinciden con los picos
+de las crecidas y con los ascensos abruptos desde el estiaje, que el estado actual del río no
+anticipa.
+
+Para la tarea de clasificación interesa además si el caudal previsto cae del lado correcto de los
+límites de la banda. En la prueba, el regresor acierta el lado en el
+{glue:text}`lado_global:.1%` de los días; el acierto es del {glue:text}`lado_lejos:.0%` cuando el
+caudal observado queda a más del 20 % de $Q_{ef}$ de un límite y cae al
+{glue:text}`lado_borde:.1%` cuando queda a menos del 5 %. Un error de unos 640 m³/s, pequeño en
+términos relativos, basta para cambiar la clase de los días próximos a los límites, que es donde
+se concentran los errores de todos los clasificadores.
 
 ## Análisis de residuos
 

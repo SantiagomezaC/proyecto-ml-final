@@ -145,9 +145,9 @@ tags: [hide-input]
 ef.round(4)
 ```
 
-La guía pide demostrar con evidencia cuantitativa, y no solo visual, que los métodos bayesiano y
-genético pueden ser más eficientes que la rejilla y la búsqueda aleatoria. La evidencia es
-mixta. Frente a la rejilla, la ventaja es clara y grande: a mitad de presupuesto (t = 8), TPE ha
+La hipótesis de que los métodos bayesiano y genético son más eficientes que la rejilla y la
+búsqueda aleatoria se evaluó con medidas cuantitativas de progreso, además de la inspección de las
+curvas. La evidencia es mixta. Frente a la rejilla, la ventaja es clara y grande: a mitad de presupuesto (t = 8), TPE ha
 recorrido el {glue:text}`prog8_bayes:.1%` de la mejora alcanzable y el algoritmo genético el
 {glue:text}`prog8_genetico:.1%`, frente al {glue:text}`prog8_grid:.1%` de la rejilla, con
 diferencias significativas tras la corrección de Holm y tamaños de efecto de Cliff grandes

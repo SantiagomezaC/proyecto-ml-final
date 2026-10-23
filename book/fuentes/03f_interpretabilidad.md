@@ -50,8 +50,8 @@ glue("modelo_shap", NOMBRES_MODELO[M], display=False)
 glue("rango_xgb", int(mejores.sort_values("pr_auc_mean", ascending=False).modelo.tolist().index(M) + 1), display=False)
 ```
 
-La guía pide el análisis SHAP {cite}`lundberg2017` del mejor modelo de cada tarea y su
-comparación con LIME en XGBoost. El modelo explicado aquí es {glue:text}`modelo_shap`, que
+Este capítulo analiza el modelo de clasificación con SHAP {cite}`lundberg2017` y compara sus
+explicaciones con las de LIME. El modelo explicado es {glue:text}`modelo_shap`, que
 ocupa el puesto {glue:text}`rango_xgb` entre los benchmarks de clasificación y admite el
 algoritmo TreeSHAP {cite}`lundberg2020`, que calcula los valores de Shapley de forma exacta y en
 tiempo polinómico recorriendo los caminos de cada árbol. Los valores se expresan en log-odds de
@@ -175,6 +175,45 @@ for r in cmp.itertuples():
 cmp.round(3)
 ```
 
+```{code-cell} ipython3
+---
+tags: [hide-input]
+---
+# Concordancia SHAP-LIME en una muestra de 100 días de prueba próximos a un límite de la banda
+# (a menos del 5 % de Q_ef) y 100 días alejados (a más del 20 %)
+import json
+from scipy.stats import mannwhitneyu
+from src.config import DATOS_PROC
+par = json.loads((DATOS_PROC / "parametros.json").read_text(encoding="utf-8"))["calamar"]
+yq = D.y_reg_test.values
+d_lim = np.minimum(np.abs(yq - par["LIM"][0]), np.abs(yq - par["LIM"][1])) / par["Q_EF"]
+rng = np.random.default_rng(SEED)
+grupos = {"próximos al límite": rng.choice(np.flatnonzero(d_lim < .05), 100, replace=False),
+          "alejados del límite": rng.choice(np.flatnonzero(d_lim > .20), 100, replace=False)}
+Xf = Xte.fillna(Xtr.median()).values
+muestra = []
+for g, ids in grupos.items():
+    for i in ids:
+        e = lime_exp.explain_instance(Xf[i], f, num_features=10, num_samples=3000)
+        lw = {Xte.columns[k]: w for k, w in e.as_map()[1]}
+        s = pd.Series(sv.values[i], index=Xte.columns)
+        muestra.append({"grupo": g, "R² del sustituto": e.score,
+                        "variables comunes (top 10)": len(set(s.abs().sort_values(ascending=False).index[:10]) & set(lw)),
+                        "Spearman |LIME| vs |SHAP|": spearmanr([abs(lw[c]) for c in lw], [abs(s[c]) for c in lw])[0],
+                        "signos coincidentes": np.mean([np.sign(lw[c]) == np.sign(s[c]) for c in lw])})
+muestra = pd.DataFrame(muestra)
+tab_m = muestra.groupby("grupo").median().T
+tab_m["p (Mann-Whitney)"] = [mannwhitneyu(muestra.loc[muestra.grupo == "próximos al límite", c].dropna(),
+                                          muestra.loc[muestra.grupo == "alejados del límite", c].dropna()).pvalue
+                             for c in tab_m.index]
+for c, k in (("Spearman |LIME| vs |SHAP|", "rho"), ("signos coincidentes", "sig"), ("R² del sustituto", "r2"),
+             ("variables comunes (top 10)", "com")):
+    glue(f"m_{k}_borde", float(tab_m.loc[c, "próximos al límite"]), display=False)
+    glue(f"m_{k}_lejos", float(tab_m.loc[c, "alejados del límite"]), display=False)
+    glue(f"m_{k}_p", float(tab_m.loc[c, "p (Mann-Whitney)"]), display=False)
+tab_m.round(3)
+```
+
 LIME {cite}`ribeiro2016` explica cada predicción ajustando un modelo lineal ponderado a
 perturbaciones de la observación en un entorno local, mientras que SHAP distribuye la predicción
 entre las variables según los valores de Shapley, que cumplen eficiencia (la suma de las
@@ -184,13 +223,31 @@ las diez variables más importantes y la correlación de rangos entre sus magnit
 {glue:text}`lime_rho_ok:.2f`, aunque el sustituto lineal de LIME solo explica un
 R² = {glue:text}`lime_r2_ok:.2f` del modelo en el entorno. En el día con error, la coincidencia
 cae a {glue:text}`lime_comunes_mal` variables comunes y el R² del sustituto local a
-{glue:text}`lime_r2_mal:.2f`. La divergencia tiene una causa precisa: ese día está cerca de una
-región donde la probabilidad cambia bruscamente (el borde de la banda), y una aproximación lineal
-del entorno no representa bien una función con esa curvatura, mientras que TreeSHAP calcula las
+{glue:text}`lime_r2_mal:.2f`.
+
+Dos observaciones no bastan para establecer un patrón, por lo que la comparación se extendió a una
+muestra de cien días de prueba próximos a un límite de la banda y cien alejados de él (tabla
+anterior). La muestra matiza lo observado en los dos días. La correlación de rangos entre las
+magnitudes de LIME y SHAP es similar en ambos grupos ({glue:text}`m_rho_borde:.2f` en los días
+próximos y {glue:text}`m_rho_lejos:.2f` en los alejados, medianas; p = {glue:text}`m_rho_p:.2f`,
+Mann-Whitney), el R² del sustituto local tampoco difiere (p = {glue:text}`m_r2_p:.2f`) y ambos
+métodos coinciden en una mediana de {glue:text}`m_com_borde:.0f` de las diez variables más
+relevantes. La caída del R² en el día con error no es, por tanto, una propiedad general de los
+días próximos al límite. La diferencia sistemática está en el signo: la proporción de variables a
+las que ambos métodos asignan el mismo sentido de contribución es de
+{glue:text}`m_sig_lejos:.2f` en los días alejados y baja a {glue:text}`m_sig_borde:.2f` en los
+próximos (p = {glue:text}`m_sig_p:.3f`). Cerca de un límite, LIME invierte el sentido de alguna de
+las variables secundarias, aunque identifica bien cuáles son relevantes y en qué orden.
+
+La inversión de signos tiene dos causas. Cerca de un límite, la probabilidad predicha cambia
+bruscamente con el caudal, y una aproximación lineal ajustada a perturbaciones del entorno
+promedia contribuciones de ambos lados del límite, que tienen signo opuesto, mientras que TreeSHAP calcula las
 contribuciones exactas del modelo de árboles sin aproximarlo. Además, LIME discretiza las
-variables continuas en cuartiles y perturba cada una de forma independiente, lo que genera puntos
-poco plausibles cuando las variables están tan correlacionadas como los rezagos de un caudal. En
-general, cabe esperar que ambas técnicas diverjan cuando el modelo es fuertemente no lineal en el
-entorno de la observación, cuando las variables están correlacionadas y cuando la observación
-está cerca de una frontera de decisión; en esos casos, la explicación de SHAP es la más fiel al
-modelo.
+variables continuas en cuartiles y perturba cada una de forma independiente, lo que genera
+combinaciones poco plausibles cuando las variables están tan correlacionadas como los rezagos de un
+caudal con autocorrelación de 0,999. Cabe esperar, por tanto, que ambas técnicas diverjan cuando
+el modelo es fuertemente no lineal en el entorno de la observación, cuando las variables están
+correlacionadas y cuando la observación está cerca de una frontera de decisión. En esos casos la
+explicación de SHAP es la más fiel al modelo, y la de LIME debe leerse en cuanto a las
+variables que identifica y su importancia relativa, pero no en cuanto al sentido de las
+contribuciones secundarias.

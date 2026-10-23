@@ -110,8 +110,8 @@ controlan la complejidad frente a un tamaño efectivo reducido. En Random Forest
 `max_samples = 0,3`, con un efecto doble: la submuestra decorrelaciona los árboles y reduce el
 costo de cada ajuste en proporción, decisivo con más de 22.000 días de entrenamiento en esta
 máquina. La SVM y la SVR usan el núcleo RBF aproximado por el método de Nyström con 600
-componentes, seguido de una SVM lineal: la guía recomienda evitar la complejidad cuadrática o
-cúbica del núcleo completo cuando la muestra es grande, y la sección de optimización
+componentes, seguido de una SVM lineal, para evitar la complejidad cuadrática o cúbica del
+núcleo completo con una muestra de este tamaño; la sección de optimización
 computacional cuantifica el ahorro y la pérdida de exactitud frente a la SVC exacta. En XGBoost, la tasa de aprendizaje (0,01 a 0,3) y el número de árboles (80 a 600)
 se exploran conjuntamente porque su producto determina la capacidad efectiva.
 
