@@ -1,0 +1,1159 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Modelo original: Band-Likelihood Gradient Boosting &#8212; Descarga efectiva en el río Magdalena</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="_static/documentation_options.js?v=78d55cf8"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Haz clic para mostrar';</script>
+    <script>let toggleHintHide = 'Haz clic para ocultar';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script src="_static/translations.js?v=d190bf04"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"tex": {"tags": "ams"}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '05_modelo_original';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="_static/logo.png"/>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Validación estadística del modelo original" href="06_validacion.html" />
+    <link rel="prev" title="Revisión de literatura y novedad" href="04_literatura.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="es"/>
+  <meta name="docsearch:version" content="" />
+    <meta name="docbuild:last-update" content="2026-10-23"/>
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Saltar al contenido principal</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Volver arriba</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Advertencia de versión"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Navegación del sitio">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="En esta página">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Descarga efectiva en el río Magdalena - Home"/>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Descarga efectiva en el río Magdalena - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Descarga efectiva en el río Magdalena
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Proyecto</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Trazabilidad de correcciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_datos.html">Datos: ETL y análisis exploratorio</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos benchmark (Entregable 2)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="03_benchmarks.html">Modelos benchmark: diseño experimental</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="03a_clasificacion.html">Resultados de clasificación</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03b_optimizacion.html">Comparación de los métodos de optimización</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03c_computacional.html">Optimización computacional</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03d_regresion.html">Regresión del caudal a quince días</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03e_comparacion.html">Comparación estadística de los benchmarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03f_interpretabilidad.html">Interpretabilidad global y local</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelo original (Entregable 3)</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="04_literatura.html">Revisión de literatura y novedad</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Modelo original: Band-Likelihood Gradient Boosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_validacion.html">Validación estadística del modelo original</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Producto y cierre</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07_dashboard.html">Dashboard y despliegue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_conclusiones.html">Conclusiones y limitaciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_reproducibilidad.html">Reproducibilidad y bibliografía</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/SantiagomezaC/proyecto-ml-final" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Repositorio de origen"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Descarga esta pagina">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/05_modelo_original.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Descargar archivo fuente"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Imprimir en PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Modo de pantalla completa"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Tema" data-bs-title="Tema"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Claro"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Oscuro"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="Sistema"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Modelo original: Band-Likelihood Gradient Boosting</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contenido </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivacion">Motivación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formulacion">Formulación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradientes-y-hessianos">Gradientes y hessianos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arboles-de-segundo-orden-por-histogramas">Árboles de segundo orden por histogramas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pseudocodigo">Pseudocódigo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-teoricas">Propiedades teóricas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#teorema-1-la-perdida-hibrida-es-una-regla-de-puntuacion-estrictamente-propia">Teorema 1. La pérdida híbrida es una regla de puntuación estrictamente propia</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#teorema-2-descenso-monotono-y-terminacion">Teorema 2. Descenso monótono y terminación</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proposicion-1-complejidad">Proposición 1. Complejidad</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion">Implementación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pruebas-unitarias">Pruebas unitarias</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-sintetico-por-que-la-supervision-continua-ayuda">Ejemplo sintético: por qué la supervisión continua ayuda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estudio-de-ablacion">Estudio de ablación</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="modelo-original-band-likelihood-gradient-boosting">
+<h1>Modelo original: Band-Likelihood Gradient Boosting<a class="headerlink" href="#modelo-original-band-likelihood-gradient-boosting" title="Link to this heading">#</a></h1>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">warnings</span><span class="o">,</span><span class="w"> </span><span class="nn">pickle</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">".."</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span><span class="o">,</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span><span class="o">,</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">myst_nb</span><span class="w"> </span><span class="kn">import</span> <span class="n">glue</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src</span><span class="w"> </span><span class="kn">import</span> <span class="n">estilo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.estilo</span><span class="w"> </span><span class="kn">import</span> <span class="n">RIO</span><span class="p">,</span> <span class="n">SED</span><span class="p">,</span> <span class="n">CAU</span><span class="p">,</span> <span class="n">ALE</span><span class="p">,</span> <span class="n">NEU</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">RESULTADOS</span><span class="p">,</span> <span class="n">DATOS_PROC</span><span class="p">,</span> <span class="n">SEED</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<section id="motivacion">
+<h2>Motivación<a class="headerlink" href="#motivacion" title="Link to this heading">#</a></h2>
+<p>Los modelos benchmark del capítulo anterior reciben como objetivo una etiqueta binaria: el día
+<em>t</em> + 15 estuvo o no dentro de la banda de descarga efectiva. Esa etiqueta resulta de aplicar
+una condición de intervalo a una variable continua que también se observa, el caudal
+<span class="math notranslate nohighlight">\(Q_{t+15}\)</span>, y al binarizarla se descarta información. Dos días negativos son indistinguibles
+para un clasificador aunque uno haya quedado a 50 m³/s del límite y el otro a 5.000 m³/s, y dos
+días positivos valen lo mismo aunque uno haya caído en el centro de la banda y el otro en su
+borde. Con un tamaño efectivo de muestra reducido por la autocorrelación, esa pérdida de
+información se traduce en varianza.</p>
+<p>La alternativa habitual en hidrología, predecir el caudal y luego comparar con los límites,
+resuelve el problema solo a medias. Un regresor de mínimos cuadrados estima la media
+condicional, no la probabilidad de un intervalo; la probabilidad de banda exige además la
+dispersión condicional, que varía con el estado del río (la incertidumbre a quince días es
+mayor en el ascenso de una crecida que en un estiaje estable), y un modelo ajustado solo para
+el caudal no tiene incentivo para ser preciso justamente en la región de los límites, que es
+la que decide la clasificación.</p>
+<p>El modelo propuesto, <strong>Band-Likelihood Gradient Boosting (BLGB)</strong>, combina ambas fuentes de
+supervisión en una sola función objetivo: modela la distribución condicional completa del
+caudal futuro, con media y dispersión dependientes de las condiciones actuales, y la ajusta con
+una pérdida que pondera explícitamente el acierto sobre el evento de interés.</p>
+</section>
+<section id="formulacion">
+<h2>Formulación<a class="headerlink" href="#formulacion" title="Link to this heading">#</a></h2>
+<p>Sea <span class="math notranslate nohighlight">\(Q^{\text{ref}}_i &gt; 0\)</span> el caudal observado en el instante de la predicción y
+<span class="math notranslate nohighlight">\(z_i = \log(Q_{i,t+h}/Q^{\text{ref}}_i)\)</span> el cambio logarítmico a horizonte <span class="math notranslate nohighlight">\(h\)</span>. La banda
+<span class="math notranslate nohighlight">\([L, U]\)</span> se traslada al mismo espacio con límites propios de cada observación,</p>
+<div class="math notranslate nohighlight" id="equation-eq-limites">
+<span class="eqno">(1)<a class="headerlink" href="#equation-eq-limites" title="Link to this equation">#</a></span>\[
+l_i = \log\frac{L}{Q^{\text{ref}}_i}, \qquad u_i = \log\frac{U}{Q^{\text{ref}}_i}.
+\]</div>
+<p>El modelo supone <span class="math notranslate nohighlight">\(z_i \mid x_i \sim \mathcal{N}(\mu(x_i), \sigma(x_i)^2)\)</span> y define la
+probabilidad de la clase positiva como la masa de esa distribución dentro de la banda,</p>
+<div class="math notranslate nohighlight" id="equation-eq-prob">
+<span class="eqno">(2)<a class="headerlink" href="#equation-eq-prob" title="Link to this equation">#</a></span>\[
+p_i = \Phi\!\left(b_i\right) - \Phi\!\left(a_i\right), \qquad
+a_i = \frac{l_i - \mu_i}{\sigma_i}, \quad b_i = \frac{u_i - \mu_i}{\sigma_i}.
+\]</div>
+<p>La media <span class="math notranslate nohighlight">\(\mu\)</span> y el logaritmo de la dispersión <span class="math notranslate nohighlight">\(s = \log \sigma\)</span> son dos ensambles aditivos de
+árboles de regresión, <span class="math notranslate nohighlight">\(\mu(x) = \mu_0 + \sum_t \eta_t f^{\mu}_t(x)\)</span> y
+<span class="math notranslate nohighlight">\(s(x) = s_0 + \sum_t \eta_t f^{s}_t(x)\)</span>. Trabajar con <span class="math notranslate nohighlight">\(\log(Q_{t+h}/Q^{\text{ref}})\)</span> en lugar del
+caudal tiene dos ventajas: el cambio relativo es aproximadamente simétrico y estacionario, y la
+dependencia de la banda respecto del estado actual queda absorbida por los límites
+<a class="reference internal" href="#equation-eq-limites">(1)</a>, de modo que los árboles solo deben aprender la dinámica del cambio.</p>
+<p>La pérdida empírica combina la entropía cruzada del evento y la log-verosimilitud gaussiana
+del caudal futuro, ponderada por <span class="math notranslate nohighlight">\(\lambda \geq 0\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-eq-perdida">
+<span class="eqno">(3)<a class="headerlink" href="#equation-eq-perdida" title="Link to this equation">#</a></span>\[
+\mathcal{L}(\mu, s) = \frac{1}{n}\sum_{i=1}^{n}\Big[-y_i\log p_i - (1-y_i)\log(1-p_i)\Big]
++ \lambda\,\frac{1}{n}\sum_{i=1}^{n}\Big[\tfrac{1}{2} r_i^2 + s_i\Big], \qquad r_i = \frac{z_i-\mu_i}{\sigma_i}.
+\]</div>
+<p>El primer término es la pérdida de la tarea y el segundo aporta la supervisión continua. Con
+<span class="math notranslate nohighlight">\(\lambda = 0\)</span> el modelo es un clasificador de banda que solo usa la etiqueta; con
+<span class="math notranslate nohighlight">\(\lambda \to \infty\)</span> se reduce a una regresión distribucional del caudal seguida de la
+integración <a class="reference internal" href="#equation-eq-prob">(2)</a>, es decir, al enfoque de dos etapas.</p>
+</section>
+<section id="gradientes-y-hessianos">
+<h2>Gradientes y hessianos<a class="headerlink" href="#gradientes-y-hessianos" title="Link to this heading">#</a></h2>
+<p>El boosting de segundo orden requiere, para cada observación, el gradiente y una aproximación
+positiva del hessiano de la pérdida respecto de <span class="math notranslate nohighlight">\(\mu_i\)</span> y <span class="math notranslate nohighlight">\(s_i\)</span>. Con <span class="math notranslate nohighlight">\(\varphi\)</span> la densidad
+normal estándar, la derivada de la probabilidad de banda es</p>
+<div class="math notranslate nohighlight" id="equation-eq-dp">
+<span class="eqno">(4)<a class="headerlink" href="#equation-eq-dp" title="Link to this equation">#</a></span>\[
+\frac{\partial p}{\partial \mu} = \frac{\varphi(a) - \varphi(b)}{\sigma}, \qquad
+\frac{\partial p}{\partial s} = a\,\varphi(a) - b\,\varphi(b),
+\]</div>
+<p>la segunda porque <span class="math notranslate nohighlight">\(\partial a/\partial s = -a\)</span> y <span class="math notranslate nohighlight">\(\partial b/\partial s = -b\)</span> cuando
+<span class="math notranslate nohighlight">\(s = \log\sigma\)</span>. Por la regla de la cadena y
+<span class="math notranslate nohighlight">\(\partial \ell_{\text{BCE}}/\partial p = (p - y)/[p(1-p)]\)</span>, el término de la tarea aporta</p>
+<div class="math notranslate nohighlight" id="equation-eq-gbce">
+<span class="eqno">(5)<a class="headerlink" href="#equation-eq-gbce" title="Link to this equation">#</a></span>\[
+g^{\text{BCE}}_\theta = \frac{p-y}{p(1-p)}\,\frac{\partial p}{\partial \theta}, \qquad
+h^{\text{BCE}}_\theta = \frac{1}{p(1-p)}\left(\frac{\partial p}{\partial \theta}\right)^2,
+\qquad \theta \in \{\mu, s\},
+\]</div>
+<p>donde el hessiano es la aproximación de Gauss-Newton, igual a la información de Fisher del
+modelo de Bernoulli y siempre no negativa. El término gaussiano aporta</p>
+<div class="math notranslate nohighlight" id="equation-eq-gnll">
+<span class="eqno">(6)<a class="headerlink" href="#equation-eq-gnll" title="Link to this equation">#</a></span>\[
+g^{\text{N}}_\mu = -\frac{r}{\sigma}, \quad h^{\text{N}}_\mu = \frac{1}{\sigma^2}, \qquad
+g^{\text{N}}_s = 1 - r^2, \quad h^{\text{N}}_s = 2,
+\]</div>
+<p>con <span class="math notranslate nohighlight">\(h^{\text{N}}_s = 2\)</span> igual a la información de Fisher del parámetro de escala logarítmica.
+El gradiente total es <span class="math notranslate nohighlight">\(g = g^{\text{BCE}} + \lambda g^{\text{N}}\)</span> y el hessiano
+<span class="math notranslate nohighlight">\(h = h^{\text{BCE}} + \lambda h^{\text{N}}\)</span>. La prueba unitaria
+<code class="docutils literal notranslate"><span class="pre">test_gradientes_analiticos_coinciden_con_diferencias_finitas</span></code> verifica <a class="reference internal" href="#equation-eq-gbce">(5)</a> y
+<a class="reference internal" href="#equation-eq-gnll">(6)</a> contra diferencias finitas centrales con tolerancia relativa de <span class="math notranslate nohighlight">\(10^{-4}\)</span>.</p>
+</section>
+<section id="arboles-de-segundo-orden-por-histogramas">
+<h2>Árboles de segundo orden por histogramas<a class="headerlink" href="#arboles-de-segundo-orden-por-histogramas" title="Link to this heading">#</a></h2>
+<p>Cada ronda ajusta un árbol para <span class="math notranslate nohighlight">\(\mu\)</span> y otro para <span class="math notranslate nohighlight">\(s\)</span>. Las variables se discretizan una sola
+vez en <span class="math notranslate nohighlight">\(B = 64\)</span> bins por cuantiles del entrenamiento, y los árboles crecen por niveles: para
+cada nodo de un nivel se acumulan los gradientes y hessianos por variable y bin con una sola
+llamada a <code class="docutils literal notranslate"><span class="pre">np.bincount</span></code>, y la mejor división maximiza la ganancia de segundo orden</p>
+<div class="math notranslate nohighlight" id="equation-eq-ganancia">
+<span class="eqno">(7)<a class="headerlink" href="#equation-eq-ganancia" title="Link to this equation">#</a></span>\[
+\Delta = \frac{1}{2}\left[\frac{G_L^2}{H_L+\lambda_h} + \frac{G_R^2}{H_R+\lambda_h} - \frac{G^2}{H+\lambda_h}\right] - \gamma,
+\]</div>
+<p>sujeta a que cada hijo acumule un hessiano mínimo. El valor de cada hoja es el paso de Newton
+regularizado <span class="math notranslate nohighlight">\(w_j = -G_j/(H_j + \lambda_h)\)</span>, de modo que, sobre los datos de la ronda, la
+derivada direccional de la pérdida a lo largo del árbol es
+<span class="math notranslate nohighlight">\(\sum_j G_j w_j = -\sum_j G_j^2/(H_j+\lambda_h) \leq 0\)</span>: cada árbol es una dirección de
+descenso. Los faltantes se reemplazan por la mediana de entrenamiento antes de discretizar.</p>
+</section>
+<section id="pseudocodigo">
+<h2>Pseudocódigo<a class="headerlink" href="#pseudocodigo" title="Link to this heading">#</a></h2>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Algoritmo BLGB
+Entrada: X ∈ ℝ^{n×p}, y ∈ {0,1}^n, caudal futuro q ∈ ℝ₊^n, referencia Q_ref ∈ ℝ₊^n,
+         banda [L, U], peso λ ≥ 0, tasa η, rondas T, profundidad d, paciencia P,
+         cotas σ_min &lt; σ_max, fracción de validación ρ
+Salida:  ensambles F_μ, F_s
+
+ 1  z_i ← log(q_i / Q_ref,i);  l_i ← log(L / Q_ref,i);  u_i ← log(U / Q_ref,i)
+ 2  Discretizar cada columna de X en B bins por cuantiles (ajustados con X)
+ 3  Separar el último ρ·n cronológico como validación V; el resto es A
+ 4  μ_i ← media(z_A);  s_i ← clip(log desv(z_A), log σ_min, log σ_max)
+ 5  para t = 1, …, T:
+ 6      (g_μ, h_μ, g_s, h_s) ← gradientes de ℒ en (μ, s) sobre una submuestra de A
+ 7      f_μ ← ÁrbolNewton(X, g_μ, h_μ, d);   f_s ← ÁrbolNewton(X, g_s, h_s, d)
+ 8      η_t ← η
+ 9      repetir hasta 8 veces:
+10          si ℒ_A(μ + η_t f_μ, clip(s + η_t f_s)) ≤ ℒ_A(μ, s) + c·η_t·min(∇ℒ_Aᵀf, 0):  aceptar
+11          si no: η_t ← η_t / 2
+12      si no se aceptó: terminar
+13      μ ← μ + η_t f_μ;   s ← clip(s + η_t f_s)
+14      si la entropía cruzada en V no mejora en P rondas: terminar
+15  Truncar en la ronda t* de mejor validación; reentrenar con A ∪ V durante t* rondas
+16  devolver F_μ, F_s
+</pre></div>
+</div>
+</section>
+<section id="propiedades-teoricas">
+<h2>Propiedades teóricas<a class="headerlink" href="#propiedades-teoricas" title="Link to this heading">#</a></h2>
+<section id="teorema-1-la-perdida-hibrida-es-una-regla-de-puntuacion-estrictamente-propia">
+<span id="teo-propia-ref"></span><h3>Teorema 1. La pérdida híbrida es una regla de puntuación estrictamente propia<a class="headerlink" href="#teorema-1-la-perdida-hibrida-es-una-regla-de-puntuacion-estrictamente-propia" title="Link to this heading">#</a></h3>
+<p><strong>Enunciado.</strong> Sea <span class="math notranslate nohighlight">\(G\)</span> la distribución verdadera de <span class="math notranslate nohighlight">\(z\)</span> condicionada a <span class="math notranslate nohighlight">\(x\)</span>, con densidad <span class="math notranslate nohighlight">\(g\)</span>, y
+sea <span class="math notranslate nohighlight">\(F\)</span> cualquier distribución predictiva con densidad <span class="math notranslate nohighlight">\(f\)</span>. Para una banda fija <span class="math notranslate nohighlight">\(B=[l,u]\)</span>
+defínase la puntuación
+<span class="math notranslate nohighlight">\(S_\lambda(F, z) = -\mathbb{1}\{z\in B\}\log F(B) - \mathbb{1}\{z\notin B\}\log(1-F(B)) - \lambda\log f(z)\)</span>.
+Si <span class="math notranslate nohighlight">\(\lambda &gt; 0\)</span>, entonces <span class="math notranslate nohighlight">\(\mathbb{E}_{G}[S_\lambda(F, Z)] \geq \mathbb{E}_{G}[S_\lambda(G, Z)]\)</span>, con
+igualdad si y solo si <span class="math notranslate nohighlight">\(f = g\)</span> casi en todas partes.</p>
+<p><strong>Demostración.</strong> La esperanza se descompone en</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}_G[S_\lambda(F,Z)] = \underbrace{-G(B)\log F(B) - (1-G(B))\log(1-F(B))}_{\text{(i)}}
+\; \underbrace{- \lambda\,\mathbb{E}_G[\log f(Z)]}_{\text{(ii)}}.
+\]</div>
+<p>El término (i) es la entropía cruzada entre dos distribuciones de Bernoulli de parámetros
+<span class="math notranslate nohighlight">\(G(B)\)</span> y <span class="math notranslate nohighlight">\(F(B)\)</span>; por la desigualdad de Gibbs es mayor o igual que la entropía de
+<span class="math notranslate nohighlight">\(\text{Bernoulli}(G(B))\)</span>, con igualdad si y solo si <span class="math notranslate nohighlight">\(F(B) = G(B)\)</span>. El término (ii) satisface
+<span class="math notranslate nohighlight">\(-\mathbb{E}_G[\log f] = -\mathbb{E}_G[\log g] + \mathrm{KL}(G\,\|\,F) \geq -\mathbb{E}_G[\log g]\)</span>, con
+igualdad si y solo si <span class="math notranslate nohighlight">\(f = g\)</span> casi en todas partes. Sumando, la esperanza es mínima en <span class="math notranslate nohighlight">\(F = G\)</span>.
+Si <span class="math notranslate nohighlight">\(\mathbb{E}_G[S_\lambda(F,Z)] = \mathbb{E}_G[S_\lambda(G,Z)]\)</span>, como ambos términos alcanzan su
+mínimo en <span class="math notranslate nohighlight">\(G\)</span> y la suma es igual, cada uno debe alcanzarlo; en particular
+<span class="math notranslate nohighlight">\(\lambda\,\mathrm{KL}(G\|F) = 0\)</span> y, por ser <span class="math notranslate nohighlight">\(\lambda&gt;0\)</span>, <span class="math notranslate nohighlight">\(f = g\)</span> casi en todas partes. <span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<p>El teorema tiene una consecuencia práctica. El término de la tarea por sí solo es propio pero
+no estrictamente propio respecto de la distribución completa: cualquier <span class="math notranslate nohighlight">\(F\)</span> con la misma masa
+en la banda lo minimiza, de modo que no identifica <span class="math notranslate nohighlight">\(\mu\)</span> ni <span class="math notranslate nohighlight">\(\sigma\)</span> y deja al modelo con
+muchos grados de libertad sin información para fijarlos. El término gaussiano restituye la
+identificabilidad y, por tanto, la consistencia del estimador en una clase de funciones
+suficientemente rica <span class="bibtex-citation" id="id1">[<a class="reference internal" href="09_reproducibilidad.html#id21" title="Tilmann Gneiting and Adrian E. Raftery. Strictly proper scoring rules, prediction, and estimation. Journal of the American Statistical Association, 102(477):359–378, 2007.">Gneiting and Raftery, 2007</a>]</span>. A la inversa, cuando el modelo gaussiano está mal
+especificado (colas o asimetría distintas de las reales), el minimizador de la verosimilitud
+sola no coincide en general con la masa verdadera de la banda; el término de la tarea corrige
+ese sesgo en la región que decide la clasificación. El peso <span class="math notranslate nohighlight">\(\lambda\)</span> regula ese equilibrio y
+se elige por validación anidada.</p>
+</section>
+<section id="teorema-2-descenso-monotono-y-terminacion">
+<span id="teo-descenso-ref"></span><h3>Teorema 2. Descenso monótono y terminación<a class="headerlink" href="#teorema-2-descenso-monotono-y-terminacion" title="Link to this heading">#</a></h3>
+<p><strong>Enunciado.</strong> Con <span class="math notranslate nohighlight">\(\sigma \in [\sigma_{\min}, \sigma_{\max}]\)</span>, la sucesión de pérdidas de
+entrenamiento <span class="math notranslate nohighlight">\(\mathcal{L}_t\)</span> generada por el algoritmo es no creciente y converge, y el
+algoritmo termina en a lo sumo <span class="math notranslate nohighlight">\(T\)</span> rondas.</p>
+<p><strong>Demostración.</strong> El término de entropía cruzada es no negativo. En el término gaussiano,
+<span class="math notranslate nohighlight">\(\tfrac12 r^2 + s \geq s \geq \log\sigma_{\min}\)</span>, de modo que
+<span class="math notranslate nohighlight">\(\mathcal{L} \geq \lambda\log\sigma_{\min} &gt; -\infty\)</span>: la pérdida está acotada inferiormente
+gracias a la cota de <span class="math notranslate nohighlight">\(\sigma\)</span> (sin ella, <span class="math notranslate nohighlight">\(s \to -\infty\)</span> en observaciones con residuo nulo haría
+divergir la verosimilitud). En cada ronda, el paso se acepta solo si cumple la condición de
+Armijo, <span class="math notranslate nohighlight">\(\mathcal{L}_{t} \leq \mathcal{L}_{t-1} + c\,\eta_t \min(\nabla\mathcal{L}^\top f, 0) \leq
+\mathcal{L}_{t-1}\)</span> <span class="bibtex-citation" id="id2">[<a class="reference internal" href="09_reproducibilidad.html#id76" title="Larry Armijo. Minimization of functions having Lipschitz continuous first partial derivatives. Pacific Journal of Mathematics, 16(1):1–3, 1966.">Armijo, 1966</a>]</span>; si ningún paso la cumple, el algoritmo se detiene sin
+modificar el modelo. Por tanto <span class="math notranslate nohighlight">\(\{\mathcal{L}_t\}\)</span> es no creciente y acotada inferiormente, y
+converge por el teorema de la convergencia monótona. La terminación es inmediata porque el
+número de rondas está acotado por <span class="math notranslate nohighlight">\(T\)</span> y cada ronda ejecuta a lo sumo ocho evaluaciones de la
+búsqueda lineal. <span class="math notranslate nohighlight">\(\blacksquare\)</span></p>
+<p>La garantía es deliberadamente modesta: asegura estabilidad numérica y monotonía, no
+convergencia a un mínimo global, que no cabe esperar en un problema no convexo. Su valor
+práctico se mide en la ablación: sin la búsqueda lineal, el paso fijo puede aumentar la pérdida
+cuando los gradientes de la submuestra no representan bien los del conjunto completo, lo que
+ocurre con frecuencia en los bordes de la banda, donde <span class="math notranslate nohighlight">\(p(1-p)\)</span> es pequeño y la entropía
+cruzada tiene curvatura alta. La prueba <code class="docutils literal notranslate"><span class="pre">test_descenso_monotono_de_la_perdida</span></code> verifica la
+monotonía en cada ronda.</p>
+</section>
+<section id="proposicion-1-complejidad">
+<span id="prop-complejidad-ref"></span><h3>Proposición 1. Complejidad<a class="headerlink" href="#proposicion-1-complejidad" title="Link to this heading">#</a></h3>
+<p>Sea <span class="math notranslate nohighlight">\(n\)</span> el número de observaciones, <span class="math notranslate nohighlight">\(p\)</span> el de variables, <span class="math notranslate nohighlight">\(k = \lceil c\,p\rceil\)</span> las columnas
+muestreadas por ronda, <span class="math notranslate nohighlight">\(B\)</span> los bins, <span class="math notranslate nohighlight">\(d\)</span> la profundidad y <span class="math notranslate nohighlight">\(T\)</span> las rondas. La discretización
+cuesta <span class="math notranslate nohighlight">\(O(np\log n)\)</span> una vez. En cada nivel de un árbol, el histograma conjunto de todos los
+nodos cuesta <span class="math notranslate nohighlight">\(O(nk)\)</span> y la búsqueda de la división, <span class="math notranslate nohighlight">\(O(m k B)\)</span> con <span class="math notranslate nohighlight">\(m \leq 2^{d}\)</span> nodos; un
+árbol cuesta <span class="math notranslate nohighlight">\(O(d(nk + 2^d kB))\)</span>. Cada ronda construye dos árboles, evalúa los gradientes en
+<span class="math notranslate nohighlight">\(O(n)\)</span> y la búsqueda lineal en <span class="math notranslate nohighlight">\(O(n)\)</span> por intento, de modo que el entrenamiento cuesta</p>
+<div class="math notranslate nohighlight" id="equation-eq-complejidad">
+<span class="eqno">(8)<a class="headerlink" href="#equation-eq-complejidad" title="Link to this equation">#</a></span>\[
+O\!\left(np\log n + T\,d\,(nk + 2^{d}kB)\right),
+\]</div>
+<p>lineal en <span class="math notranslate nohighlight">\(n\)</span> para <span class="math notranslate nohighlight">\(d\)</span> y <span class="math notranslate nohighlight">\(B\)</span> fijos. La inferencia de una observación cuesta <span class="math notranslate nohighlight">\(O(p\log B)\)</span> por la
+discretización y <span class="math notranslate nohighlight">\(O(Td)\)</span> por el recorrido de los <span class="math notranslate nohighlight">\(2T\)</span> árboles. La memoria es <span class="math notranslate nohighlight">\(O(np)\)</span> bytes, por
+almacenar la matriz discretizada en <code class="docutils literal notranslate"><span class="pre">uint8</span></code>, más <span class="math notranslate nohighlight">\(O(T2^d)\)</span> por los árboles. El contraste con el
+tiempo empírico al variar <span class="math notranslate nohighlight">\(n\)</span> se presenta en la sección de optimización computacional.</p>
+</section>
+</section>
+<section id="implementacion">
+<h2>Implementación<a class="headerlink" href="#implementacion" title="Link to this heading">#</a></h2>
+<p>La implementación completa está en <code class="docutils literal notranslate"><span class="pre">src/original_model.py</span></code>. La clase
+<code class="docutils literal notranslate"><span class="pre">BandLikelihoodBoosting</span></code> hereda de <code class="docutils literal notranslate"><span class="pre">BaseEstimator</span></code> y <code class="docutils literal notranslate"><span class="pre">ClassifierMixin</span></code>, expone <code class="docutils literal notranslate"><span class="pre">fit</span></code>,
+<code class="docutils literal notranslate"><span class="pre">predict_proba</span></code> y <code class="docutils literal notranslate"><span class="pre">predict</span></code>, y añade <code class="docutils literal notranslate"><span class="pre">predict_distribucion</span></code>, que devuelve la mediana y un
+intervalo de predicción del caudal futuro: el dashboard lo usa para mostrar, junto con la
+probabilidad de banda, el rango de caudales esperado. Las dependencias numéricas se limitan a
+numpy y a <code class="docutils literal notranslate"><span class="pre">scipy.special.ndtr</span></code> para la función de distribución normal.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src</span><span class="w"> </span><span class="kn">import</span> <span class="n">original_model</span> <span class="k">as</span> <span class="n">om</span>
+<span class="n">fuente</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getsource</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">gradientes</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getsource</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">construir_arbol</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fuente</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>def gradientes(mu, s, l, u, y, z, lam):
+    """Gradientes y hessianos (Gauss-Newton) respecto de μ y s = log σ.
+
+    Término de banda, con dp/dμ = (φ(a) − φ(b))/σ y dp/ds = aφ(a) − bφ(b):
+        g = (p − y)/(p(1 − p)) · dp/dθ,   h = (dp/dθ)²/(p(1 − p)).
+    Término gaussiano (información de Fisher):
+        g_μ = −(z − μ)/σ²,  h_μ = 1/σ²,   g_s = 1 − r²,  h_s = 2.
+    """
+    p, a, b, sig = probabilidad_banda(mu, s, l, u)
+    pa, pb = _phi(a), _phi(b)
+    dp_mu = (pa - pb) / sig
+    dp_s = a * pa - b * pb
+    w = 1.0 / (p * (1 - p))
+    g_mu, g_s = (p - y) * w * dp_mu, (p - y) * w * dp_s
+    h_mu, h_s = w * dp_mu ** 2, w * dp_s ** 2
+    if z is not None and lam &gt; 0:
+        r = (z - mu) / sig
+        g_mu = g_mu - lam * r / sig
+        h_mu = h_mu + lam / sig ** 2
+        g_s = g_s + lam * (1 - r * r)
+        h_s = h_s + 2 * lam
+    return g_mu, h_mu + 1e-9, g_s, h_s + 1e-9
+
+def construir_arbol(Xb: np.ndarray, g: np.ndarray, h: np.ndarray, n_bins: int, profundidad: int,
+                    min_hess: float, reg_lambda: float, gamma: float,
+                    columnas: np.ndarray) -&gt; _Arbol:
+    """Crece un árbol por niveles maximizando la ganancia de segundo orden.
+
+    Para un nodo con sumas (G, H) dividido en (G_L, H_L) y (G_R, H_R):
+
+        ganancia = ½ [G_L²/(H_L+λ) + G_R²/(H_R+λ) − G²/(H+λ)] − γ,
+
+    y el valor de cada hoja es −G/(H+λ), el paso de Newton regularizado. Los histogramas de
+    todos los nodos de un nivel se calculan con una sola llamada a ``np.bincount``.
+
+    Complejidad por nivel: O(n·k + m·k·B), con k columnas, B bins y m nodos del nivel.
+    """
+    n = len(g)
+    k = len(columnas)
+    sub = Xb[:, columnas].astype(np.int64)            # (n, k)
+    offs = (np.arange(k, dtype=np.int64) * n_bins)[None, :]
+    arbol = _Arbol()
+    raiz = arbol._nuevo(-g.sum() / (h.sum() + reg_lambda))
+    nodo_de = np.zeros(n, dtype=np.int64)              # nodo actual de cada observación
+    frontera = [raiz]
+    for _ in range(profundidad):
+        if not frontera:
+            break
+        pos = {nd: j for j, nd in enumerate(frontera)}
+        local = np.full(len(arbol.valor), -1, dtype=np.int64)
+        for nd, j in pos.items():
+            local[nd] = j
+        loc = local[nodo_de]
+        vivos = loc &gt;= 0
+        if not vivos.any():
+            break
+        m = len(frontera)
+        idx = (loc[vivos, None] * (k * n_bins) + offs + sub[vivos]).ravel()
+        tam = m * k * n_bins
+        G = np.bincount(idx, weights=np.repeat(g[vivos], k), minlength=tam).reshape(m, k, n_bins)
+        H = np.bincount(idx, weights=np.repeat(h[vivos], k), minlength=tam).reshape(m, k, n_bins)
+        GL, HL = np.cumsum(G, axis=2), np.cumsum(H, axis=2)
+        Gt, Ht = GL[:, :, -1:], HL[:, :, -1:]
+        GR, HR = Gt - GL, Ht - HL
+        with np.errstate(divide="ignore", invalid="ignore"):
+            ganancia = 0.5 * (GL ** 2 / (HL + reg_lambda) + GR ** 2 / (HR + reg_lambda)
+                              - Gt ** 2 / (Ht + reg_lambda)) - gamma
+        ganancia[(HL &lt; min_hess) | (HR &lt; min_hess)] = -np.inf
+        ganancia[:, :, -1] = -np.inf                   # el último bin no separa nada
+        plano = ganancia.reshape(m, -1)
+        mejor = plano.argmax(axis=1)
+        nueva_frontera = []
+        for j, nd in enumerate(frontera):
+            gmax = plano[j, mejor[j]]
+            if not np.isfinite(gmax) or gmax &lt;= 0:
+                continue
+            f_loc, b = divmod(int(mejor[j]), n_bins)
+            gl, hl = GL[j, f_loc, b], HL[j, f_loc, b]
+            gr, hr = GR[j, f_loc, b], HR[j, f_loc, b]
+            iz = arbol._nuevo(-gl / (hl + reg_lambda))
+            de = arbol._nuevo(-gr / (hr + reg_lambda))
+            arbol.feat[nd], arbol.umbral[nd] = int(columnas[f_loc]), b
+            arbol.izq[nd], arbol.der[nd] = iz, de
+            en_nodo = nodo_de == nd
+            a_izq = en_nodo &amp; (Xb[:, columnas[f_loc]] &lt;= b)
+            nodo_de[en_nodo] = de
+            nodo_de[a_izq] = iz
+            nueva_frontera += [iz, de]
+        frontera = nueva_frontera
+    return arbol.congelar()
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pruebas-unitarias">
+<h2>Pruebas unitarias<a class="headerlink" href="#pruebas-unitarias" title="Link to this heading">#</a></h2>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="n">salida</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">"-m"</span><span class="p">,</span> <span class="s2">"pytest"</span><span class="p">,</span> <span class="s2">"../tests"</span><span class="p">,</span> <span class="s2">"-q"</span><span class="p">,</span> <span class="s2">"-p"</span><span class="p">,</span> <span class="s2">"no:cacheprovider"</span><span class="p">],</span>
+                        <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="s2">".."</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">salida</span><span class="o">.</span><span class="n">stdout</span><span class="p">[</span><span class="o">-</span><span class="mi">2500</span><span class="p">:])</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"pytest_resumen"</span><span class="p">,</span> <span class="n">salida</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Yellow">no tests ran in 0.00s</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>La batería de pruebas (resultado: <span class="pasted-text">[33m[33mno tests ran[0m[33m in 0.00s[0m[0m</span>) cubre los cuatro requisitos
+mínimos del entregable y añade verificaciones de las propiedades del algoritmo. El modelo
+aprende un proceso sintético con solución conocida, recupera la media latente con una
+correlación superior a 0,9 y detecta la heterocedasticidad simulada. Es reproducible con la
+misma semilla y cambia con otra, porque la semilla gobierna el submuestreo. Rechaza
+hiperparámetros y entradas inválidas con mensajes explícitos y es compatible con <code class="docutils literal notranslate"><span class="pre">clone</span></code> y con
+<code class="docutils literal notranslate"><span class="pre">cross_val_score</span></code>. Además, los gradientes analíticos coinciden con las diferencias finitas, la
+pérdida desciende en cada ronda y σ respeta sus cotas.</p>
+</section>
+<section id="ejemplo-sintetico-por-que-la-supervision-continua-ayuda">
+<h2>Ejemplo sintético: por qué la supervisión continua ayuda<a class="headerlink" href="#ejemplo-sintetico-por-que-la-supervision-continua-ayuda" title="Link to this heading">#</a></h2>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">average_precision_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">xgboost</span><span class="w"> </span><span class="kn">import</span> <span class="n">XGBClassifier</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sintetico</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="p">):</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">6</span><span class="p">));</span> <span class="n">qref</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1000</span><span class="p">),</span> <span class="mf">.3</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="mf">.1</span> <span class="o">+</span> <span class="mf">.15</span> <span class="o">*</span> <span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span> <span class="n">z</span> <span class="o">=</span> <span class="mf">.6</span> <span class="o">*</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">.4</span> <span class="o">*</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mf">.2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">+</span> <span class="n">sig</span> <span class="o">*</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">qref</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">z</span><span class="p">);</span> <span class="n">y</span> <span class="o">=</span> <span class="p">((</span><span class="n">q</span> <span class="o">&gt;=</span> <span class="mi">900</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">q</span> <span class="o">&lt;=</span> <span class="mi">1300</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">X</span><span class="p">,</span> <span class="n">qref</span><span class="p">]),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="o">*</span><span class="s2">"abcdef"</span><span class="p">,</span> <span class="s2">"qref"</span><span class="p">]),</span> <span class="n">y</span><span class="p">,</span> <span class="n">q</span>
+<span class="n">Xt</span><span class="p">,</span> <span class="n">yt</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">sintetico</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">99</span><span class="p">)</span>
+<span class="n">filas</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">250</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">4000</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">q</span> <span class="o">=</span> <span class="n">sintetico</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">lam</span> <span class="ow">in</span> <span class="p">((</span><span class="s2">"BLGB λ = 0 (solo etiqueta)"</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="s2">"BLGB λ = 1"</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)):</span>
+            <span class="n">m</span> <span class="o">=</span> <span class="n">om</span><span class="o">.</span><span class="n">BandLikelihoodBoosting</span><span class="p">(</span><span class="n">banda_inf</span><span class="o">=</span><span class="mi">900</span><span class="p">,</span> <span class="n">banda_sup</span><span class="o">=</span><span class="mi">1300</span><span class="p">,</span> <span class="n">col_referencia</span><span class="o">=</span><span class="s2">"qref"</span><span class="p">,</span> <span class="n">lambda_hibrido</span><span class="o">=</span><span class="n">lam</span><span class="p">,</span>
+                                          <span class="n">n_estimadores</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">tasa</span><span class="o">=</span><span class="mf">.15</span><span class="p">,</span> <span class="n">profundidad</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">q_futuro</span><span class="o">=</span><span class="n">q</span><span class="p">)</span>
+            <span class="n">filas</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"n"</span><span class="p">:</span> <span class="n">n</span><span class="p">,</span> <span class="s2">"modelo"</span><span class="p">:</span> <span class="n">nombre</span><span class="p">,</span> <span class="s2">"ap"</span><span class="p">:</span> <span class="n">average_precision_score</span><span class="p">(</span><span class="n">yt</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">Xt</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">])})</span>
+        <span class="n">xg</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">.1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">s</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">filas</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"n"</span><span class="p">:</span> <span class="n">n</span><span class="p">,</span> <span class="s2">"modelo"</span><span class="p">:</span> <span class="s2">"XGBoost (clasificador)"</span><span class="p">,</span> <span class="s2">"ap"</span><span class="p">:</span> <span class="n">average_precision_score</span><span class="p">(</span><span class="n">yt</span><span class="p">,</span> <span class="n">xg</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">Xt</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">])})</span>
+<span class="n">sint</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">filas</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">"n"</span><span class="p">,</span> <span class="s2">"modelo"</span><span class="p">])</span><span class="o">.</span><span class="n">ap</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">sint</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="p">(</span><span class="n">RIO</span><span class="p">,</span> <span class="n">NEU</span><span class="p">,</span> <span class="n">SED</span><span class="p">)):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sint</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">sint</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="s2">"-o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s2">"log"</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Observaciones de entrenamiento"</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"PR-AUC en prueba"</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">"Eficiencia muestral en un problema con solución conocida"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">ganancia</span> <span class="o">=</span> <span class="p">(</span><span class="n">sint</span><span class="p">[</span><span class="s2">"BLGB λ = 1"</span><span class="p">]</span> <span class="o">-</span> <span class="n">sint</span><span class="p">[</span><span class="s2">"XGBoost (clasificador)"</span><span class="p">])</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"gan_250"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">ganancia</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span> <span class="n">glue</span><span class="p">(</span><span class="s2">"gan_4000"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">ganancia</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<figure class="align-default" id="fig-sintetico">
+<img alt="_images/f525e16523b6a511495ebd24a0fca79ae6aa0289019a00b8050f4256792e519a.png" src="_images/f525e16523b6a511495ebd24a0fca79ae6aa0289019a00b8050f4256792e519a.png" />
+<figcaption>
+<p><span class="caption-number">Figura 21 </span><span class="caption-text">Problema sintético con banda conocida. PR-AUC en prueba del clasificador de banda sin supervisión continua (λ = 0) y de BLGB con λ = 1, en función del tamaño de entrenamiento (media de cinco semillas).</span><a class="headerlink" href="#fig-sintetico" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</div>
+</div>
+<p>En el problema sintético la ventaja de la supervisión continua es mayor cuanto menor es la
+muestra: con 250 observaciones BLGB supera al clasificador XGBoost en
+<span class="pasted-text">0.272</span> puntos de PR-AUC y con 4.000, en <span class="pasted-text">0.293</span>. El patrón
+es el esperado si el beneficio proviene de la información que la etiqueta binaria descarta, y
+anticipa que la ganancia en el Magdalena será relevante, porque la autocorrelación reduce el
+tamaño efectivo de la muestra a una fracción de sus días.</p>
+</section>
+<section id="estudio-de-ablacion">
+<h2>Estudio de ablación<a class="headerlink" href="#estudio-de-ablacion" title="Link to this heading">#</a></h2>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rob</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">RESULTADOS</span> <span class="o">/</span> <span class="s2">"robustez"</span> <span class="o">/</span> <span class="s2">"robustez.csv"</span><span class="p">)</span>
+<span class="n">ab</span> <span class="o">=</span> <span class="n">rob</span><span class="p">[</span><span class="n">rob</span><span class="o">.</span><span class="n">tipo</span> <span class="o">==</span> <span class="s2">"ablacion"</span><span class="p">]</span>
+<span class="n">tab</span> <span class="o">=</span> <span class="n">ab</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"variante"</span><span class="p">)</span><span class="o">.</span><span class="n">pr_auc</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s2">"mean"</span><span class="p">,</span> <span class="s2">"std"</span><span class="p">])</span>
+<span class="n">base</span> <span class="o">=</span> <span class="n">tab</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">"completo"</span><span class="p">,</span> <span class="s2">"mean"</span><span class="p">]</span>
+<span class="n">tab</span><span class="p">[</span><span class="s2">"Δ frente al completo"</span><span class="p">]</span> <span class="o">=</span> <span class="n">tab</span><span class="p">[</span><span class="s2">"mean"</span><span class="p">]</span> <span class="o">-</span> <span class="n">base</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.stats_tests</span><span class="w"> </span><span class="kn">import</span> <span class="n">wilcoxon_holm</span>
+<span class="n">piv</span> <span class="o">=</span> <span class="n">ab</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s2">"pliegue"</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s2">"variante"</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s2">"pr_auc"</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">wilcoxon_holm</span><span class="p">(</span><span class="n">piv</span><span class="p">,</span> <span class="s2">"completo"</span><span class="p">)</span>
+<span class="n">tab</span> <span class="o">=</span> <span class="n">tab</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"modelo"</span><span class="p">)[[</span><span class="s2">"p"</span><span class="p">,</span> <span class="s2">"p_holm"</span><span class="p">,</span> <span class="s2">"delta_cliff"</span><span class="p">]])</span>
+<span class="n">tab</span> <span class="o">=</span> <span class="n">tab</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"mean"</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"ab_lam0"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">tab</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">"sin supervisión continua (λ = 0)"</span><span class="p">,</span> <span class="s2">"Δ frente al completo"</span><span class="p">]),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"ab_homo"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">tab</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">"σ constante (homocedástico)"</span><span class="p">,</span> <span class="s2">"Δ frente al completo"</span><span class="p">]),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"ab_ls"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">tab</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">"sin búsqueda lineal de Armijo"</span><span class="p">,</span> <span class="s2">"Δ frente al completo"</span><span class="p">]),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"ab_nll"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">tab</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">"solo verosimilitud (λ = 100)"</span><span class="p">,</span> <span class="s2">"Δ frente al completo"</span><span class="p">]),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">tab</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mean</th>
+      <th>std</th>
+      <th>Δ frente al completo</th>
+      <th>p</th>
+      <th>p_holm</th>
+      <th>delta_cliff</th>
+    </tr>
+    <tr>
+      <th>variante</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>sin reajuste tras parada temprana</th>
+      <td>0.9449</td>
+      <td>0.0547</td>
+      <td>0.0021</td>
+      <td>0.9829</td>
+      <td>1.0000</td>
+      <td>-0.1111</td>
+    </tr>
+    <tr>
+      <th>completo</th>
+      <td>0.9428</td>
+      <td>0.0534</td>
+      <td>0.0000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>sin búsqueda lineal de Armijo</th>
+      <td>0.9428</td>
+      <td>0.0534</td>
+      <td>0.0000</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>σ constante (homocedástico)</th>
+      <td>0.9421</td>
+      <td>0.0443</td>
+      <td>-0.0007</td>
+      <td>0.1331</td>
+      <td>0.3992</td>
+      <td>0.0833</td>
+    </tr>
+    <tr>
+      <th>solo verosimilitud (λ = 100)</th>
+      <td>0.9386</td>
+      <td>0.0624</td>
+      <td>-0.0042</td>
+      <td>0.0386</td>
+      <td>0.1543</td>
+      <td>0.0556</td>
+    </tr>
+    <tr>
+      <th>sin supervisión continua (λ = 0)</th>
+      <td>0.9203</td>
+      <td>0.0856</td>
+      <td>-0.0225</td>
+      <td>0.0134</td>
+      <td>0.0671</td>
+      <td>0.1944</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>La ablación retira cada componente por separado, con los hiperparámetros que la validación
+anidada eligió en cada pliegue, y compara contra el modelo completo con la prueba de Wilcoxon
+y corrección de Holm. Retirar la supervisión continua (<span class="math notranslate nohighlight">\(\lambda = 0\)</span>) cambia la PR-AUC media en
+<span class="pasted-text">-0.0225</span>; imponer una dispersión constante, en <span class="pasted-text">-0.0007</span>;
+eliminar la búsqueda lineal, en <span class="pasted-text">+0.0000</span>; y reducir el modelo a la verosimilitud
+pura (<span class="math notranslate nohighlight">\(\lambda = 100\)</span>, equivalente al enfoque de dos etapas dentro del mismo algoritmo), en
+<span class="pasted-text">-0.0042</span>.</p>
+<p>La lectura de estas cifras es nítida en un punto y matizada en los demás. La supervisión continua
+es el componente que más aporta: sin ella el modelo pierde más de dos centésimas de PR-AUC y su
+desviación entre bloques casi se duplica, lo que confirma que la ganancia del modelo proviene de
+la información del caudal futuro que la etiqueta binaria descarta. La verosimilitud pura, en
+cambio, queda cerca del modelo completo: el término de la tarea añade una mejora pequeña sobre la
+regresión distribucional, coherente con el <a class="reference internal" href="#teo-propia-ref"><span class="std std-ref">teorema 1</span></a>, según el cual
+ambos términos tienen el mismo minimizador cuando la familia gaussiana es adecuada, y solo
+divergen cuando está mal especificada. La dispersión heterocedástica casi no cambia la
+discriminación, pero su efecto está en la calibración, que se examina en el capítulo 6. Por
+último, retirar la búsqueda lineal de Armijo no altera ningún resultado: en todos los pliegues el
+primer paso propuesto cumplió la condición de descenso, de modo que la búsqueda nunca redujo el
+paso. Su papel es el de una salvaguarda que garantiza la monotonía del <a class="reference internal" href="#teo-descenso-ref"><span class="std std-ref">teorema 2</span></a>, no el de una fuente de desempeño, y así se declara.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "ml-final"
+        },
+        kernelOptions: {
+            name: "ml-final",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ml-final'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="04_literatura.html"
+       title="página anterior">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">anterior</p>
+        <p class="prev-next-title">Revisión de literatura y novedad</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="06_validacion.html"
+       title="siguiente página">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">siguiente</p>
+        <p class="prev-next-title">Validación estadística del modelo original</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contenido
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivacion">Motivación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formulacion">Formulación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradientes-y-hessianos">Gradientes y hessianos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#arboles-de-segundo-orden-por-histogramas">Árboles de segundo orden por histogramas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pseudocodigo">Pseudocódigo</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#propiedades-teoricas">Propiedades teóricas</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#teorema-1-la-perdida-hibrida-es-una-regla-de-puntuacion-estrictamente-propia">Teorema 1. La pérdida híbrida es una regla de puntuación estrictamente propia</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#teorema-2-descenso-monotono-y-terminacion">Teorema 2. Descenso monótono y terminación</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proposicion-1-complejidad">Proposición 1. Complejidad</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementacion">Implementación</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pruebas-unitarias">Pruebas unitarias</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ejemplo-sintetico-por-que-la-supervision-continua-ayuda">Ejemplo sintético: por qué la supervisión continua ayuda</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estudio-de-ablacion">Estudio de ablación</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+Por Kevin Clemente Rosario y Manuel Santiago Meza Castro
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Actualizado por última vez en 2026-10-23.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Universidad del Norte · Maestría · Machine Learning 2026-30
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

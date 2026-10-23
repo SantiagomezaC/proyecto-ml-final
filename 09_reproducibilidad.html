@@ -1,0 +1,1178 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Reproducibilidad y bibliografía &#8212; Descarga efectiva en el río Magdalena</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="_static/documentation_options.js?v=78d55cf8"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Haz clic para mostrar';</script>
+    <script>let toggleHintHide = 'Haz clic para ocultar';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script src="_static/translations.js?v=d190bf04"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '09_reproducibilidad';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="_static/logo.png"/>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="prev" title="Conclusiones y limitaciones" href="08_conclusiones.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="es"/>
+  <meta name="docsearch:version" content="" />
+    <meta name="docbuild:last-update" content="2026-10-23"/>
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Saltar al contenido principal</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Volver arriba</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Advertencia de versión"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Navegación del sitio">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="En esta página">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Descarga efectiva en el río Magdalena - Home"/>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Descarga efectiva en el río Magdalena - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Descarga efectiva en el río Magdalena
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Proyecto</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Trazabilidad de correcciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_datos.html">Datos: ETL y análisis exploratorio</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos benchmark (Entregable 2)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="03_benchmarks.html">Modelos benchmark: diseño experimental</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="03a_clasificacion.html">Resultados de clasificación</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03b_optimizacion.html">Comparación de los métodos de optimización</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03c_computacional.html">Optimización computacional</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03d_regresion.html">Regresión del caudal a quince días</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03e_comparacion.html">Comparación estadística de los benchmarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03f_interpretabilidad.html">Interpretabilidad global y local</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelo original (Entregable 3)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="04_literatura.html">Revisión de literatura y novedad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_modelo_original.html">Modelo original: Band-Likelihood Gradient Boosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_validacion.html">Validación estadística del modelo original</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Producto y cierre</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07_dashboard.html">Dashboard y despliegue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_conclusiones.html">Conclusiones y limitaciones</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Reproducibilidad y bibliografía</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/SantiagomezaC/proyecto-ml-final" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Repositorio de origen"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Descarga esta pagina">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/09_reproducibilidad.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Descargar archivo fuente"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Imprimir en PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Modo de pantalla completa"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Tema" data-bs-title="Tema"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Claro"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Oscuro"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="Sistema"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Reproducibilidad y bibliografía</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contenido </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entorno">Entorno</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semillas">Semillas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-maestra-de-experimentos">Tabla maestra de experimentos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#como-reproducir-los-resultados">Cómo reproducir los resultados</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliografia">Bibliografía</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="reproducibilidad-y-bibliografia">
+<h1>Reproducibilidad y bibliografía<a class="headerlink" href="#reproducibilidad-y-bibliografia" title="Link to this heading">#</a></h1>
+<section id="entorno">
+<h2>Entorno<a class="headerlink" href="#entorno" title="Link to this heading">#</a></h2>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">platform</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">".."</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">importlib.metadata</span><span class="w"> </span><span class="kn">import</span> <span class="n">version</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">SEED</span><span class="p">,</span> <span class="n">RESULTADOS</span>
+<span class="n">libs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"numpy"</span><span class="p">,</span> <span class="s2">"pandas"</span><span class="p">,</span> <span class="s2">"scipy"</span><span class="p">,</span> <span class="s2">"scikit-learn"</span><span class="p">,</span> <span class="s2">"imbalanced-learn"</span><span class="p">,</span> <span class="s2">"xgboost"</span><span class="p">,</span> <span class="s2">"optuna"</span><span class="p">,</span> <span class="s2">"deap"</span><span class="p">,</span> <span class="s2">"shap"</span><span class="p">,</span> <span class="s2">"lime"</span><span class="p">,</span>
+        <span class="s2">"statsmodels"</span><span class="p">,</span> <span class="s2">"arch"</span><span class="p">,</span> <span class="s2">"ngboost"</span><span class="p">,</span> <span class="s2">"faiss-cpu"</span><span class="p">,</span> <span class="s2">"dash"</span><span class="p">,</span> <span class="s2">"dash-bootstrap-components"</span><span class="p">,</span> <span class="s2">"plotly"</span><span class="p">,</span> <span class="s2">"jupyter-book"</span><span class="p">]</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"versión"</span><span class="p">:</span> <span class="p">{</span><span class="n">l</span><span class="p">:</span> <span class="n">version</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">libs</span><span class="p">}</span> <span class="o">|</span> <span class="p">{</span><span class="s2">"python"</span><span class="p">:</span> <span class="n">platform</span><span class="o">.</span><span class="n">python_version</span><span class="p">()}})</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>versión</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>numpy</th>
+      <td>1.26.4</td>
+    </tr>
+    <tr>
+      <th>pandas</th>
+      <td>2.2.3</td>
+    </tr>
+    <tr>
+      <th>scipy</th>
+      <td>1.14.1</td>
+    </tr>
+    <tr>
+      <th>scikit-learn</th>
+      <td>1.5.2</td>
+    </tr>
+    <tr>
+      <th>imbalanced-learn</th>
+      <td>0.12.4</td>
+    </tr>
+    <tr>
+      <th>xgboost</th>
+      <td>2.1.3</td>
+    </tr>
+    <tr>
+      <th>optuna</th>
+      <td>4.1.0</td>
+    </tr>
+    <tr>
+      <th>deap</th>
+      <td>1.4.1</td>
+    </tr>
+    <tr>
+      <th>shap</th>
+      <td>0.46.0</td>
+    </tr>
+    <tr>
+      <th>lime</th>
+      <td>0.2.0.1</td>
+    </tr>
+    <tr>
+      <th>statsmodels</th>
+      <td>0.14.4</td>
+    </tr>
+    <tr>
+      <th>arch</th>
+      <td>7.2.0</td>
+    </tr>
+    <tr>
+      <th>ngboost</th>
+      <td>0.5.1</td>
+    </tr>
+    <tr>
+      <th>faiss-cpu</th>
+      <td>1.9.0</td>
+    </tr>
+    <tr>
+      <th>dash</th>
+      <td>2.18.2</td>
+    </tr>
+    <tr>
+      <th>dash-bootstrap-components</th>
+      <td>1.6.0</td>
+    </tr>
+    <tr>
+      <th>plotly</th>
+      <td>5.24.1</td>
+    </tr>
+    <tr>
+      <th>jupyter-book</th>
+      <td>1.0.3</td>
+    </tr>
+    <tr>
+      <th>python</th>
+      <td>3.11.16</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Todas las versiones están fijadas en <code class="docutils literal notranslate"><span class="pre">requirements-dev.txt</span></code> (experimentación y libro) y en
+<code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> (dashboard en producción). Los resultados se obtuvieron en Windows 11 con un
+procesador Intel Core i7-1255U y 15,7 GB de memoria, sin GPU.</p>
+</section>
+<section id="semillas">
+<h2>Semillas<a class="headerlink" href="#semillas" title="Link to this heading">#</a></h2>
+<p>La semilla global es <code class="docutils literal notranslate"><span class="pre">SEED</span> <span class="pre">=</span> <span class="pre">42</span></code>, definida una sola vez en <code class="docutils literal notranslate"><span class="pre">src/config.py</span></code>. La función
+<code class="docutils literal notranslate"><span class="pre">fijar_semillas</span></code> la propaga a los generadores de Python y numpy; cada estimador la recibe en
+<code class="docutils literal notranslate"><span class="pre">random_state</span></code> (scikit-learn, XGBoost, imbalanced-learn y el modelo original), el muestreador
+TPE de Optuna en <code class="docutils literal notranslate"><span class="pre">seed</span></code> y el algoritmo genético la usa tanto en el generador de numpy que crea
+la población inicial como en el módulo <code class="docutils literal notranslate"><span class="pre">random</span></code> que emplea DEAP en la selección, el cruce y la
+mutación. La sensibilidad a la semilla se evaluó explícitamente con cinco semillas (capítulo 6).</p>
+</section>
+<section id="tabla-maestra-de-experimentos">
+<h2>Tabla maestra de experimentos<a class="headerlink" href="#tabla-maestra-de-experimentos" title="Link to this heading">#</a></h2>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">src.analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">tabla_pliegues</span>
+<span class="n">partes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">carpeta</span><span class="p">,</span> <span class="n">tarea</span> <span class="ow">in</span> <span class="p">((</span><span class="s2">"clf_calamar"</span><span class="p">,</span> <span class="s2">"clasificación"</span><span class="p">),</span> <span class="p">(</span><span class="s2">"reg_calamar"</span><span class="p">,</span> <span class="s2">"regresión"</span><span class="p">),</span> <span class="p">(</span><span class="s2">"original_calamar"</span><span class="p">,</span> <span class="s2">"clasificación"</span><span class="p">)):</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">tabla_pliegues</span><span class="p">(</span><span class="n">carpeta</span><span class="p">);</span> <span class="n">t</span><span class="p">[</span><span class="s2">"tarea"</span><span class="p">]</span> <span class="o">=</span> <span class="n">tarea</span>
+    <span class="n">partes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="n">largo</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">partes</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">cargar_carpeta</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{(</span><span class="n">r</span><span class="p">[</span><span class="s2">"modelo"</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="s2">"balanceo"</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="s2">"optimizador"</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="s2">"pliegue"</span><span class="p">]):</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">"params"</span><span class="p">])</span>
+          <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"clf_calamar"</span><span class="p">,</span> <span class="s2">"reg_calamar"</span><span class="p">,</span> <span class="s2">"original_calamar"</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">cargar_carpeta</span><span class="p">(</span><span class="n">c</span><span class="p">)}</span>
+<span class="n">largo</span><span class="p">[</span><span class="s2">"hiperparametros"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">params</span><span class="p">[(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">)]</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">largo</span><span class="o">.</span><span class="n">modelo</span><span class="p">,</span> <span class="n">largo</span><span class="o">.</span><span class="n">balanceo</span><span class="p">,</span> <span class="n">largo</span><span class="o">.</span><span class="n">optimizador</span><span class="p">,</span> <span class="n">largo</span><span class="o">.</span><span class="n">pliegue</span><span class="p">)]</span>
+<span class="n">largo</span><span class="p">[</span><span class="s2">"semilla"</span><span class="p">]</span> <span class="o">=</span> <span class="n">SEED</span>
+<span class="n">metricas</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"pr_auc"</span><span class="p">,</span> <span class="s2">"roc_auc"</span><span class="p">,</span> <span class="s2">"f1"</span><span class="p">,</span> <span class="s2">"precision"</span><span class="p">,</span> <span class="s2">"recall"</span><span class="p">,</span> <span class="s2">"accuracy"</span><span class="p">,</span> <span class="s2">"brier"</span><span class="p">,</span> <span class="s2">"rmse"</span><span class="p">,</span> <span class="s2">"mae"</span><span class="p">,</span> <span class="s2">"r2"</span><span class="p">,</span> <span class="s2">"mape"</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">largo</span><span class="p">]</span>
+<span class="n">agg</span> <span class="o">=</span> <span class="n">largo</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s2">"tarea"</span><span class="p">,</span> <span class="s2">"modelo"</span><span class="p">,</span> <span class="s2">"balanceo"</span><span class="p">,</span> <span class="s2">"optimizador"</span><span class="p">])</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+    <span class="o">**</span><span class="p">{</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">_media"</span><span class="p">:</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s2">"mean"</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">metricas</span><span class="p">},</span> <span class="o">**</span><span class="p">{</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">_desv"</span><span class="p">:</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s2">"std"</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">metricas</span><span class="p">},</span>
+    <span class="n">tiempo_total_s</span><span class="o">=</span><span class="p">(</span><span class="s2">"t_opt"</span><span class="p">,</span> <span class="s2">"sum"</span><span class="p">),</span> <span class="n">evaluaciones</span><span class="o">=</span><span class="p">(</span><span class="s2">"n_eval"</span><span class="p">,</span> <span class="s2">"sum"</span><span class="p">),</span> <span class="n">pliegues</span><span class="o">=</span><span class="p">(</span><span class="s2">"pliegue"</span><span class="p">,</span> <span class="s2">"nunique"</span><span class="p">))</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">agg</span><span class="p">[</span><span class="s2">"semilla"</span><span class="p">]</span> <span class="o">=</span> <span class="n">SEED</span>
+<span class="n">largo</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">RESULTADOS</span> <span class="o">/</span> <span class="s2">"tabla_maestra_por_pliegue.csv"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">agg</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">RESULTADOS</span> <span class="o">/</span> <span class="s2">"tabla_maestra.csv"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">agg</span><span class="p">)</span><span class="si">}</span><span class="s2"> combinaciones (</span><span class="si">{</span><span class="p">(</span><span class="n">agg</span><span class="o">.</span><span class="n">tarea</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'clasificación'</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> de clasificación, "</span>
+      <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="p">(</span><span class="n">agg</span><span class="o">.</span><span class="n">tarea</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">'regresión'</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2"> de regresión) y </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">largo</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> registros por pliegue."</span><span class="p">)</span>
+<span class="n">agg</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>144 combinaciones (116 de clasificación, 28 de regresión) y 1,728 registros por pliegue.
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>tarea</th>
+      <th>modelo</th>
+      <th>balanceo</th>
+      <th>optimizador</th>
+      <th>pr_auc_media</th>
+      <th>roc_auc_media</th>
+      <th>f1_media</th>
+      <th>precision_media</th>
+      <th>recall_media</th>
+      <th>accuracy_media</th>
+      <th>...</th>
+      <th>accuracy_desv</th>
+      <th>brier_desv</th>
+      <th>rmse_desv</th>
+      <th>mae_desv</th>
+      <th>r2_desv</th>
+      <th>mape_desv</th>
+      <th>tiempo_total_s</th>
+      <th>evaluaciones</th>
+      <th>pliegues</th>
+      <th>semilla</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>clasificación</td>
+      <td>arbol</td>
+      <td>adasyn</td>
+      <td>bayes</td>
+      <td>0.823377</td>
+      <td>0.949944</td>
+      <td>0.747056</td>
+      <td>0.645116</td>
+      <td>0.929716</td>
+      <td>0.865033</td>
+      <td>...</td>
+      <td>0.056905</td>
+      <td>0.040648</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>603.568744</td>
+      <td>192</td>
+      <td>12</td>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>clasificación</td>
+      <td>arbol</td>
+      <td>adasyn</td>
+      <td>genetico</td>
+      <td>0.819597</td>
+      <td>0.945409</td>
+      <td>0.736796</td>
+      <td>0.637943</td>
+      <td>0.917673</td>
+      <td>0.860405</td>
+      <td>...</td>
+      <td>0.058249</td>
+      <td>0.041865</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>591.355474</td>
+      <td>192</td>
+      <td>12</td>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>clasificación</td>
+      <td>arbol</td>
+      <td>adasyn</td>
+      <td>grid</td>
+      <td>0.817331</td>
+      <td>0.946920</td>
+      <td>0.760622</td>
+      <td>0.660727</td>
+      <td>0.939898</td>
+      <td>0.871537</td>
+      <td>...</td>
+      <td>0.061336</td>
+      <td>0.046960</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>579.468026</td>
+      <td>192</td>
+      <td>12</td>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>clasificación</td>
+      <td>arbol</td>
+      <td>adasyn</td>
+      <td>random</td>
+      <td>0.811542</td>
+      <td>0.946119</td>
+      <td>0.755920</td>
+      <td>0.651948</td>
+      <td>0.939623</td>
+      <td>0.869594</td>
+      <td>...</td>
+      <td>0.061602</td>
+      <td>0.046401</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>640.133744</td>
+      <td>192</td>
+      <td>12</td>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>clasificación</td>
+      <td>arbol</td>
+      <td>balanced</td>
+      <td>bayes</td>
+      <td>0.834009</td>
+      <td>0.955161</td>
+      <td>0.774157</td>
+      <td>0.689797</td>
+      <td>0.911165</td>
+      <td>0.885921</td>
+      <td>...</td>
+      <td>0.047243</td>
+      <td>0.028558</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>209.150589</td>
+      <td>192</td>
+      <td>12</td>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>clasificación</td>
+      <td>arbol</td>
+      <td>balanced</td>
+      <td>genetico</td>
+      <td>0.858403</td>
+      <td>0.958021</td>
+      <td>0.779494</td>
+      <td>0.691585</td>
+      <td>0.920481</td>
+      <td>0.888873</td>
+      <td>...</td>
+      <td>0.040021</td>
+      <td>0.025360</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>209.610429</td>
+      <td>192</td>
+      <td>12</td>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>clasificación</td>
+      <td>arbol</td>
+      <td>balanced</td>
+      <td>grid</td>
+      <td>0.834966</td>
+      <td>0.953047</td>
+      <td>0.765905</td>
+      <td>0.668263</td>
+      <td>0.930796</td>
+      <td>0.872748</td>
+      <td>...</td>
+      <td>0.060749</td>
+      <td>0.031675</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>190.795915</td>
+      <td>192</td>
+      <td>12</td>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>clasificación</td>
+      <td>arbol</td>
+      <td>balanced</td>
+      <td>random</td>
+      <td>0.833961</td>
+      <td>0.949313</td>
+      <td>0.769216</td>
+      <td>0.687024</td>
+      <td>0.909654</td>
+      <td>0.883668</td>
+      <td>...</td>
+      <td>0.052558</td>
+      <td>0.028839</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>214.925280</td>
+      <td>192</td>
+      <td>12</td>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>clasificación</td>
+      <td>arbol</td>
+      <td>ninguno</td>
+      <td>bayes</td>
+      <td>0.848508</td>
+      <td>0.954955</td>
+      <td>0.753114</td>
+      <td>0.731742</td>
+      <td>0.799189</td>
+      <td>0.888580</td>
+      <td>...</td>
+      <td>0.050047</td>
+      <td>0.026237</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>234.419083</td>
+      <td>192</td>
+      <td>12</td>
+      <td>42</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>clasificación</td>
+      <td>arbol</td>
+      <td>ninguno</td>
+      <td>genetico</td>
+      <td>0.842621</td>
+      <td>0.960224</td>
+      <td>0.785632</td>
+      <td>0.782409</td>
+      <td>0.799907</td>
+      <td>0.910824</td>
+      <td>...</td>
+      <td>0.027868</td>
+      <td>0.018810</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>224.630224</td>
+      <td>192</td>
+      <td>12</td>
+      <td>42</td>
+    </tr>
+  </tbody>
+</table>
+<p>10 rows × 30 columns</p>
+</div></div></div>
+</div>
+<p>La tabla maestra (<code class="docutils literal notranslate"><span class="pre">results/tabla_maestra.csv</span></code>) contiene una fila por combinación con la media y
+la desviación de cada métrica del bucle externo, el tiempo total, el número de evaluaciones y la
+semilla; <code class="docutils literal notranslate"><span class="pre">results/tabla_maestra_por_pliegue.csv</span></code> agrega los hiperparámetros elegidos en cada
+pliegue externo. Las 112 combinaciones de clasificación, las 28 de regresión y las variantes del
+modelo original y de los métodos distribucionales comparten el mismo esquema.</p>
+</section>
+<section id="como-reproducir-los-resultados">
+<h2>Cómo reproducir los resultados<a class="headerlink" href="#como-reproducir-los-resultados" title="Link to this heading">#</a></h2>
+<p>El README del repositorio enumera los comandos en orden. Los cómputos costosos (la validación
+anidada de los 140 modelos y del modelo original) se guardan como resultados versionados en
+<code class="docutils literal notranslate"><span class="pre">results/</span></code>, y los cuadernos de este libro los leen y regeneran tablas y figuras; el código que
+los produce está en <code class="docutils literal notranslate"><span class="pre">scripts/</span></code> y <code class="docutils literal notranslate"><span class="pre">src/</span></code> y se ejecuta de principio a fin con los comandos del
+README. Las pruebas unitarias se ejecutan con <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">pytest</span></code>.</p>
+</section>
+<section id="bibliografia">
+<h2>Bibliografía<a class="headerlink" href="#bibliografia" title="Link to this heading">#</a></h2>
+<div class="docutils container" id="id1">
+<div role="list" class="citation-list">
+<div class="citation" id="id7" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<p>Juan D. Restrepo and Björn Kjerfve. Magdalena river: interannual variability (1975–1995) and revised water discharge and sediment load estimates. <em>Journal of Hydrology</em>, 235(1-2):137–149, 2000.</p>
+</div>
+<div class="citation" id="id6" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
+<p>John D. Milliman and James P. M. Syvitski. Geomorphic/tectonic control of sediment discharge to the ocean: the importance of small mountainous rivers. <em>The Journal of Geology</em>, 100(5):525–544, 1992.</p>
+</div>
+<div class="citation" id="id2" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></span>
+<p>M. Gordon Wolman and John P. Miller. Magnitude and frequency of forces in geomorphic processes. <em>The Journal of Geology</em>, 68(1):54–74, 1960.</p>
+</div>
+<div class="citation" id="id74" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
+<p>IDEAM. Consulta y descarga de datos hidrometeorológicos (DHIME). <a class="reference external" href="http://dhime.ideam.gov.co">http://dhime.ideam.gov.co</a>, 2026. Instituto de Hidrología, Meteorología y Estudios Ambientales de Colombia.</p>
+</div>
+<div class="citation" id="id4" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></span>
+<p>David B. Nash. Effective sediment-transporting discharge from magnitude-frequency analysis. <em>The Journal of Geology</em>, 102(1):79–95, 1994.</p>
+</div>
+<div class="citation" id="id75" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></span>
+<p>Takaya Saito and Marc Rehmsmeier. The precision-recall plot is more informative than the ROC plot when evaluating binary classifiers on imbalanced datasets. <em>PLOS ONE</em>, 10(3):e0118432, 2015.</p>
+</div>
+<div class="citation" id="id73" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></span>
+<p>Yoav Benjamini and Yosef Hochberg. Controlling the false discovery rate: a practical and powerful approach to multiple testing. <em>Journal of the Royal Statistical Society: Series B (Methodological)</em>, 57(1):289–300, 1995.</p>
+</div>
+<div class="citation" id="id64" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></span>
+<p>Robert B. Cleveland, William S. Cleveland, Jean E. McRae, and Irma Terpenning. STL: a seasonal-trend decomposition procedure based on loess. <em>Journal of Official Statistics</em>, 6(1):3–73, 1990.</p>
+</div>
+<div class="citation" id="id49" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></span>
+<p>Dimitris N. Politis and Joseph P. Romano. The stationary bootstrap. <em>Journal of the American Statistical Association</em>, 89(428):1303–1313, 1994.</p>
+</div>
+<div class="citation" id="id50" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></span>
+<p>Dimitris N. Politis and Halbert White. Automatic block-length selection for the dependent bootstrap. <em>Econometric Reviews</em>, 23(1):53–70, 2004.</p>
+</div>
+<div class="citation" id="id34" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></span>
+<p>Sudhir Varma and Richard Simon. Bias in error estimation when using cross-validation for model selection. <em>BMC Bioinformatics</em>, 7:91, 2006.</p>
+</div>
+<div class="citation" id="id35" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></span>
+<p>Gavin C. Cawley and Nicola L. C. Talbot. On over-fitting in model selection and subsequent selection bias in performance evaluation. <em>Journal of Machine Learning Research</em>, 11:2079–2107, 2010.</p>
+</div>
+<div class="citation" id="id36" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></span>
+<p>Christoph Bergmeir and José M. Benítez. On the use of cross-validation for time series predictor evaluation. <em>Information Sciences</em>, 191:192–213, 2012.</p>
+</div>
+<div class="citation" id="id29" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></span>
+<p>James Bergstra and Yoshua Bengio. Random search for hyper-parameter optimization. <em>Journal of Machine Learning Research</em>, 13:281–305, 2012.</p>
+</div>
+<div class="citation" id="id26" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>15<span class="fn-bracket">]</span></span>
+<p>James Bergstra, Rémi Bardenet, Yoshua Bengio, and Balázs Kégl. Algorithms for hyper-parameter optimization. In <em>Advances in Neural Information Processing Systems</em>, volume 24. 2011.</p>
+</div>
+<div class="citation" id="id28" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>16<span class="fn-bracket">]</span></span>
+<p>Félix-Antoine Fortin, François-Michel De Rainville, Marc-André Gardner, Marc Parizeau, and Christian Gagné. DEAP: evolutionary algorithms made easy. <em>Journal of Machine Learning Research</em>, 13:2171–2175, 2012.</p>
+</div>
+<div class="citation" id="id31" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>17<span class="fn-bracket">]</span></span>
+<p>Kevin Jamieson and Ameet Talwalkar. Non-stochastic best arm identification and hyperparameter optimization. In <em>Proceedings of the 19th International Conference on Artificial Intelligence and Statistics</em>, volume 51 of PMLR, 240–248. 2016.</p>
+</div>
+<div class="citation" id="id32" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>18<span class="fn-bracket">]</span></span>
+<p>Nitesh V. Chawla, Kevin W. Bowyer, Lawrence O. Hall, and W. Philip Kegelmeyer. SMOTE: synthetic minority over-sampling technique. <em>Journal of Artificial Intelligence Research</em>, 16:321–357, 2002.</p>
+</div>
+<div class="citation" id="id33" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>19<span class="fn-bracket">]</span></span>
+<p>Haibo He, Yang Bai, Edwardo A. Garcia, and Shutao Li. ADASYN: adaptive synthetic sampling approach for imbalanced learning. In <em>IEEE International Joint Conference on Neural Networks</em>, 1322–1328. 2008.</p>
+</div>
+<div class="citation" id="id67" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>20<span class="fn-bracket">]</span></span>
+<p>Jeff Johnson, Matthijs Douze, and Hervé Jégou. Billion-scale similarity search with GPUs. <em>IEEE Transactions on Big Data</em>, 7(3):535–547, 2021.</p>
+</div>
+<div class="citation" id="id68" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>21<span class="fn-bracket">]</span></span>
+<p>Yu A. Malkov and D. A. Yashunin. Efficient and robust approximate nearest neighbor search using hierarchical navigable small world graphs. <em>IEEE Transactions on Pattern Analysis and Machine Intelligence</em>, 42(4):824–836, 2020.</p>
+</div>
+<div class="citation" id="id70" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>22<span class="fn-bracket">]</span></span>
+<p>Aaron Defazio, Francis Bach, and Simon Lacoste-Julien. SAGA: a fast incremental gradient method with support for non-strongly convex composite objectives. In <em>Advances in Neural Information Processing Systems</em>, volume 27. 2014.</p>
+</div>
+<div class="citation" id="id69" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>23<span class="fn-bracket">]</span></span>
+<p>Christopher K. I. Williams and Matthias Seeger. Using the Nyström method to speed up kernel machines. In <em>Advances in Neural Information Processing Systems</em>, volume 13, 682–688. 2001.</p>
+</div>
+<div class="citation" id="id46" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>24<span class="fn-bracket">]</span></span>
+<p>Peter R. Hansen, Asger Lunde, and James M. Nason. The model confidence set. <em>Econometrica</em>, 79(2):453–497, 2011.</p>
+</div>
+<div class="citation" id="id43" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>25<span class="fn-bracket">]</span></span>
+<p>David Harvey, Stephen Leybourne, and Paul Newbold. Testing the equality of prediction mean squared errors. <em>International Journal of Forecasting</em>, 13(2):281–291, 1997.</p>
+</div>
+<div class="citation" id="id44" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>26<span class="fn-bracket">]</span></span>
+<p>Raffaella Giacomini and Halbert White. Tests of conditional predictive ability. <em>Econometrica</em>, 74(6):1545–1578, 2006.</p>
+</div>
+<div class="citation" id="id45" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>27<span class="fn-bracket">]</span></span>
+<p>Todd E. Clark and Kenneth D. West. Approximately normal tests for equal predictive accuracy in nested models. <em>Journal of Econometrics</em>, 138(1):291–311, 2007.</p>
+</div>
+<div class="citation" id="id47" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>28<span class="fn-bracket">]</span></span>
+<p>Peter R. Hansen. A test for superior predictive ability. <em>Journal of Business and Economic Statistics</em>, 23(4):365–380, 2005.</p>
+</div>
+<div class="citation" id="id56" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>29<span class="fn-bracket">]</span></span>
+<p>Scott M. Lundberg and Su-In Lee. A unified approach to interpreting model predictions. In <em>Advances in Neural Information Processing Systems</em>, volume 30. 2017.</p>
+</div>
+<div class="citation" id="id57" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>30<span class="fn-bracket">]</span></span>
+<p>Scott M. Lundberg, Gabriel Erion, Hugh Chen, Alex DeGrave, Jordan M. Prutkin, Bala Nair, Ronit Katz, Jonathan Himmelfarb, Nisha Bansal, and Su-In Lee. From local explanations to global understanding with explainable AI for trees. <em>Nature Machine Intelligence</em>, 2(1):56–67, 2020.</p>
+</div>
+<div class="citation" id="id59" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>31<span class="fn-bracket">]</span></span>
+<p>Marco Tulio Ribeiro, Sameer Singh, and Carlos Guestrin. &quot;why should I trust you?&quot;: explaining the predictions of any classifier. In <em>Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining</em>, 1135–1144. 2016.</p>
+</div>
+<div class="citation" id="id21" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>32<span class="fn-bracket">]</span></span>
+<p>Tilmann Gneiting and Adrian E. Raftery. Strictly proper scoring rules, prediction, and estimation. <em>Journal of the American Statistical Association</em>, 102(477):359–378, 2007.</p>
+</div>
+<div class="citation" id="id76" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>33<span class="fn-bracket">]</span></span>
+<p>Larry Armijo. Minimization of functions having Lipschitz continuous first partial derivatives. <em>Pacific Journal of Mathematics</em>, 16(1):1–3, 1966.</p>
+</div>
+<div class="citation" id="id40" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>34<span class="fn-bracket">]</span></span>
+<p>Claude Nadeau and Yoshua Bengio. Inference for the generalization error. <em>Machine Learning</em>, 52:239–281, 2003.</p>
+</div>
+<div class="citation" id="id37" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>35<span class="fn-bracket">]</span></span>
+<p>Janez Demšar. Statistical comparisons of classifiers over multiple data sets. <em>Journal of Machine Learning Research</em>, 7:1–30, 2006.</p>
+</div>
+<div class="citation" id="id55" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>36<span class="fn-bracket">]</span></span>
+<p>Jeanine Romano, Jeffrey D. Kromrey, Jesse Coraggio, and Jeff Skowronek. Appropriate statistics for ordinal level data: should we really be using t-test and Cohen's d for evaluating group differences on the NSSE and other surveys? In <em>Annual Meeting of the Florida Association of Institutional Research</em>. 2006.</p>
+</div>
+<div class="citation" id="id14" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>37<span class="fn-bracket">]</span></span>
+<p>Tony Duan, Anand Avati, Daisy Yi Ding, Khanh K. Thai, Sanjay Basu, Andrew Ng, and Alejandro Schuler. NGBoost: natural gradient boosting for probabilistic prediction. In <em>Proceedings of the 37th International Conference on Machine Learning</em>, volume 119 of PMLR, 2690–2700. 2020.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "ml-final"
+        },
+        kernelOptions: {
+            name: "ml-final",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ml-final'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="08_conclusiones.html"
+       title="página anterior">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">anterior</p>
+        <p class="prev-next-title">Conclusiones y limitaciones</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contenido
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entorno">Entorno</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semillas">Semillas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tabla-maestra-de-experimentos">Tabla maestra de experimentos</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#como-reproducir-los-resultados">Cómo reproducir los resultados</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bibliografia">Bibliografía</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+Por Kevin Clemente Rosario y Manuel Santiago Meza Castro
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Actualizado por última vez en 2026-10-23.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Universidad del Norte · Maestría · Machine Learning 2026-30
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

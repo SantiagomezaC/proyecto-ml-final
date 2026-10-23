@@ -1,0 +1,1628 @@
+
+<!DOCTYPE html>
+
+
+<html lang="es" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Optimización computacional &#8212; Descarga efectiva en el río Magdalena</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="_static/documentation_options.js?v=78d55cf8"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Haz clic para mostrar';</script>
+    <script>let toggleHintHide = 'Haz clic para ocultar';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script src="_static/translations.js?v=d190bf04"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"tex": {"tags": "ams"}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '03c_computacional';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="icon" href="_static/logo.png"/>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Regresión del caudal a quince días" href="03d_regresion.html" />
+    <link rel="prev" title="Comparación de los métodos de optimización" href="03b_optimizacion.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="es"/>
+  <meta name="docsearch:version" content="" />
+    <meta name="docbuild:last-update" content="2026-10-23"/>
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Saltar al contenido principal</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Volver arriba</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Advertencia de versión"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Navegación del sitio">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="En esta página">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Descarga efectiva en el río Magdalena - Home"/>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Descarga efectiva en el río Magdalena - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Búsqueda</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Descarga efectiva en el río Magdalena
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Proyecto</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Trazabilidad de correcciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_datos.html">Datos: ETL y análisis exploratorio</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos benchmark (Entregable 2)</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="03_benchmarks.html">Modelos benchmark: diseño experimental</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="03a_clasificacion.html">Resultados de clasificación</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03b_optimizacion.html">Comparación de los métodos de optimización</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Optimización computacional</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03d_regresion.html">Regresión del caudal a quince días</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03e_comparacion.html">Comparación estadística de los benchmarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03f_interpretabilidad.html">Interpretabilidad global y local</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelo original (Entregable 3)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="04_literatura.html">Revisión de literatura y novedad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_modelo_original.html">Modelo original: Band-Likelihood Gradient Boosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_validacion.html">Validación estadística del modelo original</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Producto y cierre</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07_dashboard.html">Dashboard y despliegue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_conclusiones.html">Conclusiones y limitaciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_reproducibilidad.html">Reproducibilidad y bibliografía</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/SantiagomezaC/proyecto-ml-final" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Repositorio de origen"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Descarga esta pagina">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/03c_computacional.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Descargar archivo fuente"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Imprimir en PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Modo de pantalla completa"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Tema" data-bs-title="Tema"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Claro"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Oscuro"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="Sistema"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Búsqueda" aria-label="Búsqueda" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Optimización computacional</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contenido </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complejidad-teorica-frente-a-tiempo-empirico">Complejidad teórica frente a tiempo empírico</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variantes-eficientes-por-modelo">Variantes eficientes por modelo</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#knn-estructuras-de-indexacion-y-vecinos-aproximados">KNN: estructuras de indexación y vecinos aproximados</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-y-lasso-solvers">Ridge y Lasso: solvers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-aprendizaje-incremental">Naive Bayes: aprendizaje incremental</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xgboost-histogramas-y-parada-temprana">XGBoost: histogramas y parada temprana</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svm-nucleo-completo-frente-a-aproximaciones-lineales">SVM: núcleo completo frente a aproximaciones lineales</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#paralelizacion">Paralelización</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perfilamiento">Perfilamiento</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-estandar-frente-a-optimizado">Modelo estándar frente a optimizado</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="optimizacion-computacional">
+<h1>Optimización computacional<a class="headerlink" href="#optimizacion-computacional" title="Link to this heading">#</a></h1>
+<p>El experimento completo exigió del orden de 82.000 ajustes de modelos en un portátil con un
+procesador Intel Core i7-1255U (dos núcleos de rendimiento y ocho de eficiencia, doce hilos) y
+15,7 GB de memoria, sin GPU. Esta sección contrasta la complejidad teórica de cada modelo con su
+tiempo empírico, evalúa las variantes eficientes que propone la guía y documenta la
+paralelización y el perfilamiento que hicieron viable el experimento.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">".."</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span><span class="o">,</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span><span class="o">,</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">myst_nb</span><span class="w"> </span><span class="kn">import</span> <span class="n">glue</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src</span><span class="w"> </span><span class="kn">import</span> <span class="n">estilo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.estilo</span><span class="w"> </span><span class="kn">import</span> <span class="n">RIO</span><span class="p">,</span> <span class="n">SED</span><span class="p">,</span> <span class="n">CAU</span><span class="p">,</span> <span class="n">ALE</span><span class="p">,</span> <span class="n">NEU</span><span class="p">,</span> <span class="n">COLORES</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">RESULTADOS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">NOMBRES_MODELO</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">RESULTADOS</span> <span class="o">/</span> <span class="s2">"computacional"</span>
+<span class="n">esc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"escalamiento.csv"</span><span class="p">);</span> <span class="n">exps</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"exponentes.csv"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<section id="complejidad-teorica-frente-a-tiempo-empirico">
+<h2>Complejidad teórica frente a tiempo empírico<a class="headerlink" href="#complejidad-teorica-frente-a-tiempo-empirico" title="Link to this heading">#</a></h2>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">esc</span><span class="p">[</span><span class="n">esc</span><span class="o">.</span><span class="n">variable</span> <span class="o">==</span> <span class="s2">"n"</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"modelo"</span><span class="p">)):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">COLORES</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"#7a5c99"</span><span class="p">,</span> <span class="s2">"#2f6b3a"</span><span class="p">,</span> <span class="s2">"#9c6b30"</span><span class="p">])[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">t_fit</span><span class="p">,</span> <span class="s2">"-o"</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">NOMBRES_MODELO</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">esc</span><span class="p">[</span><span class="n">esc</span><span class="o">.</span><span class="n">variable</span> <span class="o">==</span> <span class="s2">"p"</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"modelo"</span><span class="p">)):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">COLORES</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"#7a5c99"</span><span class="p">,</span> <span class="s2">"#2f6b3a"</span><span class="p">,</span> <span class="s2">"#9c6b30"</span><span class="p">])[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">t_fit</span><span class="p">,</span> <span class="s2">"-o"</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">NOMBRES_MODELO</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"n (observaciones)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Tiempo de entrenamiento (s)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"(a) Escalamiento en n"</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"p (variables)"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Tiempo de entrenamiento (s)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"(b) Escalamiento en p"</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">();</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">exps</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s2">"modelo"</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s2">"variable"</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s2">"exponente_empirico"</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">exps</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="s2">"modelo"</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"modelo"</span><span class="p">)[[</span><span class="s2">"teoria_entrenamiento"</span><span class="p">,</span> <span class="s2">"teoria_inferencia"</span><span class="p">]])</span>
+<span class="n">t</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="n">NOMBRES_MODELO</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">"n"</span><span class="p">:</span> <span class="s2">"exponente empírico en n"</span><span class="p">,</span> <span class="s2">"p"</span><span class="p">:</span> <span class="s2">"exponente empírico en p"</span><span class="p">,</span>
+                      <span class="s2">"teoria_entrenamiento"</span><span class="p">:</span> <span class="s2">"O(·) entrenamiento"</span><span class="p">,</span> <span class="s2">"teoria_inferencia"</span><span class="p">:</span> <span class="s2">"O(·) inferencia"</span><span class="p">})</span>
+<span class="k">for</span> <span class="n">m</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">exps</span><span class="p">[</span><span class="n">exps</span><span class="o">.</span><span class="n">variable</span> <span class="o">==</span> <span class="s2">"n"</span><span class="p">]</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"modelo"</span><span class="p">)</span><span class="o">.</span><span class="n">exponente_empirico</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">glue</span><span class="p">(</span><span class="sa">f</span><span class="s2">"exp_</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<figure class="align-default" id="fig-escalamiento">
+<img alt="_images/f9caef1a763eca6c3a5203a384de14830cf2483b70c7cf71dca0d1e64e994c57.png" src="_images/f9caef1a763eca6c3a5203a384de14830cf2483b70c7cf71dca0d1e64e994c57.png" />
+<figcaption>
+<p><span class="caption-number">Figura 14 </span><span class="caption-text">Tiempo de entrenamiento en función del número de observaciones (escala log-log). La pendiente de cada recta estima el exponente empírico de la complejidad.</span><a class="headerlink" href="#fig-escalamiento" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>exponente empírico en n</th>
+      <th>exponente empírico en p</th>
+      <th>O(·) entrenamiento</th>
+      <th>O(·) inferencia</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Árbol de decisión</th>
+      <td>1.12</td>
+      <td>1.17</td>
+      <td>O(p·n log n)</td>
+      <td>O(profundidad)</td>
+    </tr>
+    <tr>
+      <th>KNN</th>
+      <td>0.43</td>
+      <td>0.77</td>
+      <td>O(1) (almacena)</td>
+      <td>O(n·p) por consulta</td>
+    </tr>
+    <tr>
+      <th>Regresión logística</th>
+      <td>1.12</td>
+      <td>1.51</td>
+      <td>O(n·p) por iteración</td>
+      <td>O(p)</td>
+    </tr>
+    <tr>
+      <th>Naive Bayes</th>
+      <td>0.78</td>
+      <td>0.92</td>
+      <td>O(n·p)</td>
+      <td>O(p) por consulta</td>
+    </tr>
+    <tr>
+      <th>BLGB (modelo original)</th>
+      <td>1.09</td>
+      <td>NaN</td>
+      <td>O(T·(n·k + 2^d·k·B)) ×2 ensambles</td>
+      <td>O(T·d) + O(p log B)</td>
+    </tr>
+    <tr>
+      <th>Random Forest</th>
+      <td>0.98</td>
+      <td>0.56</td>
+      <td>O(T·p'·n' log n')</td>
+      <td>O(T·profundidad)</td>
+    </tr>
+    <tr>
+      <th>SVM</th>
+      <td>1.95</td>
+      <td>0.01</td>
+      <td>O(n²·p) a O(n³)</td>
+      <td>O(n_sv·p)</td>
+    </tr>
+    <tr>
+      <th>XGBoost</th>
+      <td>0.48</td>
+      <td>0.85</td>
+      <td>O(T·(n·p + 2^d·p·B)) con hist</td>
+      <td>O(T·d)</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Los exponentes empíricos se estimaron con cinco tamaños de muestra entre 1.000 y 12.000 días y
+deben leerse como pendientes locales en ese rango, no como órdenes asintóticos. Con esa
+salvedad, la concordancia con la teoría es buena en los casos informativos. La SVC con núcleo
+RBF escala con un exponente de <span class="pasted-text">1.95</span>, muy cerca del comportamiento cuadrático
+esperado para el problema dual de libsvm, y es la razón por la que en el experimento se usó la
+aproximación de Nyström. El árbol de decisión (<span class="pasted-text">1.12</span>) y Random Forest
+(<span class="pasted-text">0.98</span>) siguen el orden <span class="math notranslate nohighlight">\(n\log n\)</span> del ordenamiento de los cortes, y
+la regresión logística (<span class="pasted-text">1.12</span>) el orden lineal por iteración más un
+número de iteraciones que crece levemente con n. El modelo original escala con un exponente de
+<span class="pasted-text">1.09</span>, lineal como predice la <a class="reference internal" href="05_modelo_original.html#prop-complejidad-ref"><span class="std std-ref">proposición 1</span></a>
+del capítulo 5. Los exponentes menores que uno de KNN (<span class="pasted-text">0.43</span>), que en el
+entrenamiento solo almacena los datos, y de XGBoost con histogramas (<span class="pasted-text">0.48</span>)
+no contradicen la teoría: reflejan costos fijos (validación de datos, construcción de los
+histogramas, gestión de hilos) que dominan a tamaños pequeños, de modo que la pendiente en este
+rango subestima el orden asintótico.</p>
+</section>
+<section id="variantes-eficientes-por-modelo">
+<h2>Variantes eficientes por modelo<a class="headerlink" href="#variantes-eficientes-por-modelo" title="Link to this heading">#</a></h2>
+<section id="knn-estructuras-de-indexacion-y-vecinos-aproximados">
+<h3>KNN: estructuras de indexación y vecinos aproximados<a class="headerlink" href="#knn-estructuras-de-indexacion-y-vecinos-aproximados" title="Link to this heading">#</a></h3>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"knn.csv"</span><span class="p">)</span>
+<span class="n">base</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"sklearn-brute"</span><span class="p">,</span> <span class="s2">"t_consulta_ms"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">knn</span><span class="p">[</span><span class="s2">"aceleración vs fuerza bruta"</span><span class="p">]</span> <span class="o">=</span> <span class="n">base</span> <span class="o">/</span> <span class="n">knn</span><span class="o">.</span><span class="n">t_consulta_ms</span>
+<span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">((</span><span class="s2">"faiss-hnsw (aprox.)"</span><span class="p">,</span> <span class="s2">"hnsw"</span><span class="p">),</span> <span class="p">(</span><span class="s2">"sklearn-kd_tree"</span><span class="p">,</span> <span class="s2">"kd"</span><span class="p">),</span> <span class="p">(</span><span class="s2">"faiss-flat (exacto)"</span><span class="p">,</span> <span class="s2">"flat"</span><span class="p">)):</span>
+    <span class="n">fila</span> <span class="o">=</span> <span class="n">knn</span><span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="n">v</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">glue</span><span class="p">(</span><span class="sa">f</span><span class="s2">"knn_ac_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">fila</span><span class="p">[</span><span class="s2">"aceleración vs fuerza bruta"</span><span class="p">]),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">glue</span><span class="p">(</span><span class="sa">f</span><span class="s2">"knn_rec_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">fila</span><span class="o">.</span><span class="n">recall_vecinos</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"knn_lento_kd"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">knn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"sklearn-kd_tree"</span><span class="p">,</span> <span class="s2">"t_consulta_ms"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">base</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">knn</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variante</th>
+      <th>t_consulta_ms</th>
+      <th>memoria_pico_mb</th>
+      <th>pr_auc</th>
+      <th>recall_vecinos</th>
+      <th>aceleración vs fuerza bruta</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>sklearn-brute</td>
+      <td>0.0407</td>
+      <td>6.2135</td>
+      <td>0.8890</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>sklearn-kd_tree</td>
+      <td>0.4551</td>
+      <td>6.6873</td>
+      <td>0.8890</td>
+      <td>1.0000</td>
+      <td>0.0895</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>sklearn-ball_tree</td>
+      <td>0.4249</td>
+      <td>6.4450</td>
+      <td>0.8890</td>
+      <td>1.0000</td>
+      <td>0.0959</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>faiss-flat (exacto)</td>
+      <td>0.0241</td>
+      <td>2.6740</td>
+      <td>0.8890</td>
+      <td>1.0000</td>
+      <td>1.6881</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>faiss-hnsw (aprox.)</td>
+      <td>0.0022</td>
+      <td>8.1945</td>
+      <td>0.8905</td>
+      <td>0.9537</td>
+      <td>18.5706</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>La búsqueda exhaustiva cuesta <span class="math notranslate nohighlight">\(O(np)\)</span> por consulta. Los KD-Trees y Ball Trees reducen ese costo
+a <span class="math notranslate nohighlight">\(O(\log n)\)</span> cuando la dimensión es baja, pero con 31 variables correlacionadas el número de
+ramas que deben visitarse crece y la ventaja desaparece: el KD-Tree resulta más lento que la
+fuerza bruta (su tiempo por consulta es <span class="pasted-text">11</span> veces mayor), porque la
+búsqueda exhaustiva vectorizada sobre una matriz densa aprovecha mejor la memoria caché que el
+recorrido de un árbol que poda poco. FAISS <span class="bibtex-citation" id="id1">[<a class="reference internal" href="09_reproducibilidad.html#id67" title="Jeff Johnson, Matthijs Douze, and Hervé Jégou. Billion-scale similarity search with GPUs. IEEE Transactions on Big Data, 7(3):535–547, 2021.">Johnson <em>et al.</em>, 2021</a>]</span> con índice plano calcula las mismas
+distancias exactas con instrucciones vectorizadas en precisión simple
+(<span class="pasted-text">1.7</span> veces), y el grafo HNSW <span class="bibtex-citation" id="id2">[<a class="reference internal" href="09_reproducibilidad.html#id68" title="Yu A. Malkov and D. A. Yashunin. Efficient and robust approximate nearest neighbor search using hierarchical navigable small world graphs. IEEE Transactions on Pattern Analysis and Machine Intelligence, 42(4):824–836, 2020.">Malkov and Yashunin, 2020</a>]</span> encuentra vecinos
+aproximados con <span class="pasted-text">18.6</span> veces menos tiempo y recupera el
+<span class="pasted-text">95.4%</span> de los 30 vecinos exactos. El compromiso entre exactitud y velocidad
+es favorable en este problema porque la predicción promedia 30 vecinos: perder algunos y
+reemplazarlos por otros casi igual de cercanos apenas cambia la proporción de positivos.</p>
+</section>
+<section id="ridge-y-lasso-solvers">
+<h3>Ridge y Lasso: solvers<a class="headerlink" href="#ridge-y-lasso-solvers" title="Link to this heading">#</a></h3>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"lineales.csv"</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variante</th>
+      <th>t_fit</th>
+      <th>rmse_estandarizado_train</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Ridge auto (Cholesky)</td>
+      <td>0.0058</td>
+      <td>0.2449</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Ridge SAGA</td>
+      <td>2.8221</td>
+      <td>0.2449</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Lasso coordenadas</td>
+      <td>0.5136</td>
+      <td>0.2514</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Lasso por SGD (penalización L1)</td>
+      <td>0.0352</td>
+      <td>0.2523</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Con n ≈ 22.000 y p = 31, el solver directo de Ridge (Cholesky sobre la matriz de Gram de
+<span class="math notranslate nohighlight">\(p\times p\)</span>, costo <span class="math notranslate nohighlight">\(O(np^2 + p^3)\)</span>) es más rápido que SAGA <span class="bibtex-citation" id="id3">[<a class="reference internal" href="09_reproducibilidad.html#id70" title="Aaron Defazio, Francis Bach, and Simon Lacoste-Julien. SAGA: a fast incremental gradient method with support for non-strongly convex composite objectives. In Advances in Neural Information Processing Systems, volume 27. 2014.">Defazio <em>et al.</em>, 2014</a>]</span>, cuyo costo por
+época es <span class="math notranslate nohighlight">\(O(np)\)</span> pero necesita muchas épocas para converger con variables muy colineales. SAGA
+compensa cuando n crece en órdenes de magnitud o los datos son dispersos, condiciones que no se
+dan aquí; la decisión de usar el solver por defecto se apoya en esta medición.</p>
+</section>
+<section id="naive-bayes-aprendizaje-incremental">
+<h3>Naive Bayes: aprendizaje incremental<a class="headerlink" href="#naive-bayes-aprendizaje-incremental" title="Link to this heading">#</a></h3>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"naive_bayes.csv"</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variante</th>
+      <th>t</th>
+      <th>memoria_pico_mb</th>
+      <th>pr_auc</th>
+      <th>max_dif_vs_completo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>fit completo</td>
+      <td>0.00941</td>
+      <td>7.94649</td>
+      <td>0.7482</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>partial_fit lotes de 500</td>
+      <td>0.01687</td>
+      <td>0.30553</td>
+      <td>0.7482</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>partial_fit lotes de 2000</td>
+      <td>0.00799</td>
+      <td>0.82662</td>
+      <td>0.7482</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">partial_fit</span></code> actualiza las medias y varianzas por clase lote a lote con las fórmulas de
+actualización de momentos, de modo que el modelo final es el mismo que con <code class="docutils literal notranslate"><span class="pre">fit</span></code> (la diferencia
+máxima en las probabilidades es del orden del error de redondeo) y la memoria pico depende del
+tamaño del lote y no de n: con lotes de 500 días la memoria pico cae de unos 8 MB a 0,3 MB sin
+cambio alguno en las predicciones ni en el tiempo. En este problema todo cabe en memoria y la
+ventaja práctica es pequeña; la técnica sería la adecuada si el registro se ampliara a series
+subdiarias de toda la red.</p>
+</section>
+<section id="xgboost-histogramas-y-parada-temprana">
+<h3>XGBoost: histogramas y parada temprana<a class="headerlink" href="#xgboost-histogramas-y-parada-temprana" title="Link to this heading">#</a></h3>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"xgboost.csv"</span><span class="p">)</span>
+<span class="n">t_exact</span> <span class="o">=</span> <span class="n">xg</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">xg</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"tree_method=exact"</span><span class="p">,</span> <span class="s2">"t_fit"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">t_hist</span> <span class="o">=</span> <span class="n">xg</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">xg</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"tree_method=hist"</span><span class="p">,</span> <span class="s2">"t_fit"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"xgb_ac_hist"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">t_exact</span> <span class="o">/</span> <span class="n">t_hist</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">es</span> <span class="o">=</span> <span class="n">xg</span><span class="p">[</span><span class="n">xg</span><span class="o">.</span><span class="n">variante</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">"parada"</span><span class="p">)]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"xgb_es_arboles"</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">es</span><span class="o">.</span><span class="n">n_arboles</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">xg</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variante</th>
+      <th>t_fit</th>
+      <th>t_inf_ms_fila</th>
+      <th>memoria_pico_mb</th>
+      <th>n_arboles</th>
+      <th>pr_auc</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>tree_method=exact</td>
+      <td>17.9246</td>
+      <td>0.0045</td>
+      <td>0.8056</td>
+      <td>400</td>
+      <td>0.9387</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>tree_method=approx</td>
+      <td>13.7278</td>
+      <td>0.0048</td>
+      <td>0.8707</td>
+      <td>400</td>
+      <td>0.9357</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>tree_method=hist</td>
+      <td>1.2826</td>
+      <td>0.0042</td>
+      <td>0.8688</td>
+      <td>400</td>
+      <td>0.9416</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>hist + parada temprana (validación cronológica...</td>
+      <td>0.6811</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>86</td>
+      <td>0.9281</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>hist n_jobs=1</td>
+      <td>1.2864</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>400</td>
+      <td>0.9416</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>hist n_jobs=4</td>
+      <td>0.7754</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>400</td>
+      <td>0.9416</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>hist n_jobs=10</td>
+      <td>0.7407</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>400</td>
+      <td>0.9416</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>El método exacto ordena cada variable en cada nodo y evalúa todos los cortes posibles; el método
+por histogramas discretiza una vez cada variable en un número fijo de bins y acumula gradientes
+por bin, lo que reduce el costo por nivel de <span class="math notranslate nohighlight">\(O(n\,p\log n)\)</span> a <span class="math notranslate nohighlight">\(O(np + p\cdot\text{bins})\)</span>. La
+aceleración medida es de <span class="pasted-text">14.0</span> veces con PR-AUC prácticamente igual. La
+parada temprana sobre el último 15 % cronológico del entrenamiento detiene el ajuste en
+<span class="pasted-text">86</span> árboles. El modelo original usa la misma idea de histogramas,
+programada desde cero.</p>
+</section>
+<section id="svm-nucleo-completo-frente-a-aproximaciones-lineales">
+<h3>SVM: núcleo completo frente a aproximaciones lineales<a class="headerlink" href="#svm-nucleo-completo-frente-a-aproximaciones-lineales" title="Link to this heading">#</a></h3>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"svm.csv"</span><span class="p">)</span>
+<span class="n">t_rbf</span> <span class="o">=</span> <span class="n">sv</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sv</span><span class="o">.</span><span class="n">variante</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"SVC"</span><span class="p">),</span> <span class="s2">"t_fit"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sv</span><span class="p">[</span><span class="s2">"aceleración vs SVC"</span><span class="p">]</span> <span class="o">=</span> <span class="n">t_rbf</span> <span class="o">/</span> <span class="n">sv</span><span class="o">.</span><span class="n">t_fit</span>
+<span class="n">ny</span> <span class="o">=</span> <span class="n">sv</span><span class="p">[</span><span class="n">sv</span><span class="o">.</span><span class="n">variante</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"Nyström"</span><span class="p">)]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"ny_ac"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">ny</span><span class="p">[</span><span class="s2">"aceleración vs SVC"</span><span class="p">]),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"ny_dif"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">ny</span><span class="o">.</span><span class="n">pr_auc</span> <span class="o">-</span> <span class="n">sv</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sv</span><span class="o">.</span><span class="n">variante</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"SVC"</span><span class="p">),</span> <span class="s2">"pr_auc"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"ny_mem"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">ny</span><span class="o">.</span><span class="n">memoria_pico_mb</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">sv</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>variante</th>
+      <th>t_fit</th>
+      <th>t_inf_ms_fila</th>
+      <th>memoria_pico_mb</th>
+      <th>pr_auc</th>
+      <th>aceleración vs SVC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>SVC RBF (libsvm)</td>
+      <td>3.2169</td>
+      <td>0.2727</td>
+      <td>6.9116</td>
+      <td>0.9528</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>LinearSVC</td>
+      <td>0.0861</td>
+      <td>0.0001</td>
+      <td>6.0409</td>
+      <td>0.8889</td>
+      <td>37.3489</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>SGDClassifier (hinge)</td>
+      <td>0.0450</td>
+      <td>0.0001</td>
+      <td>5.8449</td>
+      <td>0.8736</td>
+      <td>71.5644</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Nyström (500) + LinearSVC</td>
+      <td>1.3089</td>
+      <td>0.0112</td>
+      <td>174.8152</td>
+      <td>0.9429</td>
+      <td>2.4576</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>La SVC con núcleo RBF resuelve un problema cuadrático dual cuyo costo crece entre <span class="math notranslate nohighlight">\(O(n^2p)\)</span> y
+<span class="math notranslate nohighlight">\(O(n^3)\)</span>, y su inferencia es <span class="math notranslate nohighlight">\(O(n_{sv}\,p)\)</span> por consulta. LinearSVC y el descenso de gradiente
+estocástico eliminan el núcleo y escalan linealmente, pero pierden la frontera no lineal que el
+problema requiere. La aproximación de Nyström <span class="bibtex-citation" id="id4">[<a class="reference internal" href="09_reproducibilidad.html#id69" title="Christopher K. I. Williams and Matthias Seeger. Using the Nyström method to speed up kernel machines. In Advances in Neural Information Processing Systems, volume 13, 682–688. 2001.">Williams and Seeger, 2001</a>]</span> con 500 componentes proyecta los
+datos en un espacio de características donde el núcleo es aproximadamente un producto interno, y
+recupera la capacidad no lineal con un costo lineal en n: es <span class="pasted-text">2.5</span> veces más
+rápida que la SVC con una diferencia de <span class="pasted-text">-0.0099</span> en PR-AUC, y su inferencia es
+un orden de magnitud más rápida porque no depende del número de vectores de soporte. El costo se
+traslada a la memoria: la matriz de características de Nyström (<span class="math notranslate nohighlight">\(n \times 500\)</span> en doble
+precisión) eleva la memoria pico del ajuste de unos 7 MB a <span class="pasted-text">175</span> MB, un
+compromiso aceptable en esta máquina pero que habría que vigilar con muestras mucho mayores.</p>
+</section>
+</section>
+<section id="paralelizacion">
+<h2>Paralelización<a class="headerlink" href="#paralelizacion" title="Link to this heading">#</a></h2>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">par</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"paralelizacion.csv"</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.5</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">))</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">esc_</span><span class="p">,</span> <span class="n">g</span><span class="p">),</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"escenario"</span><span class="p">),</span> <span class="p">(</span><span class="n">RIO</span><span class="p">,</span> <span class="n">SED</span><span class="p">)):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">trabajadores</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">aceleracion</span><span class="p">,</span> <span class="s2">"-o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">esc_</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="s2">":"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">NEU</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Aceleración ideal"</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlabel</span><span class="o">=</span><span class="s2">"Trabajadores"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">"Aceleración"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Escalamiento del paralelismo"</span><span class="p">);</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">e</span><span class="p">,</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">par</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"escenario"</span><span class="p">):</span>
+    <span class="n">glue</span><span class="p">(</span><span class="s2">"acel_"</span> <span class="o">+</span> <span class="p">(</span><span class="s2">"rf"</span> <span class="k">if</span> <span class="s2">"Random"</span> <span class="ow">in</span> <span class="n">e</span> <span class="k">else</span> <span class="s2">"joblib"</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">aceleracion</span><span class="o">.</span><span class="n">max</span><span class="p">()),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">gpu</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">((</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"gpu.json"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="n">log</span> <span class="o">=</span> <span class="p">(</span><span class="n">RESULTADOS</span> <span class="o">/</span> <span class="s2">"log_cadena.txt"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span>
+<span class="n">t_ini</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">"== (\d\d:\d\d:\d\d) INICIO clf"</span><span class="p">,</span> <span class="n">log</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span> <span class="n">t_fin</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">"== (\d\d:\d\d:\d\d) INICIO reg"</span><span class="p">,</span> <span class="n">log</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">dur</span> <span class="o">=</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">t_fin</span><span class="p">,</span> <span class="s2">"%H:%M:%S"</span><span class="p">)</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">t_ini</span><span class="p">,</span> <span class="s2">"%H:%M:%S"</span><span class="p">))</span><span class="o">.</span><span class="n">seconds</span> <span class="o">/</span> <span class="mi">3600</span>
+<span class="k">if</span> <span class="n">dur</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span> <span class="n">dur</span> <span class="o">+=</span> <span class="mi">24</span>
+<span class="n">pc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">RESULTADOS</span> <span class="o">/</span> <span class="s2">"pliegues_clf.parquet"</span><span class="p">)</span>
+<span class="n">horas_cpu</span> <span class="o">=</span> <span class="p">(</span><span class="n">pc</span><span class="o">.</span><span class="n">t_opt</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="n">pc</span><span class="o">.</span><span class="n">t_fit</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="o">/</span> <span class="mi">3600</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"horas_tarea"</span><span class="p">,</span> <span class="n">horas_cpu</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span> <span class="n">glue</span><span class="p">(</span><span class="s2">"horas_reloj"</span><span class="p">,</span> <span class="n">dur</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"concurrencia"</span><span class="p">,</span> <span class="n">horas_cpu</span> <span class="o">/</span> <span class="n">dur</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<figure class="align-default" id="fig-paralelo">
+<img alt="_images/f96b08275e897448a1ad15769a8a7a3e425b27ad338660c5c8c7536403707ca0.png" src="_images/f96b08275e897448a1ad15769a8a7a3e425b27ad338660c5c8c7536403707ca0.png" />
+<figcaption>
+<p><span class="caption-number">Figura 15 </span><span class="caption-text">Aceleración en función del número de trabajadores, para el paralelismo interno de Random Forest (n_jobs) y para el paralelismo entre ajustes independientes con joblib (backend loky).</span><a class="headerlink" href="#fig-paralelo" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</div>
+</div>
+<p>El experimento se paralelizó entre tareas y no dentro de ellas: cada tupla (modelo, balanceo,
+optimizador, pliegue) es independiente, de modo que diez procesos de <code class="docutils literal notranslate"><span class="pre">joblib</span></code> con el backend
+<code class="docutils literal notranslate"><span class="pre">loky</span></code> ejecutan diez optimizaciones a la vez, cada una con estimadores de un solo hilo. Esta
+estrategia evita la sobresuscripción (diez procesos con Random Forest de diez hilos competirían
+por doce hilos) y resultó eficaz en el experimento real: las 1.344 optimizaciones de
+clasificación sumaron <span class="pasted-text">46.0</span> horas de tiempo de tarea y se completaron en
+<span class="pasted-text">4.6</span> horas de reloj, una concurrencia efectiva de
+<span class="pasted-text">10.0</span> procesos simultáneos. La <a class="reference internal" href="#fig-paralelo"><span class="std std-numref">Figura 15</span></a> muestra el
+reverso de la medalla: con tareas muy cortas (diez ajustes de XGBoost de menos de medio segundo)
+el paralelismo entre procesos no acelera nada, porque el costo de lanzar los procesos y
+serializar los datos supera al del cómputo, mientras que el paralelismo interno de Random Forest
+alcanza una aceleración de <span class="pasted-text">4.0</span> con diez hilos. Ninguna curva se acerca a la
+ideal porque ocho de los diez núcleos del procesador son de eficiencia, más lentos que los dos de
+rendimiento, y la frecuencia baja con la carga sostenida. La lección es que el paralelismo debe
+aplicarse al nivel de grano grueso, el de las tareas de minutos, que es como se organizó el
+experimento. Con 1.680 optimizaciones y una duración típica de minutos, herramientas distribuidas como Dask o Ray
+no se justificaron: el cuello de botella es el número de núcleos, no la coordinación. El equipo
+no tiene GPU NVIDIA, de modo que la aceleración con <code class="docutils literal notranslate"><span class="pre">device='cuda'</span></code> de XGBoost no pudo medirse.</p>
+</section>
+<section id="perfilamiento">
+<h2>Perfilamiento<a class="headerlink" href="#perfilamiento" title="Link to this heading">#</a></h2>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">perf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"perfil.csv"</span><span class="p">)</span>
+<span class="n">mem</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"memoria.csv"</span><span class="p">);</span> <span class="n">mem</span><span class="p">[</span><span class="s2">"modelo"</span><span class="p">]</span> <span class="o">=</span> <span class="n">mem</span><span class="o">.</span><span class="n">modelo</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">NOMBRES_MODELO</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">perf</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">mem</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>funcion</th>
+      <th>llamadas</th>
+      <th>t_propio</th>
+      <th>t_acumulado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>experiment.py:ejecutar_tarea</td>
+      <td>1</td>
+      <td>0.000</td>
+      <td>12.935</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>base.py:wrapper</td>
+      <td>76</td>
+      <td>0.003</td>
+      <td>12.486</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>pipeline.py:fit</td>
+      <td>19</td>
+      <td>0.001</td>
+      <td>12.483</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>optim.py:optimizar</td>
+      <td>1</td>
+      <td>0.000</td>
+      <td>12.270</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>optim.py:bayes_search</td>
+      <td>1</td>
+      <td>0.000</td>
+      <td>12.270</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>study.py:optimize</td>
+      <td>1</td>
+      <td>0.000</td>
+      <td>12.269</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>_optimize.py:_optimize</td>
+      <td>1</td>
+      <td>0.000</td>
+      <td>12.269</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>_optimize.py:_optimize_sequential</td>
+      <td>1</td>
+      <td>0.001</td>
+      <td>12.269</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>_optimize.py:_run_trial</td>
+      <td>6</td>
+      <td>0.000</td>
+      <td>12.268</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>optim.py:&lt;lambda&gt;</td>
+      <td>6</td>
+      <td>0.000</td>
+      <td>12.264</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>optim.py:f</td>
+      <td>6</td>
+      <td>0.000</td>
+      <td>12.257</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>experiment.py:objetivo</td>
+      <td>6</td>
+      <td>0.000</td>
+      <td>12.257</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>modelo</th>
+      <th>memoria_pico_fit_mb</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>KNN</td>
+      <td>6.21</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Naive Bayes</td>
+      <td>7.95</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Regresión logística</td>
+      <td>6.04</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Árbol de decisión</td>
+      <td>3.54</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Random Forest</td>
+      <td>4.45</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>XGBoost</td>
+      <td>0.32</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>SVM</td>
+      <td>6.91</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>El perfil de CPU de una tarea elemental (XGBoost con SMOTE y TPE en un pliegue) muestra que cerca
+de las tres cuartas partes del tiempo se consumen en la actualización de los árboles de XGBoost
+(<code class="docutils literal notranslate"><span class="pre">core.update</span></code>) dentro de la validación interna, mientras que la generación de sintéticos de
+SMOTE, la construcción de las matrices de datos y la lógica del optimizador (muestreo de TPE,
+registro de Optuna) son marginales. La conclusión práctica fue que la única forma efectiva de acortar el
+experimento era reducir el costo de cada ajuste: de ahí la submuestra de 0,3 en Random Forest, la aproximación de Nyström en la SVM, el
+método <code class="docutils literal notranslate"><span class="pre">hist</span></code> en XGBoost y el despacho de las tareas más costosas primero para equilibrar la
+carga de los procesos.</p>
+</section>
+<section id="modelo-estandar-frente-a-optimizado">
+<h2>Modelo estándar frente a optimizado<a class="headerlink" href="#modelo-estandar-frente-a-optimizado" title="Link to this heading">#</a></h2>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filas</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">"KNN"</span><span class="p">,</span> <span class="s2">"fuerza bruta"</span><span class="p">,</span> <span class="s2">"FAISS HNSW"</span><span class="p">,</span> <span class="s2">"O(n·p) por consulta"</span><span class="p">,</span> <span class="s2">"O(log n) aprox."</span><span class="p">,</span> <span class="n">knn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"sklearn-brute"</span><span class="p">,</span> <span class="s2">"t_consulta_ms"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+     <span class="n">knn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"faiss-hnsw (aprox.)"</span><span class="p">,</span> <span class="s2">"t_consulta_ms"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">"ms/consulta"</span><span class="p">,</span>
+     <span class="n">knn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"faiss-hnsw (aprox.)"</span><span class="p">,</span> <span class="s2">"pr_auc"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">knn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"sklearn-brute"</span><span class="p">,</span> <span class="s2">"pr_auc"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="s2">"XGBoost"</span><span class="p">,</span> <span class="s2">"exact"</span><span class="p">,</span> <span class="s2">"hist"</span><span class="p">,</span> <span class="s2">"O(n·p log n) por nivel"</span><span class="p">,</span> <span class="s2">"O(n·p + p·B) por nivel"</span><span class="p">,</span> <span class="n">t_exact</span><span class="p">,</span> <span class="n">t_hist</span><span class="p">,</span> <span class="s2">"s (entrenamiento)"</span><span class="p">,</span>
+     <span class="n">xg</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">xg</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"tree_method=hist"</span><span class="p">,</span> <span class="s2">"pr_auc"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">xg</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">xg</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"tree_method=exact"</span><span class="p">,</span> <span class="s2">"pr_auc"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+    <span class="p">(</span><span class="s2">"SVM"</span><span class="p">,</span> <span class="s2">"SVC RBF"</span><span class="p">,</span> <span class="s2">"Nyström + LinearSVC"</span><span class="p">,</span> <span class="s2">"O(n²·p) a O(n³)"</span><span class="p">,</span> <span class="s2">"O(n·m·p)"</span><span class="p">,</span> <span class="n">t_rbf</span><span class="p">,</span> <span class="n">ny</span><span class="o">.</span><span class="n">t_fit</span><span class="p">,</span> <span class="s2">"s (entrenamiento)"</span><span class="p">,</span> <span class="n">ny</span><span class="o">.</span><span class="n">pr_auc</span> <span class="o">-</span> <span class="n">sv</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sv</span><span class="o">.</span><span class="n">variante</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"SVC"</span><span class="p">),</span> <span class="s2">"pr_auc"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+<span class="p">]</span>
+<span class="n">tabla_so</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">filas</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"Modelo"</span><span class="p">,</span> <span class="s2">"Estándar"</span><span class="p">,</span> <span class="s2">"Optimizado"</span><span class="p">,</span> <span class="s2">"O(·) estándar"</span><span class="p">,</span> <span class="s2">"O(·) optimizado"</span><span class="p">,</span> <span class="s2">"Tiempo estándar"</span><span class="p">,</span>
+                                        <span class="s2">"Tiempo optimizado"</span><span class="p">,</span> <span class="s2">"Unidad"</span><span class="p">,</span> <span class="s2">"Δ PR-AUC"</span><span class="p">])</span>
+<span class="n">mem_std</span> <span class="o">=</span> <span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"sklearn-brute"</span><span class="p">,</span> <span class="s2">"memoria_pico_mb"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+           <span class="n">xg</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">xg</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"tree_method=exact"</span><span class="p">,</span> <span class="s2">"memoria_pico_mb"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+           <span class="n">sv</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sv</span><span class="o">.</span><span class="n">variante</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"SVC"</span><span class="p">),</span> <span class="s2">"memoria_pico_mb"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">mem_opt</span> <span class="o">=</span> <span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"faiss-hnsw (aprox.)"</span><span class="p">,</span> <span class="s2">"memoria_pico_mb"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+           <span class="n">xg</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">xg</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"tree_method=hist"</span><span class="p">,</span> <span class="s2">"memoria_pico_mb"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ny</span><span class="o">.</span><span class="n">memoria_pico_mb</span><span class="p">]</span>
+<span class="n">inf_std</span> <span class="o">=</span> <span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"sklearn-brute"</span><span class="p">,</span> <span class="s2">"t_consulta_ms"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+           <span class="n">xg</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">xg</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"tree_method=exact"</span><span class="p">,</span> <span class="s2">"t_inf_ms_fila"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sv</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sv</span><span class="o">.</span><span class="n">variante</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"SVC"</span><span class="p">),</span> <span class="s2">"t_inf_ms_fila"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">inf_opt</span> <span class="o">=</span> <span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"faiss-hnsw (aprox.)"</span><span class="p">,</span> <span class="s2">"t_consulta_ms"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+           <span class="n">xg</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">xg</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"tree_method=hist"</span><span class="p">,</span> <span class="s2">"t_inf_ms_fila"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ny</span><span class="o">.</span><span class="n">t_inf_ms_fila</span><span class="p">]</span>
+<span class="n">tabla_so</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s2">"Inferencia estándar (ms/fila)"</span><span class="p">,</span> <span class="n">inf_std</span><span class="p">);</span> <span class="n">tabla_so</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="s2">"Inferencia optimizada (ms/fila)"</span><span class="p">,</span> <span class="n">inf_opt</span><span class="p">)</span>
+<span class="n">tabla_so</span><span class="p">[</span><span class="s2">"Memoria estándar (MB)"</span><span class="p">]</span> <span class="o">=</span> <span class="n">mem_std</span><span class="p">;</span> <span class="n">tabla_so</span><span class="p">[</span><span class="s2">"Memoria optimizada (MB)"</span><span class="p">]</span> <span class="o">=</span> <span class="n">mem_opt</span>
+<span class="n">tabla_so</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Modelo</th>
+      <th>Estándar</th>
+      <th>Optimizado</th>
+      <th>O(·) estándar</th>
+      <th>O(·) optimizado</th>
+      <th>Tiempo estándar</th>
+      <th>Tiempo optimizado</th>
+      <th>Inferencia estándar (ms/fila)</th>
+      <th>Inferencia optimizada (ms/fila)</th>
+      <th>Unidad</th>
+      <th>Δ PR-AUC</th>
+      <th>Memoria estándar (MB)</th>
+      <th>Memoria optimizada (MB)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>KNN</td>
+      <td>fuerza bruta</td>
+      <td>FAISS HNSW</td>
+      <td>O(n·p) por consulta</td>
+      <td>O(log n) aprox.</td>
+      <td>0.0407</td>
+      <td>0.0022</td>
+      <td>0.0407</td>
+      <td>0.0022</td>
+      <td>ms/consulta</td>
+      <td>0.0014</td>
+      <td>6.2135</td>
+      <td>8.1945</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>XGBoost</td>
+      <td>exact</td>
+      <td>hist</td>
+      <td>O(n·p log n) por nivel</td>
+      <td>O(n·p + p·B) por nivel</td>
+      <td>17.9246</td>
+      <td>1.2826</td>
+      <td>0.0045</td>
+      <td>0.0042</td>
+      <td>s (entrenamiento)</td>
+      <td>0.0029</td>
+      <td>0.8056</td>
+      <td>0.8688</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>SVM</td>
+      <td>SVC RBF</td>
+      <td>Nyström + LinearSVC</td>
+      <td>O(n²·p) a O(n³)</td>
+      <td>O(n·m·p)</td>
+      <td>3.2169</td>
+      <td>1.3089</td>
+      <td>0.2727</td>
+      <td>0.0112</td>
+      <td>s (entrenamiento)</td>
+      <td>-0.0099</td>
+      <td>6.9116</td>
+      <td>174.8152</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "ml-final"
+        },
+        kernelOptions: {
+            name: "ml-final",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ml-final'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03b_optimizacion.html"
+       title="página anterior">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">anterior</p>
+        <p class="prev-next-title">Comparación de los métodos de optimización</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="03d_regresion.html"
+       title="siguiente página">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">siguiente</p>
+        <p class="prev-next-title">Regresión del caudal a quince días</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contenido
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#complejidad-teorica-frente-a-tiempo-empirico">Complejidad teórica frente a tiempo empírico</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variantes-eficientes-por-modelo">Variantes eficientes por modelo</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#knn-estructuras-de-indexacion-y-vecinos-aproximados">KNN: estructuras de indexación y vecinos aproximados</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ridge-y-lasso-solvers">Ridge y Lasso: solvers</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-aprendizaje-incremental">Naive Bayes: aprendizaje incremental</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#xgboost-histogramas-y-parada-temprana">XGBoost: histogramas y parada temprana</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svm-nucleo-completo-frente-a-aproximaciones-lineales">SVM: núcleo completo frente a aproximaciones lineales</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#paralelizacion">Paralelización</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perfilamiento">Perfilamiento</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelo-estandar-frente-a-optimizado">Modelo estándar frente a optimizado</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+Por Kevin Clemente Rosario y Manuel Santiago Meza Castro
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+  Actualizado por última vez en 2026-10-23.
+  <br/>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  Universidad del Norte · Maestría · Machine Learning 2026-30
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
