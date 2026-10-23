@@ -5,7 +5,7 @@ Maestría · Universidad del Norte · Machine Learning, 2026-30
 
 ```{admonition} Productos del proyecto
 :class: tip
-- **Dashboard en línea:** URL_DASHBOARD
+- **Dashboard en línea:** <https://descarga-efectiva-magdalena.onrender.com>
 - **Repositorio:** <https://github.com/SantiagomezaC/proyecto-ml-final>
 ```
 
