@@ -57,20 +57,30 @@ def layout():
     mejor_bench = lid[lid.modelo != "original"].sort_values("pr_auc_mean", ascending=False).iloc[0]
     mf = tabla("magnitud_frecuencia.csv")
     return html.Div([
-        html.Section([
-            html.Div("Proyecto de investigación · Machine Learning", className="etiqueta mb-2"),
-            html.H1("¿Cuándo volverá el Magdalena a mover la mayor parte de su sedimento?"),
-            html.P("Este tablero predice, con quince días de anticipación, si el caudal del río en "
-                   "Calamar caerá dentro de la banda de descarga efectiva: el rango de caudales que, "
-                   "a lo largo de las décadas, transporta la mayor fracción de la carga sedimentaria "
-                   "y modela la geometría del cauce.", className="lead mt-3"),
-            dbc.Row([
-                dbc.Col(dcc.Link(dbc.Button("Explorar los datos", color="light", className="me-2 mt-2"),
-                                 href="/eda"), width="auto"),
-                dbc.Col(dcc.Link(dbc.Button("Probar los modelos", outline=True, color="light",
-                                            className="mt-2"), href="/modelos"), width="auto"),
-            ], className="g-0"),
-        ], className="hero mb-4"),
+        html.Section(dbc.Row([
+            dbc.Col([
+                html.Div("Proyecto de investigación · Machine Learning", className="etiqueta mb-2"),
+                html.H1("¿Cuándo volverá el Magdalena a mover la mayor parte de su sedimento?"),
+                html.P("Este tablero predice, con quince días de anticipación, si el caudal del río en "
+                       "Calamar caerá dentro de la banda de descarga efectiva: el rango de caudales que, "
+                       "a lo largo de las décadas, transporta la mayor fracción de la carga sedimentaria "
+                       "y modela la geometría del cauce.", className="lead mt-3"),
+                dbc.Row([
+                    dbc.Col(dcc.Link(dbc.Button("Explorar los datos", color="light", className="me-2 mt-2"),
+                                     href="/eda"), width="auto"),
+                    dbc.Col(dcc.Link(dbc.Button("Probar los modelos", outline=True, color="light",
+                                                className="mt-2"), href="/modelos"), width="auto"),
+                ], className="g-0"),
+            ], lg=6, className="hero-texto"),
+            dbc.Col(html.Figure([
+                html.Img(src=dash.get_asset_url("transporte_sedimentos.webp"), className="hero-img",
+                         alt="Esquema del transporte de sedimentos en un cauce: aporte desde la cuenca, "
+                             "transporte en suspensión de limos y arcillas, saltación de arenas y arrastre "
+                             "de gravas y bloques en la dirección del flujo"),
+                html.Figcaption("Mecanismos de transporte de sedimentos en un cauce aluvial",
+                                className="hero-pie"),
+            ], className="hero-figura mb-0"), lg=6),
+        ], className="align-items-center g-4"), className="hero mb-4"),
 
         dbc.Row([
             dbc.Col(kpi(f"{P['Q_EF']:,.0f} m³/s", "Descarga efectiva",

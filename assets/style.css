@@ -153,3 +153,27 @@ pre.pseudo { background: #0f2530; color: #d9e7ee; border-radius: 12px; padding: 
   .kpi .valor { font-size: 1.4rem; }
   .panel-filtros { position: static; }
 }
+
+/* ---------- Ilustración del encabezado ---------- */
+.hero-texto { position: relative; z-index: 2; }
+.hero-figura { position: relative; z-index: 1; margin: -1.2rem -1.6rem -1.4rem 0; text-align: center; }
+.hero-img { width: 100%; max-width: 640px; height: auto;
+  filter: drop-shadow(0 18px 28px rgba(4, 30, 44, .45)); }
+.hero-pie { font-size: .74rem; letter-spacing: .04em; color: rgba(255,255,255,.72); margin-top: -.4rem; }
+@media (max-width: 991px) {
+  .hero-figura { margin: 1rem 0 0 0; }
+  .hero-img { max-width: 520px; }
+}
+
+/* ---------- Ajustes de ancho en pantallas pequeñas ---------- */
+html, body { overflow-x: hidden; max-width: 100%; }
+.tarjeta, .kpi { min-width: 0; }
+.tarjeta table { max-width: 100%; }
+.tabla-simple td, .tabla-simple th { word-break: break-word; }
+@media (max-width: 576px) {
+  .barra .navbar-brand { font-size: .95rem; white-space: normal; }
+  .barra .navbar-brand img { height: 26px; }
+  .hero h1 { font-size: 1.45rem; }
+  .hero .lead { font-size: .95rem; }
+  .contenido { padding-left: 6px; padding-right: 6px; }
+}
