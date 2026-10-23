@@ -100,7 +100,7 @@ tags: [hide-input]
 mystnb:
   figure:
     caption: Caudal observado y predicho a quince días por el mejor modelo de regresión. Entrenamiento (ajuste
-      dentro de muestra, 1976-1985), validación (predicciones fuera de muestra del bucle externo, 1986-2009) y
+      dentro de muestra, 1947-1985), validación (predicciones fuera de muestra del bucle externo, 1986-2009) y
       prueba reservada (2010-2026). Para legibilidad se muestran medias semanales.
     name: fig-reg-series
 ---

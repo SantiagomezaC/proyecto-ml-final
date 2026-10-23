@@ -22,11 +22,7 @@
       9954.459762845301
     ],
     "PREDICTORAS": [
-      "coyongal",
-      "el_banco",
-      "pto_salgar",
-      "san_roque",
-      "tres_cruces"
+      "pto_salgar"
     ],
     "TRANSITOS": {
       "arrancaplumas": 20,
@@ -56,21 +52,9 @@
       "calamar_desv365",
       "calamar_d1",
       "calamar_d7",
-      "coyongal_t7",
-      "coyongal_d3",
-      "coyongal_rel",
-      "el_banco_t12",
-      "el_banco_d3",
-      "el_banco_rel",
       "pto_salgar_t21",
       "pto_salgar_d3",
       "pto_salgar_rel",
-      "san_roque_t10",
-      "san_roque_d3",
-      "san_roque_rel",
-      "tres_cruces_t16",
-      "tres_cruces_d3",
-      "tres_cruces_rel",
       "sen_anual",
       "cos_anual",
       "sen_semi",
@@ -83,9 +67,11 @@
       "dist_qef_lag7",
       "dist_qef_lag15"
     ],
-    "n_train": 12383,
+    "n_train": 22612,
     "n_test": 5946,
-    "prevalencia_train": 0.2516353064685456,
+    "inicio": "1947-01-01",
+    "n_total": 28588,
+    "prevalencia_train": 0.2633999646205555,
     "prevalencia_test": 0.25243861419441643,
     "n_pliegues_externos": 12
   },
@@ -159,6 +145,8 @@
     ],
     "n_train": 12413,
     "n_test": 5435,
+    "inicio": "1976-01-01",
+    "n_total": 17878,
     "prevalencia_train": 0.299283009747845,
     "prevalencia_test": 0.2701011959521619,
     "n_pliegues_externos": 12
@@ -241,6 +229,8 @@
     ],
     "n_train": 10937,
     "n_test": 4873,
+    "inicio": "1976-01-01",
+    "n_total": 15816,
     "prevalencia_train": 0.36993691140166407,
     "prevalencia_test": 0.2920172378411656,
     "n_pliegues_externos": 12
@@ -312,6 +302,8 @@
     ],
     "n_train": 10661,
     "n_test": 5224,
+    "inicio": "1976-01-01",
+    "n_total": 15911,
     "prevalencia_train": 0.26770471813150737,
     "prevalencia_test": 0.1332312404287902,
     "n_pliegues_externos": 12

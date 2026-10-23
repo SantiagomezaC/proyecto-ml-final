@@ -87,7 +87,7 @@ knn.round(4)
 ```
 
 La búsqueda exhaustiva cuesta $O(np)$ por consulta. Los KD-Trees y Ball Trees reducen ese costo
-a $O(\log n)$ cuando la dimensión es baja, pero con 43 variables correlacionadas el número de
+a $O(\log n)$ cuando la dimensión es baja, pero con 31 variables correlacionadas el número de
 ramas que deben visitarse crece y la ventaja se diluye; el KD-Tree consigue una aceleración de
 {glue:text}`knn_ac_kd:.1f` veces. FAISS {cite}`johnson2019` con índice plano calcula las mismas
 distancias exactas con instrucciones vectorizadas en precisión simple
@@ -224,7 +224,7 @@ El perfil de CPU de una tarea elemental (XGBoost con SMOTE y TPE en un pliegue) 
 tiempo se concentra en el ajuste de los estimadores dentro de la validación interna y en la
 generación de sintéticos, mientras que la lógica del optimizador (muestreo de TPE, bookkeeping
 de Optuna) es despreciable. La conclusión práctica fue que la única forma efectiva de acortar el
-experimento era reducir el costo de cada ajuste: de ahí la submuestra de 0,6 en Random Forest, el
+experimento era reducir el costo de cada ajuste: de ahí la submuestra de 0,3 en Random Forest, la aproximación de Nyström en la SVM, el
 método `hist` en XGBoost y el despacho de las tareas más costosas primero para equilibrar la
 carga de los procesos.
 

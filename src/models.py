@@ -17,7 +17,8 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC, SVR
+from sklearn.kernel_approximation import Nystroem
+from sklearn.svm import SVC, SVR, LinearSVC, LinearSVR
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from xgboost import XGBClassifier, XGBRegressor
@@ -125,13 +126,17 @@ def _clasificador(modelo: str, params: dict, balanceo: str, prevalencia: float, 
         return DecisionTreeClassifier(class_weight=cw, random_state=seed, **params)
     if modelo == "random_forest":
         return RandomForestClassifier(class_weight=cw, random_state=seed, n_jobs=1,
-                                      max_samples=0.6, **params)
+                                      max_samples=0.3, **params)
     if modelo == "xgboost":
         spw = (1 - prevalencia) / prevalencia if balanceo == "balanced" else 1.0
         return XGBClassifier(tree_method="hist", n_jobs=1, random_state=seed,
                              scale_pos_weight=spw, eval_metric="logloss", **params)
     if modelo == "svm":
-        return SVC(kernel="rbf", class_weight=cw, cache_size=500, random_state=seed, **params)
+        # Núcleo RBF aproximado por Nyström (600 componentes) y SVM lineal en ese espacio:
+        # costo lineal en n en lugar del O(n²)-O(n³) de la SVC exacta (Sección 4 del Entregable 2).
+        return Pipeline([("nystroem", Nystroem(kernel="rbf", gamma=params["gamma"], n_components=600,
+                                                random_state=seed)),
+                         ("svc", LinearSVC(C=params["C"], class_weight=cw, dual=False, max_iter=5000))])
     raise ValueError(f"Modelo de clasificación desconocido: {modelo}")
 
 
@@ -145,11 +150,14 @@ def _regresor(modelo: str, params: dict, seed: int):
     if modelo == "arbol":
         return DecisionTreeRegressor(random_state=seed, **params)
     if modelo == "random_forest":
-        return RandomForestRegressor(random_state=seed, n_jobs=1, max_samples=0.6, **params)
+        return RandomForestRegressor(random_state=seed, n_jobs=1, max_samples=0.3, **params)
     if modelo == "xgboost":
         return XGBRegressor(tree_method="hist", n_jobs=1, random_state=seed, **params)
     if modelo == "svr":
-        return SVR(kernel="rbf", cache_size=500, **params)
+        return Pipeline([("nystroem", Nystroem(kernel="rbf", gamma=params["gamma"], n_components=600,
+                                                random_state=seed)),
+                         ("svr", LinearSVR(C=params["C"], epsilon=params["epsilon"], dual="auto",
+                                           max_iter=5000, random_state=seed))])
     raise ValueError(f"Modelo de regresión desconocido: {modelo}")
 
 
@@ -200,5 +208,7 @@ def puntaje_continuo(estimador, X) -> np.ndarray:
 
 
 def _es_svc(estimador) -> bool:
-    final = estimador[-1] if hasattr(estimador, "steps") else estimador
-    return isinstance(final, SVC)
+    final = estimador
+    while hasattr(final, "steps"):
+        final = final[-1]
+    return isinstance(final, (SVC, LinearSVC))

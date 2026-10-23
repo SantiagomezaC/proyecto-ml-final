@@ -75,8 +75,9 @@ def final_benchmark(tarea: str, fila: pd.Series, presupuesto: int) -> dict:
     if tarea == "clf":
         oo = oof(RESULTADOS / "clf_calamar", m, b, o)
         # Decisión de recalibrar sin mirar la prueba: Platt ajustado en los bloques externos
-        # 1986-1997 y evaluado en 1998-2009; se recalibra solo si el ECE mejora ahí.
-        mitad = oo.pliegue < 6
+        # 1986-1997 y evaluado en 1998-2009 (mitades cronológicas de las predicciones fuera de
+        # muestra); se recalibra solo si el ECE mejora en la segunda mitad.
+        mitad = (oo.idx < oo.idx.median()).values
         cal_val = Recalibrador("platt").fit(oo.pred[mitad].values, oo.y[mitad].values)
         ece_crudo_oof = ece(oo.y[~mitad].values, oo.pred[~mitad].values)
         ece_cal_oof = ece(oo.y[~mitad].values, cal_val.transform(oo.pred[~mitad].values))

@@ -15,7 +15,7 @@ detectó al revisar el material anterior, que se reportan con el mismo criterio.
 |---|---|---|---|
 | Los intervalos de confianza remuestrean filas pese a una autocorrelación de 0,999 | Todos los intervalos se calculan con bootstrap estacionario (Politis y Romano), longitud media de bloque de Politis y White y corrección BCa con jackknife por bloques; las comparaciones entre modelos usan pruebas sobre bloques externos y la t corregida de Nadeau-Bengio | Capítulo 2, sección «Corrección 2 y 3»; capítulos 3.5 y 6 | Tabla del modelo base con la razón de anchos entre el intervalo por bloques y el i.i.d.; función `bootstrap_bloques` en `src/stats_tests.py` |
 | El parámetro de regularización no se ajustó | C y la penalización (L1/L2) se eligen por búsqueda con validación cronológica; en el Entregable 2 la regresión logística, Ridge y Lasso se optimizan dentro de la validación anidada con cuatro métodos | Capítulo 2; capítulo 3 | Valor óptimo de C reportado en el capítulo 2; tabla maestra de 140 combinaciones con hiperparámetros por pliegue |
-| La imputación de estaciones que aún no existían queda sin justificar | El modelado inicia el 1 de enero de 1976, cuando toda la red está instalada; el mecanismo de los faltantes residuales se diagnostica (MAR respecto del caudal de Calamar) y se mide la sensibilidad del desempeño a la estrategia de imputación | Capítulo 2, sección «Corrección 1» y última sección | Figura de cobertura; tabla de Mann-Whitney con tamaño de efecto A y Holm; comparación de imputación por mediana, mediana con indicador e iterativa en los 12 bloques; desempeño con y sin recorte |
+| La imputación de estaciones que aún no existían queda sin justificar | Ningún predictor se imputa en años en que su estación no existía. Se compararon dos soluciones: recortar a 1976 con las seis estaciones (18.359 observaciones, por debajo del mínimo de 20.000 de la guía) o conservar 1947-2026 con las estaciones que existen en todo el periodo, Calamar y Puerto Salgar (28.558 observaciones). Se adoptó la segunda, que además obtiene mayor PR-AUC en la prueba; las seis estaciones se usan en las tareas adicionales del capítulo 6. El mecanismo de los faltantes residuales se diagnostica (MAR respecto del caudal de Calamar) y se mide la sensibilidad a la imputación | Capítulo 2, sección «Corrección 1» y última sección | Figura de cobertura; tabla comparativa de los tres diseños; tabla de Mann-Whitney con tamaño de efecto A y Holm; comparación de imputación por mediana, mediana con indicador e iterativa en los 12 bloques |
 | Conviene actualizar el README | Nuevo README con descripción, estructura del repositorio, instalación, reproducción paso a paso, pruebas y despliegue | Raíz del repositorio | `README.md` |
 | Explorar los modelos no lineales | 112 combinaciones de clasificación (KNN, Naive Bayes, logística, árbol, Random Forest, XGBoost, SVM RBF) y 28 de regresión, y un modelo original no lineal | Capítulos 3, 5 y 6 | Tabla maestra; diagrama de diferencia crítica |
 
@@ -31,8 +31,9 @@ detectó al revisar el material anterior, que se reportan con el mismo criterio.
 ## Consistencia de los resultados
 
 Las correcciones modifican resultados del Entregable 1, y todos los que dependen de ellas se
-recalcularon con el periodo corregido: la prevalencia (25,2 % en el entrenamiento), el modelo
-base, sus intervalos y las figuras del dashboard. El único resultado que no cambia es la
+recalcularon con el diseño corregido: el conjunto de predictores (de 43 a 31 variables), la
+prevalencia (26,3 % en el entrenamiento 1947-2009), el modelo base, sus intervalos y las figuras
+del dashboard. La base de modelado conserva más de 20.000 observaciones, como exige la guía. El único resultado que no cambia es la
 descarga efectiva, porque su cálculo usa solo la serie de Calamar, completa desde 1940. La
 comparación directa entre el modelo base del Entregable 1 y el corregido se presenta en el
 capítulo 2, incluido el caso en que la corrección no mejora la métrica, que se reporta tal como

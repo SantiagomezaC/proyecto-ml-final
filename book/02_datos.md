@@ -58,6 +58,7 @@ for e in EST:
     s = caudales.set_index("fecha")[e]
     filas.append({"Estación": NL[e], "Inicio": s.first_valid_index().date(), "Fin": s.last_valid_index().date(),
                   "Faltantes 1940-2026 (%)": round(100 * s.isna().mean(), 1),
+                  "Faltantes desde 1947 (%)": round(100 * s["1947":].isna().mean(), 1),
                   "Faltantes desde 1976 (%)": round(100 * s["1976":].isna().mean(), 1),
                   "Media (m³/s)": round(s.mean()), "Asimetría": round(s.skew(), 2)})
 inv = pd.DataFrame(filas)
@@ -87,7 +88,8 @@ tags: [hide-input]
 mystnb:
   figure:
     caption: Cobertura anual del registro por estación. El bloque vacío anterior a 1972-1975 corresponde a
-      estaciones aún no instaladas; la línea punteada marca el inicio del periodo de modelado.
+      estaciones aún no instaladas. La línea continua marca el inicio del diseño adoptado (1947) y la
+      punteada, el del diseño alternativo con la red completa (1976).
     name: fig-cobertura
 ---
 cob = caudales.set_index("fecha")[EST].notna().resample("YS").mean() * 100
@@ -95,57 +97,119 @@ fig, ax = plt.subplots(figsize=(10, 3.4))
 im = ax.imshow(cob.T, aspect="auto", cmap=estilo.mapa_seq(), vmin=0, vmax=100,
                extent=[cob.index.year.min(), cob.index.year.max() + 1, len(EST), 0])
 ax.set_yticks(np.arange(len(EST)) + .5, [NL[e] for e in EST]); ax.grid(False)
-ax.axvline(1976, color=ALE, ls=":", lw=2)
+ax.axvline(1947, color=SED, lw=2); ax.axvline(1976, color=ALE, ls=":", lw=2)
 ax.set_xlabel("Año"); ax.set_title("Porcentaje de días con dato por año")
 fig.colorbar(im, ax=ax, label="% de días con dato", fraction=.025)
 plt.show()
 ```
 
-La corrección adoptada consiste en iniciar el periodo de modelado el 1 de enero de 1976,
-cuando la última estación de la red (Coyongal, marzo de 1975) acumula un año de registro y
-las ventanas móviles de 365 días están definidas. Las variables de 1976 se calculan con el
-registro observado de 1975, de modo que el recorte no introduce valores artificiales. El
-análisis magnitud-frecuencia de la descarga efectiva se mantiene sobre 1940-2009, porque solo
-usa la serie de Calamar, que está completa en ese periodo.
+Había dos formas de eliminar la imputación de estaciones inexistentes, y ambas se evaluaron.
+La primera conserva las seis estaciones y recorta el periodo de modelado a 1976, cuando la
+última estación de la red (Coyongal, marzo de 1975) acumula un año de registro. La segunda
+conserva el periodo largo y restringe los predictores a las estaciones que existen durante
+todo él: Calamar, la estación objetivo, y Puerto Salgar, con registro desde 1946, de modo que
+el modelado empieza el 1 de enero de 1947. La guía del curso fija además un mínimo de 20.000
+observaciones. La tabla siguiente compara los tres diseños (el del Entregable 1 y las dos
+alternativas) con los mismos modelos de referencia evaluados en la prueba reservada.
 
 ```{code-cell} ipython3
-:tags: [hide-input]
-d76 = caudales[caudales.fecha >= INICIO_MODELADO]
+---
+tags: [hide-input]
+---
+from src.features import construir_tarea
+from src.splits import separar_prueba
+from sklearn.metrics import average_precision_score
+from xgboost import XGBClassifier
+from src.models import construir_pipeline
+disenos = {
+    "Entregable 1: seis estaciones desde 1940, imputadas": (["coyongal", "el_banco", "pto_salgar", "san_roque", "tres_cruces"], "1940-01-01"),
+    "Alternativa: seis estaciones desde 1976": (["coyongal", "el_banco", "pto_salgar", "san_roque", "tres_cruces"], "1976-01-01"),
+    "Adoptado: Calamar y Puerto Salgar desde 1947": (["pto_salgar"], "1947-01-01"),
+}
+filas = []
+for nombre, (pred, ini) in disenos.items():
+    t = construir_tarea(caudales, "calamar", pred, par["TRANSITOS"], par["Q_EF"], tuple(par["LIM"]), inicio=ini)
+    d, cs = t["datos"], t["columnas"]
+    a_, b_ = separar_prueba(d.fecha)
+    ytr_, yte_ = d.y.iloc[a_].astype(int), d.y.iloc[b_].astype(int)
+    xg = XGBClassifier(n_estimators=300, max_depth=4, learning_rate=.05, n_jobs=4, random_state=SEED).fit(d.iloc[a_][cs], ytr_)
+    lr = construir_pipeline("clf", "logistica", {"C": 0.1, "penalty": "l1"}, "balanced").fit(d.iloc[a_][cs], ytr_)
+    est_cols = [c for c in cs if not c.startswith(("calamar", "sen", "cos", "dist"))]
+    filas.append({"diseño": nombre, "observaciones": len(d), "entrenamiento": len(a_), "prueba": len(b_), "predictores": len(cs),
+                  "faltantes en predictores de estaciones (%)": 100 * d.iloc[a_][est_cols].isna().mean().mean(),
+                  "≥ 20.000": "sí" if len(d) >= 20000 else "no",
+                  "PR-AUC XGBoost": average_precision_score(yte_, xg.predict_proba(d.iloc[b_][cs])[:, 1]),
+                  "PR-AUC logística": average_precision_score(yte_, lr.predict_proba(d.iloc[b_][cs])[:, 1])})
+dis = pd.DataFrame(filas).set_index("diseño")
+for k, n in zip(("e1", "r76", "a47"), dis.index):
+    glue(f"n_{k}", int(dis.loc[n, "observaciones"]), display=False)
+    glue(f"xg_{k}", float(dis.loc[n, "PR-AUC XGBoost"]), display=False)
+    glue(f"lr_{k}", float(dis.loc[n, "PR-AUC logística"]), display=False)
+    glue(f"fe_{k}", float(dis.loc[n, "faltantes en predictores de estaciones (%)"]), display=False)
+dis.round(3)
+```
+
+El recorte a 1976 resuelve la imputación pero deja {glue:text}`n_r76:,` observaciones, por
+debajo del mínimo de la guía. El diseño adoptado cumple ambas exigencias: no imputa ninguna
+estación en años en que no existía y dispone de {glue:text}`n_a47:,` observaciones. La
+comparación empírica lo respalda. Con XGBoost, la PR-AUC en la prueba es
+{glue:text}`xg_a47:.3f` con Calamar y Puerto Salgar desde 1947, frente a {glue:text}`xg_r76:.3f`
+con las seis estaciones desde 1976 y {glue:text}`xg_e1:.3f` con el diseño del Entregable 1; con
+la regresión logística los valores son {glue:text}`lr_a47:.3f`, {glue:text}`lr_r76:.3f` y
+{glue:text}`lr_e1:.3f`. Treinta años adicionales de registro, que abarcan más ciclos de El Niño
+y La Niña, aportan más que las estaciones del bajo Magdalena, cuya información anticipada está
+en buena parte contenida en el estado reciente de Calamar: la más informativa, Coyongal, tiene
+un tiempo de tránsito de siete días, inferior al horizonte de predicción. Las seis estaciones no
+se descartan del proyecto: intervienen en las tres tareas adicionales con las que se evalúa el
+modelo original (capítulo 6), que empiezan en 1976. El análisis magnitud-frecuencia de la
+descarga efectiva se mantiene sobre 1940-2009, porque solo usa la serie de Calamar.
+
+```{code-cell} ipython3
+---
+tags: [hide-input]
+---
+inicio_op = {"pto_salgar": "1947-01-01", "arrancaplumas": "1947-01-01"}
 filas = []
 for e in EST:
-    if e in ("calamar",):
+    if e == "calamar":
         continue
-    m = d76[e].isna()
-    a, b = d76.loc[m, "calamar"].dropna(), d76.loc[~m, "calamar"].dropna()
+    d_e = caudales[caudales.fecha >= inicio_op.get(e, "1976-01-01")]
+    m = d_e[e].isna()
+    a, b = d_e.loc[m, "calamar"].dropna(), d_e.loc[~m, "calamar"].dropna()
     if len(a) < 30:
         continue
     u = st.mannwhitneyu(a, b)
     rachas = (m.ne(m.shift()).cumsum()[m].value_counts())
-    filas.append({"Estación": NL[e], "Días sin dato": int(m.sum()), "Rachas": len(rachas),
+    filas.append({"Estación": NL[e], "Periodo": "desde " + inicio_op.get(e, "1976-01-01")[:4], "Días sin dato": int(m.sum()),
+                  "% sin dato": round(100 * m.mean(), 1), "Rachas": len(rachas),
                   "Racha mediana (d)": int(rachas.median()), "Racha máxima (d)": int(rachas.max()),
                   "Q Calamar sin dato (mediana)": round(a.median()), "Q Calamar con dato (mediana)": round(b.median()),
                   "A de Vargha-Delaney": round(u.statistic / (len(a) * len(b)), 3), "p": u.pvalue})
 mec = pd.DataFrame(filas)
 from src.stats_tests import holm
 mec["p (Holm)"] = holm(mec.p.values)
+d47 = caudales[caudales.fecha >= INICIO_MODELADO]
+glue("a_ps", float(mec.set_index("Estación").loc["Puerto Salgar", "A de Vargha-Delaney"]), display=False)
+glue("falt_ps", float(mec.set_index("Estación").loc["Puerto Salgar", "% sin dato"]), display=False)
+glue("falt_cal", float(100 * d47.calamar.isna().mean()), display=False)
 glue("a_coyongal", float(mec.set_index("Estación").loc["Coyongal", "A de Vargha-Delaney"]), display=False)
-glue("falt_coy", float(100 * d76.coyongal.isna().mean()), display=False)
 mec.style.format({"p": "{:.2g}", "p (Holm)": "{:.2g}"})
 ```
 
-Tras el recorte subsisten huecos genuinos de operación, con una incidencia máxima de
-{glue:text}`falt_coy:.1f` % en Coyongal. Para establecer su mecanismo se comparó, dentro del
-periodo operativo, el caudal de Calamar (que está completo) en los días con y sin registro de
-cada estación mediante la prueba de Mann-Whitney y el tamaño de efecto A de Vargha y Delaney,
-con corrección de Holm. Con muestras de este tamaño casi toda diferencia resulta
-significativa, de modo que la lectura se apoya en A: un valor de 0,5 indica que la ausencia
-no se relaciona con el caudal. Coyongal se aparta con claridad (A = {glue:text}`a_coyongal:.3f`):
-sus huecos se concentran en aguas bajas, mientras que en las demás estaciones el efecto es
-pequeño. El mecanismo es, por tanto, MAR respecto del caudal observado en Calamar y no MCAR:
-la probabilidad de faltar depende de una variable observada. Dos consecuencias se siguen de
-ese diagnóstico. La imputación debe ajustarse solo con el entrenamiento y dentro del
-pipeline, y su efecto sobre el desempeño debe medirse, cosa que se hace al final de este
-capítulo comparando la mediana con una imputación condicional.
+Dentro de su periodo operativo, cada estación conserva huecos genuinos de operación. Para la
+tarea principal importan los de Calamar ({glue:text}`falt_cal:.1f` % de los días desde 1947) y
+los de Puerto Salgar ({glue:text}`falt_ps:.1f` %). Para establecer su mecanismo se comparó el
+caudal de Calamar en los días con y sin registro de cada estación mediante la prueba de
+Mann-Whitney y el tamaño de efecto A de Vargha y Delaney, con corrección de Holm. Con muestras de
+este tamaño casi toda diferencia resulta significativa, de modo que la lectura se apoya en A: un
+valor de 0,5 indica que la ausencia no se relaciona con el caudal. En Puerto Salgar A vale
+{glue:text}`a_ps:.3f`; Coyongal, que interviene en las tareas adicionales, se aparta más
+(A = {glue:text}`a_coyongal:.3f`), con huecos concentrados en aguas bajas. El mecanismo es, por
+tanto, MAR respecto del caudal observado en Calamar y no MCAR: la probabilidad de faltar depende
+de una variable observada. De ese diagnóstico se siguen dos consecuencias: la imputación debe
+ajustarse solo con el entrenamiento y dentro del pipeline, y su efecto sobre el desempeño debe
+medirse, lo que se hace al final de este capítulo comparando la mediana con una imputación
+condicional.
 
 ## Auditoría de la serie de transporte y descarga efectiva
 
@@ -205,7 +269,7 @@ tags: [hide-input]
 mystnb:
   figure:
     caption: Proporción anual de días en la banda de descarga efectiva. La línea vertical separa el
-      entrenamiento (1976-2009) de la prueba reservada (2010-2026).
+      entrenamiento (1947-2009) de la prueba reservada (2010-2026).
     name: fig-prev
 ---
 tr = tarea[tarea.fecha < FECHA_CORTE_TEST]; te = tarea[tarea.fecha >= pd.Timestamp(FECHA_CORTE_TEST) + pd.Timedelta(days=30)]
@@ -240,12 +304,13 @@ distintas.
 ```{code-cell} ipython3
 :tags: [hide-input]
 cols_q = [e for e in EST if e != "arrancaplumas"]
-desc = d76[cols_q].describe(percentiles=[.05, .25, .5, .75, .95]).T
-desc["asimetría"] = d76[cols_q].skew(); desc["curtosis"] = d76[cols_q].kurt()
+d47m = caudales[caudales.fecha >= INICIO_MODELADO]
+desc = d47m[cols_q].describe(percentiles=[.05, .25, .5, .75, .95]).T
+desc["asimetría"] = d47m[cols_q].skew(); desc["curtosis"] = d47m[cols_q].kurt()
 iqr = desc["75%"] - desc["25%"]
-desc["% atípicos (IQR)"] = [100 * ((d76[c] < desc.loc[c, "25%"] - 1.5 * iqr[c]) | (d76[c] > desc.loc[c, "75%"] + 1.5 * iqr[c])).mean() for c in cols_q]
+desc["% atípicos (IQR)"] = [100 * ((d47m[c] < desc.loc[c, "25%"] - 1.5 * iqr[c]) | (d47m[c] > desc.loc[c, "75%"] + 1.5 * iqr[c])).mean() for c in cols_q]
 desc.index = [NL[c] for c in desc.index]
-glue("asim_cal", float(d76.calamar.skew()), display=False)
+glue("asim_cal", float(d47m.calamar.skew()), display=False)
 desc.drop(columns="count").round(2)
 ```
 
@@ -266,7 +331,8 @@ mystnb:
       Magdalena forman dos bloques débilmente acoplados.
     name: fig-corr
 ---
-cm = d76[d76.fecha < FECHA_CORTE_TEST][EST].corr(method="spearman")
+d76 = caudales[(caudales.fecha >= "1976-01-01") & (caudales.fecha < FECHA_CORTE_TEST)]
+cm = d76[EST].corr(method="spearman")
 fig, ax = plt.subplots(figsize=(6.4, 5.2))
 im = ax.imshow(cm, cmap=estilo.mapa_div(), vmin=-1, vmax=1)
 ax.set_xticks(range(len(EST)), [NL[e] for e in EST], rotation=40, ha="right"); ax.set_yticks(range(len(EST)), [NL[e] for e in EST])
@@ -295,6 +361,7 @@ Xs = (Xtr - Xtr.mean()) / Xtr.std()
 asoc["VIF"] = [variance_inflation_factor(Xs.values, i) for i in range(len(cols))]
 asoc = asoc.sort_values("información mutua", ascending=False)
 glue("mi_top", asoc.iloc[0].variable, display=False)
+glue("n_cols", len(cols), display=False)
 glue("vif_altos", int((asoc.VIF > 10).sum()), display=False)
 asoc.head(15).round(3)
 ```
@@ -302,7 +369,7 @@ asoc.head(15).round(3)
 La asociación de cada predictor con el objetivo se mide con la información mutua, que capta
 relaciones no lineales, junto con la correlación punto-biserial y el tamaño de efecto A, con
 control de la tasa de falsos descubrimientos de Benjamini y Hochberg {cite}`benjamini1995` por
-tratarse de 43 pruebas simultáneas. La variable más informativa es `{glue:text}`mi_top``, y las variables de
+tratarse de {glue:text}`n_cols` pruebas simultáneas. La variable más informativa es `{glue:text}`mi_top``, y las variables de
 dominio que miden la distancia del caudal actual a la descarga efectiva superan a los rezagos
 del caudal en bruto, lo que confirma que la condición de banda no es monótona en el caudal: un
 día con caudal muy alto está tan lejos de la banda como uno con caudal muy bajo. El factor de
@@ -356,7 +423,7 @@ que la serie es estacionaria en nivel alrededor de un ciclo estacional estable.
 tags: [hide-input]
 mystnb:
   figure:
-    caption: Descomposición STL robusta del caudal medio mensual en Calamar (1976-2009).
+    caption: Descomposición STL robusta del caudal medio mensual en Calamar (1947-2009).
     name: fig-stl
 ---
 fig, axs = plt.subplots(4, 1, figsize=(10, 6.4), sharex=True)
@@ -382,18 +449,20 @@ def psi(a, b, bins=10):
     pa, pb_ = np.histogram(a, q)[0] / len(a), np.histogram(b, q)[0] / len(b)
     pa, pb_ = np.clip(pa, 1e-4, None), np.clip(pb_, 1e-4, None)
     return float(((pa - pb_) * np.log(pa / pb_)).sum())
-p1, p2 = tr[tr.fecha < "1993-01-01"], tr[tr.fecha >= "1993-01-01"]
+cq = caudales.set_index("fecha")
+p1, p2, p3 = cq["1976":"1992"], cq["1993":"2009"], cq["2010":]
 filas = []
-for v in ["calamar", "q_futuro", "el_banco_t12", "pto_salgar_t21", "tres_cruces_t16", "coyongal_t7"]:
-    a, b, c = p1[v].dropna(), p2[v].dropna(), te[v].dropna()
+for v in ["calamar", "pto_salgar", "el_banco", "tres_cruces", "coyongal", "san_roque"]:
+    a, b, c = p1[v].dropna(), p2[v].dropna(), p3[v].dropna()
     filas.append({"variable": v, "media 1976-92": a.mean(), "media 1993-09": b.mean(), "media 2010-26": c.mean(),
                   "PSI 76-92 → 93-09": psi(a, b), "PSI 93-09 → 10-26": psi(b, c),
                   "KS 93-09 vs 10-26": st.ks_2samp(b, c).statistic})
 deriva = pd.DataFrame(filas)
-filas_y = {"variable": "y (prevalencia)", "media 1976-92": p1.y.mean(), "media 1993-09": p2.y.mean(), "media 2010-26": te.y.mean()}
+ty = tarea.set_index("fecha").y
+filas_y = {"variable": "y (prevalencia)", "media 1976-92": ty["1976":"1992"].mean(), "media 1993-09": ty["1993":"2009"].mean(), "media 2010-26": ty["2010":].mean()}
 glue("psi_max", float(deriva[["PSI 76-92 → 93-09", "PSI 93-09 → 10-26"]].max().max()), display=False)
-glue("psi_tc", float(deriva.set_index("variable").loc["tres_cruces_t16", "PSI 93-09 → 10-26"]), display=False)
-glue("psi_coy", float(deriva.set_index("variable").loc["coyongal_t7", "PSI 76-92 → 93-09"]), display=False)
+glue("psi_tc", float(deriva.set_index("variable").loc["tres_cruces", "PSI 93-09 → 10-26"]), display=False)
+glue("psi_coy", float(deriva.set_index("variable").loc["coyongal", "PSI 76-92 → 93-09"]), display=False)
 glue("psi_cal", float(deriva.set_index("variable").loc["calamar", "PSI 93-09 → 10-26"]), display=False)
 pd.concat([deriva, pd.DataFrame([filas_y])]).round(3)
 ```
@@ -404,16 +473,17 @@ diferencia, por lo que la interpretación se apoya en el PSI: por debajo de 0,1 
 se considera menor, entre 0,1 y 0,25 moderado y por encima de 0,25 severo. El caudal de Calamar
 y el objetivo son estables (PSI de {glue:text}`psi_cal:.3f` entre el entrenamiento reciente y la
 prueba), y la prevalencia de la clase positiva es prácticamente la misma en ambos periodos, de
-modo que no hay desplazamiento de la distribución a priori. Dos estaciones predictoras, en
-cambio, muestran desplazamientos severos: Coyongal entre las dos mitades del entrenamiento
+modo que no hay desplazamiento de la distribución a priori. Puerto Salgar, la estación
+predictora de la tarea principal, también es estable (PSI de {glue:text}`psi_ps:.3f`). Dos
+estaciones del bajo Magdalena, en cambio, muestran desplazamientos severos: Coyongal entre las dos mitades del entrenamiento
 (PSI = {glue:text}`psi_coy:.2f`) y Tres Cruces entre el entrenamiento y la prueba
 (PSI = {glue:text}`psi_tc:.2f`, con una media que pasa de unos 2.850 a 1.880 m³/s). Como el
 caudal de Calamar, que integra el aporte de esas estaciones, no cambia en la misma proporción,
 el desplazamiento apunta a cambios en la curva de calibración o en la ubicación del sensor y no
-a un cambio hidrológico: es una deriva de medición en los predictores. La consecuencia para el
-modelado es doble: evaluar en bloques cronológicos y no en una única partición, y desconfiar de
-los modelos que dependan en exceso de esas dos estaciones, algo que se verifica con la
-interpretabilidad del capítulo 3.
+a un cambio hidrológico: es una deriva de medición. Ese hallazgo es un argumento adicional a
+favor del diseño adoptado, que no usa esas estaciones como predictores de Calamar; en las
+tareas adicionales del capítulo 6, donde sí intervienen, la deriva afecta por igual a todos los
+modelos comparados.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
@@ -475,8 +545,8 @@ glue("k90", k90, display=False); glue("pc1", pca.explained_variance_ratio_[0], d
 glue("pct_iso", pct_iso, display=False); glue("pct_mah", pct_mah, display=False)
 ```
 
-Las {glue:text}`k90` primeras componentes principales explican el 90 % de la varianza de 43
-predictores, y la primera concentra el {glue:text}`pc1:.0%`, lo que confirma la fuerte
+Las {glue:text}`k90` primeras componentes principales explican el 90 % de la varianza de
+{glue:text}`n_cols` predictores, y la primera concentra el {glue:text}`pc1:.0%`, lo que confirma la fuerte
 redundancia entre rezagos y estaciones. La proyección en el plano de las dos primeras
 componentes muestra que la clase positiva ocupa una franja de la primera componente, la que
 resume el nivel general de caudal, con días negativos a ambos lados: una
@@ -515,11 +585,11 @@ la única entidad es la red de estaciones.
 
 | Decisión | Hallazgo que la motiva |
 |---|---|
-| Modelado desde 1976 | Faltantes estructurales anteriores a la instalación de la red ({numref}`fig-cobertura`) |
-| Imputación por mediana dentro del pipeline, con análisis de sensibilidad | Huecos residuales MAR, con incidencia ≤ 12 % |
+| Predictores restringidos a Calamar y Puerto Salgar; modelado desde 1947 | Faltantes estructurales anteriores a la instalación de la red ({numref}`fig-cobertura`) y mínimo de 20.000 observaciones |
+| Imputación por mediana dentro del pipeline, con análisis de sensibilidad | Huecos residuales MAR, con incidencia baja en Calamar y Puerto Salgar |
 | Escalado estándar; sin transformación logarítmica | Calamar casi simétrica; atípicos válidos |
 | Variables de distancia a $Q_{ef}$ | Objetivo no monótono en el caudal ({numref}`fig-pca`) |
-| Estaciones desfasadas por su tránsito | Correlación cruzada verificada con la geografía |
+| Puerto Salgar desfasada 21 días (su tiempo de tránsito) | Correlación cruzada verificada con la geografía |
 | Armónicos anual y semianual | Estacionalidad bimodal ({numref}`fig-stl`) |
 | Regularización L1/L2 en modelos lineales | VIF > 10 por colinealidad física |
 | Bloques externos de dos años y separación de 30 días | ACF de 0,92 a 15 días; heterogeneidad interanual |
@@ -576,13 +646,6 @@ el problema que señaló la retroalimentación.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-from src.features import construir_tarea
-from src.splits import separar_prueba
-completa = construir_tarea(caudales, "calamar", par["PREDICTORAS"], par["TRANSITOS"], par["Q_EF"], tuple(par["LIM"]),
-                           inicio="1940-01-01")["datos"]
-a, b = separar_prueba(completa.fecha)
-m_c = construir_pipeline("clf", "logistica", {"C": C_opt, "penalty": pen}, "balanced").fit(completa.iloc[a][cols], completa.y.iloc[a])
-ap_c = average_precision_score(completa.y.iloc[b], m_c.predict_proba(completa.iloc[b][cols])[:, 1])
 # Sensibilidad a la imputación en los 12 bloques externos
 from sklearn.experimental import enable_iterative_imputer  # noqa
 from sklearn.impute import IterativeImputer, SimpleImputer
@@ -602,18 +665,16 @@ for nombre, imp in (("mediana", SimpleImputer(strategy="median")),
 res = pd.DataFrame(res)
 tab_imp = res.groupby("imputación").pr_auc.agg(["mean", "std"])
 w = st.wilcoxon(res[res["imputación"] == "mediana"].pr_auc.values, res[res["imputación"] == "iterativa (condicional)"].pr_auc.values)
-glue("ap_completa", ap_c, display=False); glue("p_imp", w.pvalue, display=False)
+glue("p_imp", w.pvalue, display=False)
+glue("imp_lectura", "no permite distinguirlas" if w.pvalue >= 0.05 else "las distingue", display=False)
 glue("dif_imp", float(tab_imp.loc["iterativa (condicional)", "mean"] - tab_imp.loc["mediana", "mean"]), display=False)
 tab_imp.round(4)
 ```
 
-Dos verificaciones cuantifican el efecto de la primera corrección. Entrenado sobre 1940-2009
-con las estaciones imputadas, el mismo modelo obtiene una PR-AUC de {glue:text}`ap_completa:.3f`
-en la prueba, frente a {glue:text}`ap_base:.3f` con el periodo corregido, de modo que el
-recorte no solo es metodológicamente defendible sino que no sacrifica desempeño pese a usar
-menos años. La segunda verificación compara, en los doce bloques externos, la imputación por
-mediana con una imputación iterativa que condiciona cada estación a las demás, la estrategia
-apropiada bajo un mecanismo MAR. La diferencia media de PR-AUC es {glue:text}`dif_imp:+.4f` y la
-prueba de Wilcoxon no permite distinguirlas (p = {glue:text}`p_imp:.2f`): con faltantes
-residuales de esta magnitud la elección del imputador no altera las conclusiones, y se conserva
-la mediana por su menor costo dentro de los 140 modelos.
+La última verificación compara, en los doce bloques externos, la imputación por mediana con
+una imputación iterativa que condiciona cada variable a las demás, la estrategia apropiada bajo
+un mecanismo MAR, y con la mediana acompañada de indicadores de faltante. La diferencia media de
+PR-AUC entre la imputación iterativa y la mediana es {glue:text}`dif_imp:+.4f`, y la prueba de
+Wilcoxon {glue:text}`imp_lectura` (p = {glue:text}`p_imp:.2f`). Con faltantes residuales de esta
+magnitud la elección del imputador no cambia las conclusiones, y se conserva la mediana por su
+menor costo dentro de los 140 modelos.

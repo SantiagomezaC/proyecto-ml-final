@@ -76,7 +76,7 @@ def layout():
             dbc.Col(kpi(f"{P['Q_EF']:,.0f} m³/s", "Descarga efectiva",
                         f"Banda ±15 %: {P['LIM'][0]:,.0f}–{P['LIM'][1]:,.0f} m³/s"), md=3, sm=6),
             dbc.Col(kpi(f"{100 * P['prevalencia_train']:.1f} %", "Días en la banda",
-                        "Clase positiva en el entrenamiento 1976-2009", "acento"), md=3, sm=6),
+                        "Clase positiva en el entrenamiento 1947-2009", "acento"), md=3, sm=6),
             dbc.Col(kpi("15 días", "Horizonte de predicción",
                         "Compromiso entre utilidad operativa y dificultad"), md=3, sm=6),
             dbc.Col(kpi(f"{orig.pr_auc_test:.3f}" if orig is not None else "—",
@@ -123,10 +123,11 @@ def layout():
         dbc.Row([
             dbc.Col(tarjeta("Red de estaciones del IDEAM", dcc.Graph(figure=mapa_estaciones(ubicaciones()),
                                                                      config={"displayModeBar": False}),
-                            html.Div(["Las seis estaciones aguas arriba aportan información anticipada: la "
-                                      "onda de crecida tarda de 7 días (Coyongal) a 21 días (Puerto Salgar) "
-                                      "en llegar a Calamar, y cada estación entra al modelo desfasada por "
-                                      "su tiempo de tránsito."], className="insight"),
+                            html.Div(["La onda de crecida tarda de 7 días (Coyongal) a 21 días (Puerto Salgar) en "
+                                      "llegar a Calamar. Puerto Salgar, con registro desde 1946, entra al "
+                                      "modelo principal desfasada 21 días; las estaciones del bajo "
+                                      "Magdalena, instaladas en 1972-1975, se usan en las tres tareas "
+                                      "adicionales para no imputar años sin registro."], className="insight"),
                             subtitulo="Cauce principal del Magdalena, de Guaduas (Cundinamarca) a Calamar "
                                       "(Bolívar)"), lg=6),
             dbc.Col(tarjeta("Cómo se definió la variable objetivo",
@@ -146,10 +147,11 @@ def layout():
                     dbc.Col([
                         html.Table([html.Tbody([
                             html.Tr([html.Th("Fuente"), html.Td("IDEAM, portal DHIME (caudal medio diario)")]),
-                            html.Tr([html.Th("Periodo"), html.Td("1940-2026; modelado desde 1976, cuando "
-                                                                 "toda la red está instalada")]),
+                            html.Tr([html.Th("Periodo"), html.Td("1940-2026; modelado desde 1947 con "
+                                                                 "Calamar y Puerto Salgar, sin imputar "
+                                                                 "estaciones inexistentes")]),
                             html.Tr([html.Th("Observaciones"),
-                                     html.Td(f"{P['n_train']:,} días de entrenamiento (1976-2009) y "
+                                     html.Td(f"{P['n_train']:,} días de entrenamiento (1947-2009) y "
                                              f"{P['n_test']:,} de prueba (2010-2026)")]),
                             html.Tr([html.Th("Predictores"), html.Td(f"{len(P['columnas'])} variables")]),
                             html.Tr([html.Th("Tarea"), html.Td("Clasificación binaria; tarea auxiliar de "

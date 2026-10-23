@@ -44,10 +44,14 @@ FIGURAS = RAIZ / "book" / "figuras"
 # ---------------------------------------------------------------------------
 # Delimitación temporal
 # ---------------------------------------------------------------------------
-# Corrección del Entregable 1: el modelado empieza cuando toda la red está
-# instalada (la última estación, Coyongal, inicia en marzo de 1975). Antes de
-# esa fecha los faltantes son estructurales y no admiten imputación.
-INICIO_MODELADO = "1976-01-01"
+# Corrección del Entregable 1: ningún predictor se imputa en años en que su
+# estación no existía. La tarea principal usa Calamar y Puerto Salgar (registro
+# desde 1946) y empieza en 1947, lo que da más de 20.000 observaciones. Las
+# estaciones del bajo Magdalena (instaladas en 1972-1975) solo intervienen en el
+# análisis de sensibilidad y en las tareas adicionales, que empiezan en 1976.
+INICIO_MODELADO = "1947-01-01"
+INICIO_RED_COMPLETA = "1976-01-01"
+PREDICTORAS_CALAMAR = ["pto_salgar"]
 FECHA_CORTE_TEST = "2010-01-01"   # conjunto de prueba reservado: 2010-2026
 GAP_DIAS = 30                     # separación entre entrenamiento y evaluación
 HORIZONTE = 15                    # días de anticipación

@@ -146,7 +146,7 @@ INTERPRETACION_BALANCEO
 ## Desempeño en la prueba reservada
 
 Con la combinación ganadora de cada modelo se repitió la optimización sobre todo el
-entrenamiento (1976-2009), se reentrenó el pipeline y se evaluó una única vez en 2010-2026.
+entrenamiento (1947-2009), se reentrenó el pipeline y se evaluó una única vez en 2010-2026.
 
 ```{code-cell} ipython3
 ---

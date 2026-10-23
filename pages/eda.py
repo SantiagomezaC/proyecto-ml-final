@@ -14,7 +14,7 @@ dash.register_page(__name__, path="/eda", name="EDA", title="EDA · Descarga efe
 P = parametros()
 COLS = P["columnas"]
 ESTACIONES = [e for e in caudales().columns if e != "fecha"]
-ANIO_MIN, ANIO_MAX = 1976, int(caudales().fecha.dt.year.max())
+ANIO_MIN, ANIO_MAX = 1947, int(caudales().fecha.dt.year.max())
 VARIABLES = ["calamar"] + COLS + ["q_futuro"]
 ETQ = {c: etiqueta(c) for c in VARIABLES + ["y"]}
 
@@ -200,10 +200,11 @@ def act_faltantes(anios, estaciones):
     c = c[(c.fecha.dt.year >= anios[0]) & (c.fecha.dt.year <= anios[1])]
     est = estaciones or ESTACIONES
     pct = c[est].isna().mean() * 100
-    txt = (f"Faltantes entre {pct.min():.1f} % y {pct.max():.1f} % en la selección. Antes de 1975 la ausencia "
-           "es estructural (las estaciones no existían) y por eso el modelado inicia en 1976. Después, los "
-           "huecos dependen del caudal observado en Calamar (Coyongal pierde datos en aguas bajas), un "
-           "mecanismo MAR que se trata con imputación dentro del pipeline y un análisis de sensibilidad.")
+    txt = (f"Faltantes entre {pct.min():.1f} % y {pct.max():.1f} % en la selección. Antes de 1972-1975 la "
+           "ausencia de las estaciones del bajo Magdalena es estructural (no existían); por eso el modelo "
+           "principal usa solo Calamar y Puerto Salgar, con registro desde 1946, y no imputa años sin "
+           "estación. Los huecos operativos restantes dependen del caudal de Calamar (mecanismo MAR) y se "
+           "tratan con imputación dentro del pipeline.")
     return faltantes(c, est, NOMBRES_LEGIBLES), es(txt)
 
 

@@ -14,8 +14,8 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from src.config import (DATOS, DATOS_PROC, ESTACION_OBJETIVO, EXCLUIR_MODELO, FECHA_CORTE_TEST,
-                        TOLERANCIA)
+from src.config import (DATOS, DATOS_PROC, ESTACION_OBJETIVO, FECHA_CORTE_TEST, INICIO_MODELADO,
+                        INICIO_RED_COMPLETA, PREDICTORAS_CALAMAR, TOLERANCIA)
 from src.etl import auditoria_transporte, cargar_red, descarga_efectiva, tiempos_transito
 from src.features import construir_tarea
 from src.splits import guardar_pliegues, pliegues_externos, separar_prueba
@@ -59,8 +59,9 @@ def main() -> None:
     for est in estaciones:
         p = parametros_estacion(red, est)
         if est == ESTACION_OBJETIVO:
-            predictoras = [e for e in TRANSITOS_CALAMAR if e not in EXCLUIR_MODELO]
+            predictoras = PREDICTORAS_CALAMAR
             transitos = TRANSITOS_CALAMAR
+            inicio = INICIO_MODELADO
             p["auditoria"].to_csv(DATOS_PROC / "auditoria_transporte.csv", index=False)
             p["tabla_mf"].to_csv(DATOS_PROC / "magnitud_frecuencia.csv", index=False)
         else:
@@ -68,9 +69,10 @@ def main() -> None:
             # Tránsito relativo: diferencia de tiempos hacia Calamar, contrastada con la
             # correlación cruzada directa entre la estación predictora y la objetivo.
             transitos = {e: max(1, TRANSITOS_CALAMAR[e] - TRANSITOS_CALAMAR[est]) for e in predictoras}
+            inicio = INICIO_RED_COMPLETA
             p["transitos_ccf"] = tiempos_transito(caudales[caudales.fecha < FECHA_CORTE_TEST],
                                                   est, predictoras)
-        tarea = construir_tarea(caudales, est, predictoras, transitos, p["Q_EF"], tuple(p["LIM"]))
+        tarea = construir_tarea(caudales, est, predictoras, transitos, p["Q_EF"], tuple(p["LIM"]), inicio=inicio)
         tarea["datos"].to_parquet(DATOS_PROC / f"tarea_{est}.parquet", index=False)
         tr, te = separar_prueba(tarea["datos"].fecha)
         fechas_tr = tarea["datos"].fecha.iloc[tr].reset_index(drop=True)
@@ -79,7 +81,8 @@ def main() -> None:
         parametros[est] = {k: v for k, v in p.items() if k not in ("auditoria", "tabla_mf")}
         parametros[est].update({"PREDICTORAS": predictoras, "TRANSITOS": transitos,
                                 "BASE_COLS": tarea["base_cols"], "DOM_COLS": tarea["dom_cols"],
-                                "n_train": int(len(tr)), "n_test": int(len(te)),
+                                "n_train": int(len(tr)), "n_test": int(len(te)), "inicio": inicio,
+                                "n_total": int(len(tarea["datos"])),
                                 "prevalencia_train": float(tarea["datos"].y.iloc[tr].mean()),
                                 "prevalencia_test": float(tarea["datos"].y.iloc[te].mean()),
                                 "n_pliegues_externos": len(pl)})

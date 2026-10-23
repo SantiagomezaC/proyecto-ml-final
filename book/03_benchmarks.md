@@ -41,7 +41,7 @@ tabla_pl
 
 Cada modelo base se combina con cada técnica de balanceo y cada método de optimización. En
 clasificación hay siete modelos (KNN, Naive Bayes, regresión logística con penalización L1 o
-L2, árbol de decisión, Random Forest, XGBoost y SVM con núcleo RBF), cuatro estrategias de
+L2, árbol de decisión, Random Forest, XGBoost y SVM con núcleo RBF aproximado), cuatro estrategias de
 balanceo (ninguna, SMOTE, ADASYN y ponderación por clase) y cuatro optimizadores (rejilla,
 aleatorio, bayesiano con TPE y genético con DEAP), es decir, 7 × 4 × 4 = 112 combinaciones.
 En regresión, donde el balanceo no aplica, los siete modelos (KNN, Ridge, Lasso, árbol, Random
@@ -107,9 +107,12 @@ En la regresión logística y la SVM, C y γ recorren cuatro o cinco órdenes de
 logarítmica, como recomienda la guía para parámetros de regularización y de escala. En los
 árboles, la profundidad máxima (2 a 16) y el tamaño mínimo de hoja (5 a 300 días, logarítmico)
 controlan la complejidad frente a un tamaño efectivo reducido. En Random Forest se fijó
-`max_samples = 0,6`, con un efecto doble: la submuestra decorrelaciona los árboles y reduce el
-costo de cada ajuste a la mitad, que en esta máquina resultó decisivo (sección de optimización
-computacional). En XGBoost, la tasa de aprendizaje (0,01 a 0,3) y el número de árboles (80 a 600)
+`max_samples = 0,3`, con un efecto doble: la submuestra decorrelaciona los árboles y reduce el
+costo de cada ajuste en proporción, decisivo con más de 22.000 días de entrenamiento en esta
+máquina. La SVM y la SVR usan el núcleo RBF aproximado por el método de Nyström con 600
+componentes, seguido de una SVM lineal: la guía recomienda evitar la complejidad cuadrática o
+cúbica del núcleo completo cuando la muestra es grande, y la sección de optimización
+computacional cuantifica el ahorro y la pérdida de exactitud frente a la SVC exacta. En XGBoost, la tasa de aprendizaje (0,01 a 0,3) y el número de árboles (80 a 600)
 se exploran conjuntamente porque su producto determina la capacidad efectiva.
 
 ## Métodos de optimización
@@ -183,6 +186,6 @@ evalúa empíricamente en la sección siguiente.
 Todo paso que aprende de los datos (imputación, escalado, sobremuestreo, discretización del
 modelo original, recalibración de probabilidades) se ajusta dentro del pliegue que corresponde:
 el bucle interno con la porción interna de entrenamiento, el reentrenamiento externo con el
-entrenamiento del bloque, y el modelo final con 1976-2009. Las particiones externas se
+entrenamiento del bloque, y el modelo final con 1947-2009. Las particiones externas se
 calculan una vez y se guardan en `data/processed/pliegues_calamar.json`; todos los modelos,
 incluido el modelo original del capítulo 5, leen ese mismo archivo.
