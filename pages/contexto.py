@@ -40,6 +40,19 @@ def _diccionario():
         style_table={"overflowX": "auto"})
 
 
+AUTORES = [
+    ("Kevin Clemente Rosario", "Geólogo · Estudiante de M.Sc.", "autor_kevin.jpg"),
+    ("Manuel Santiago Meza Castro", "Estudiante de Geología y de M.Sc.", "autor_manuel.jpg"),
+]
+
+
+def autor(nombre, rol, foto):
+    return html.Div([
+        html.Img(src=dash.get_asset_url(foto), alt=f"Fotografía de {nombre}", className="autor-foto"),
+        html.Div([html.Div(nombre, className="autor-nombre"), html.Div(rol, className="autor-rol")]),
+    ], className="autor")
+
+
 PASOS = [
     ("01", "ETL", "7 series diarias del IDEAM, consolidación y auditoría de la serie de transporte"),
     ("02", "EDA", "Magnitud-frecuencia, tránsito de crecidas, fuga y estructura temporal"),
@@ -194,9 +207,7 @@ def layout():
                 html.Li("No hay datos personales; el riesgo ético principal es el uso operativo de una "
                         "predicción sin comunicar su incertidumbre, que el tablero siempre muestra."),
             ], className="mb-0")), lg=7),
-            dbc.Col(tarjeta("Autores y referencias", html.P([
-                html.B("Kevin Clemente Rosario y Manuel Santiago Meza Castro"), html.Br(),
-                "Maestría · Universidad del Norte · Machine Learning, 2026-30"]),
+            dbc.Col(tarjeta("Referencias",
                 html.Ul([
                     html.Li("Andrews, E. D. (1980). Effective and bankfull discharges of streams in the "
                             "Yampa River basin. Journal of Hydrology, 46, 311-330."),
@@ -206,5 +217,11 @@ def layout():
                     html.Li("Wolman, M. G., y Miller, J. P. (1960). Magnitude and frequency of forces in "
                             "geomorphic processes. The Journal of Geology, 68, 54-74."),
                 ], className="small mb-0")), lg=5),
-        ], className="g-3"),
+        ], className="g-3 mb-4"),
+
+        html.Section([
+            html.Div("Autores", className="titulo-seccion"),
+            dbc.Row([dbc.Col(autor(*a), md=6) for a in AUTORES], className="g-3"),
+            html.P("Universidad del Norte · Machine Learning, 2026-30", className="autores-pie"),
+        ], className="autores"),
     ])
