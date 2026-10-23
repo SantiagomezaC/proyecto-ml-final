@@ -54,7 +54,7 @@ PASOS = [
 def layout():
     lid = tabla("lideres.csv")
     orig = lid[lid.modelo == "original"].iloc[0] if (lid.modelo == "original").any() else None
-    mejor_bench = lid[lid.modelo != "original"].sort_values("pr_auc_test", ascending=False).iloc[0]
+    mejor_bench = lid[lid.modelo != "original"].sort_values("pr_auc_mean", ascending=False).iloc[0]
     mf = tabla("magnitud_frecuencia.csv")
     return html.Div([
         html.Section([

@@ -99,7 +99,7 @@ Predicción en vivo: probabilidad de banda, intervalo del caudal previsto y expl
 
 ## Despliegue en Render
 
-El repositorio incluye `render.yaml`, que define un servicio web de Python con
+El dashboard está desplegado en <https://descarga-efectiva-magdalena.onrender.com>. El repositorio incluye `render.yaml`, que define un servicio web de Python con
 `pip install -r requirements.txt` como comando de construcción y `gunicorn app:server` como
 comando de inicio, y fija la versión de Python. El procedimiento es el siguiente:
 

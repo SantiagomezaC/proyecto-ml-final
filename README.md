@@ -9,7 +9,7 @@ transporta la mayor fracción del sedimento. Proyecto final del curso de Machine
 
 | Producto | Enlace |
 |---|---|
-| Dashboard (Render) | URL_DASHBOARD |
+| Dashboard (Render) | https://descarga-efectiva-magdalena.onrender.com |
 | Informe técnico (Jupyter Book) | https://santiagomezac.github.io/proyecto-ml-final/ |
 | Repositorio | https://github.com/SantiagomezaC/proyecto-ml-final |
 
