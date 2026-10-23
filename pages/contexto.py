@@ -73,7 +73,7 @@ def layout():
                 ], className="g-0"),
             ], lg=6, className="hero-texto"),
             dbc.Col(html.Figure([
-                html.Img(src=dash.get_asset_url("transporte_sedimentos.webp"), className="hero-img",
+                html.Img(src=dash.get_asset_url("transporte_sedimentos.png"), className="hero-img",
                          alt="Esquema del transporte de sedimentos en un cauce: aporte desde la cuenca, "
                              "transporte en suspensión de limos y arcillas, saltación de arenas y arrastre "
                              "de gravas y bloques en la dirección del flujo"),
