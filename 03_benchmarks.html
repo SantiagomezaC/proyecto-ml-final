@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -226,7 +226,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Proyecto</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Trazabilidad de correcciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Respuesta a la evaluación del Entregable 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_datos.html">Datos: ETL y análisis exploratorio</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos benchmark (Entregable 2)</span></p>
@@ -597,8 +597,8 @@ hiperparámetros produce una estimación optimista, el sesgo de selección descr
 Simon <span class="bibtex-citation" id="id1">[<a class="reference internal" href="09_reproducibilidad.html#id34" title="Sudhir Varma and Richard Simon. Bias in error estimation when using cross-validation for model selection. BMC Bioinformatics, 7:91, 2006.">Varma and Simon, 2006</a>]</span> y por Cawley y Talbot <span class="bibtex-citation" id="id2">[<a class="reference internal" href="09_reproducibilidad.html#id35" title="Gavin C. Cawley and Nicola L. C. Talbot. On over-fitting in model selection and subsequent selection bias in performance evaluation. Journal of Machine Learning Research, 11:2079–2107, 2010.">Cawley and Talbot, 2010</a>]</span>. El protocolo separa dos
 niveles. El bucle externo divide el periodo 1986-2009 en doce bloques de calendario de dos años;
 para cada bloque, el entrenamiento comprende todos los días anteriores menos una separación de
-30 días, de modo que la ventana de entrenamiento crece de <span class="pasted-text">13,852</span> a
-<span class="pasted-text">21,851</span> días. El bucle interno,
+30 días, de modo que la ventana de entrenamiento crece de <span class="pasted-text">13.852</span> a
+<span class="pasted-text">21.851</span> días. El bucle interno,
 que ejecuta cada optimizador, aplica <code class="docutils literal notranslate"><span class="pre">TimeSeriesSplit</span></code> con tres pliegues y la misma separación
 dentro del entrenamiento externo. La métrica que se reporta proviene siempre del bloque externo,
 que el optimizador nunca vio.</p>
@@ -1104,8 +1104,8 @@ controlan la complejidad frente a un tamaño efectivo reducido. En Random Forest
 <code class="docutils literal notranslate"><span class="pre">max_samples</span> <span class="pre">=</span> <span class="pre">0,3</span></code>, con un efecto doble: la submuestra decorrelaciona los árboles y reduce el
 costo de cada ajuste en proporción, decisivo con más de 22.000 días de entrenamiento en esta
 máquina. La SVM y la SVR usan el núcleo RBF aproximado por el método de Nyström con 600
-componentes, seguido de una SVM lineal: la guía recomienda evitar la complejidad cuadrática o
-cúbica del núcleo completo cuando la muestra es grande, y la sección de optimización
+componentes, seguido de una SVM lineal, para evitar la complejidad cuadrática o cúbica del
+núcleo completo con una muestra de este tamaño; la sección de optimización
 computacional cuantifica el ahorro y la pérdida de exactitud frente a la SVC exacta. En XGBoost, la tasa de aprendizaje (0,01 a 0,3) y el número de árboles (80 a 600)
 se exploran conjuntamente porque su producto determina la capacidad efectiva.</p>
 </section>

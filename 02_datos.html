@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -69,7 +69,7 @@
     <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Búsqueda" href="search.html" />
     <link rel="next" title="Modelos benchmark: diseño experimental" href="03_benchmarks.html" />
-    <link rel="prev" title="Trazabilidad de correcciones" href="01_correcciones.html" />
+    <link rel="prev" title="Respuesta a la evaluación del Entregable 1" href="01_correcciones.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="es"/>
   <meta name="docsearch:version" content="" />
@@ -226,7 +226,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Proyecto</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Trazabilidad de correcciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Respuesta a la evaluación del Entregable 1</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Datos: ETL y análisis exploratorio</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos benchmark (Entregable 2)</span></p>
@@ -616,7 +616,7 @@ originales.</p>
 </div>
 <p>El ETL lee los catorce archivos, corrige la marca de orden de bytes y los metadatos
 repetidos en cada fila, unifica los nombres de las estaciones y construye una tabla ancha
-sobre el calendario diario de Calamar, con <span class="pasted-text">31,475</span> días entre 1940 y 2026. Los
+sobre el calendario diario de Calamar, con <span class="pasted-text">31.475</span> días entre 1940 y 2026. Los
 días sin registro quedan como valores faltantes explícitos; ninguna serie se rellena en esta
 etapa.</p>
 </section>
@@ -786,16 +786,16 @@ alternativas) con los mismos modelos de referencia evaluados en la prueba reserv
 </table>
 </div></div></div>
 </div>
-<p>El recorte a 1976 resuelve la imputación pero deja <span class="pasted-text">18,359</span> observaciones, por
+<p>El recorte a 1976 resuelve la imputación pero deja <span class="pasted-text">18.359</span> observaciones, por
 debajo del mínimo de la guía. El diseño adoptado cumple ambas exigencias: no imputa ninguna
-estación en años en que no existía y dispone de <span class="pasted-text">28,588</span> observaciones. La
+estación en años en que no existía y dispone de <span class="pasted-text">28.588</span> observaciones. La
 comparación empírica lo respalda. Con XGBoost, la PR-AUC en la prueba es
-<span class="pasted-text">0.941</span> con Calamar y Puerto Salgar desde 1947, frente a <span class="pasted-text">0.919</span>
-con las seis estaciones desde 1976 y <span class="pasted-text">0.940</span> con el diseño del Entregable 1; con
+<span class="pasted-text">0,941</span> con Calamar y Puerto Salgar desde 1947, frente a <span class="pasted-text">0,919</span>
+con las seis estaciones desde 1976 y <span class="pasted-text">0,940</span> con el diseño del Entregable 1; con
 la regresión logística, menos sensible al tamaño de la muestra, los tres valores
-(<span class="pasted-text">0.880</span>, <span class="pasted-text">0.882</span> y <span class="pasted-text">0.875</span>) difieren en menos de
-una centésima. La lectura conjunta es clara: lo que da ventaja al modelo no lineal son los treinta
-años adicionales de registro, que abarcan más ciclos de El Niño y La Niña, y no las estaciones
+(<span class="pasted-text">0,880</span>, <span class="pasted-text">0,882</span> y <span class="pasted-text">0,875</span>) difieren en menos de
+una centésima. En conjunto, los resultados indican que la ventaja del modelo no lineal proviene
+de los treinta años adicionales de registro, que abarcan más ciclos de El Niño y La Niña, y no las estaciones
 del bajo Magdalena. El diseño del Entregable 1 alcanzaba casi el mismo desempeño que el adoptado
 porque también usaba el periodo largo, pero lo hacía alimentando cuatro predictores con medianas
 durante tres décadas; el diseño adoptado obtiene el mismo resultado sin esa imputación. La
@@ -845,127 +845,127 @@ descarga efectiva se mantiene sobre 1940-2009, porque solo usa la serie de Calam
 <div class="cell_output docutils container">
 <div class="output text_html"><style type="text/css">
 </style>
-<table id="T_ba6e5">
+<table id="T_88256">
   <thead>
     <tr>
       <th class="blank level0" >&nbsp;</th>
-      <th id="T_ba6e5_level0_col0" class="col_heading level0 col0" >Estación</th>
-      <th id="T_ba6e5_level0_col1" class="col_heading level0 col1" >Periodo</th>
-      <th id="T_ba6e5_level0_col2" class="col_heading level0 col2" >Días sin dato</th>
-      <th id="T_ba6e5_level0_col3" class="col_heading level0 col3" >% sin dato</th>
-      <th id="T_ba6e5_level0_col4" class="col_heading level0 col4" >Rachas</th>
-      <th id="T_ba6e5_level0_col5" class="col_heading level0 col5" >Racha mediana (d)</th>
-      <th id="T_ba6e5_level0_col6" class="col_heading level0 col6" >Racha máxima (d)</th>
-      <th id="T_ba6e5_level0_col7" class="col_heading level0 col7" >Q Calamar sin dato (mediana)</th>
-      <th id="T_ba6e5_level0_col8" class="col_heading level0 col8" >Q Calamar con dato (mediana)</th>
-      <th id="T_ba6e5_level0_col9" class="col_heading level0 col9" >A de Vargha-Delaney</th>
-      <th id="T_ba6e5_level0_col10" class="col_heading level0 col10" >p</th>
-      <th id="T_ba6e5_level0_col11" class="col_heading level0 col11" >p (Holm)</th>
+      <th id="T_88256_level0_col0" class="col_heading level0 col0" >Estación</th>
+      <th id="T_88256_level0_col1" class="col_heading level0 col1" >Periodo</th>
+      <th id="T_88256_level0_col2" class="col_heading level0 col2" >Días sin dato</th>
+      <th id="T_88256_level0_col3" class="col_heading level0 col3" >% sin dato</th>
+      <th id="T_88256_level0_col4" class="col_heading level0 col4" >Rachas</th>
+      <th id="T_88256_level0_col5" class="col_heading level0 col5" >Racha mediana (d)</th>
+      <th id="T_88256_level0_col6" class="col_heading level0 col6" >Racha máxima (d)</th>
+      <th id="T_88256_level0_col7" class="col_heading level0 col7" >Q Calamar sin dato (mediana)</th>
+      <th id="T_88256_level0_col8" class="col_heading level0 col8" >Q Calamar con dato (mediana)</th>
+      <th id="T_88256_level0_col9" class="col_heading level0 col9" >A de Vargha-Delaney</th>
+      <th id="T_88256_level0_col10" class="col_heading level0 col10" >p</th>
+      <th id="T_88256_level0_col11" class="col_heading level0 col11" >p (Holm)</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th id="T_ba6e5_level0_row0" class="row_heading level0 row0" >0</th>
-      <td id="T_ba6e5_row0_col0" class="data row0 col0" >Arrancaplumas</td>
-      <td id="T_ba6e5_row0_col1" class="data row0 col1" >desde 1947</td>
-      <td id="T_ba6e5_row0_col2" class="data row0 col2" >4555</td>
-      <td id="T_ba6e5_row0_col3" class="data row0 col3" >15.600000</td>
-      <td id="T_ba6e5_row0_col4" class="data row0 col4" >15</td>
-      <td id="T_ba6e5_row0_col5" class="data row0 col5" >29</td>
-      <td id="T_ba6e5_row0_col6" class="data row0 col6" >4285</td>
-      <td id="T_ba6e5_row0_col7" class="data row0 col7" >7087</td>
-      <td id="T_ba6e5_row0_col8" class="data row0 col8" >7122</td>
-      <td id="T_ba6e5_row0_col9" class="data row0 col9" >0.493000</td>
-      <td id="T_ba6e5_row0_col10" class="data row0 col10" >0.15</td>
-      <td id="T_ba6e5_row0_col11" class="data row0 col11" >0.31</td>
+      <th id="T_88256_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_88256_row0_col0" class="data row0 col0" >Arrancaplumas</td>
+      <td id="T_88256_row0_col1" class="data row0 col1" >desde 1947</td>
+      <td id="T_88256_row0_col2" class="data row0 col2" >4555</td>
+      <td id="T_88256_row0_col3" class="data row0 col3" >15.600000</td>
+      <td id="T_88256_row0_col4" class="data row0 col4" >15</td>
+      <td id="T_88256_row0_col5" class="data row0 col5" >29</td>
+      <td id="T_88256_row0_col6" class="data row0 col6" >4285</td>
+      <td id="T_88256_row0_col7" class="data row0 col7" >7087</td>
+      <td id="T_88256_row0_col8" class="data row0 col8" >7122</td>
+      <td id="T_88256_row0_col9" class="data row0 col9" >0.493000</td>
+      <td id="T_88256_row0_col10" class="data row0 col10" >0.15</td>
+      <td id="T_88256_row0_col11" class="data row0 col11" >0.31</td>
     </tr>
     <tr>
-      <th id="T_ba6e5_level0_row1" class="row_heading level0 row1" >1</th>
-      <td id="T_ba6e5_row1_col0" class="data row1 col0" >Coyongal</td>
-      <td id="T_ba6e5_row1_col1" class="data row1 col1" >desde 1976</td>
-      <td id="T_ba6e5_row1_col2" class="data row1 col2" >2213</td>
-      <td id="T_ba6e5_row1_col3" class="data row1 col3" >11.900000</td>
-      <td id="T_ba6e5_row1_col4" class="data row1 col4" >82</td>
-      <td id="T_ba6e5_row1_col5" class="data row1 col5" >6</td>
-      <td id="T_ba6e5_row1_col6" class="data row1 col6" >425</td>
-      <td id="T_ba6e5_row1_col7" class="data row1 col7" >5853</td>
-      <td id="T_ba6e5_row1_col8" class="data row1 col8" >7259</td>
-      <td id="T_ba6e5_row1_col9" class="data row1 col9" >0.346000</td>
-      <td id="T_ba6e5_row1_col10" class="data row1 col10" >6.2e-120</td>
-      <td id="T_ba6e5_row1_col11" class="data row1 col11" >3.7e-119</td>
+      <th id="T_88256_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_88256_row1_col0" class="data row1 col0" >Coyongal</td>
+      <td id="T_88256_row1_col1" class="data row1 col1" >desde 1976</td>
+      <td id="T_88256_row1_col2" class="data row1 col2" >2213</td>
+      <td id="T_88256_row1_col3" class="data row1 col3" >11.900000</td>
+      <td id="T_88256_row1_col4" class="data row1 col4" >82</td>
+      <td id="T_88256_row1_col5" class="data row1 col5" >6</td>
+      <td id="T_88256_row1_col6" class="data row1 col6" >425</td>
+      <td id="T_88256_row1_col7" class="data row1 col7" >5853</td>
+      <td id="T_88256_row1_col8" class="data row1 col8" >7259</td>
+      <td id="T_88256_row1_col9" class="data row1 col9" >0.346000</td>
+      <td id="T_88256_row1_col10" class="data row1 col10" >6.2e-120</td>
+      <td id="T_88256_row1_col11" class="data row1 col11" >3.7e-119</td>
     </tr>
     <tr>
-      <th id="T_ba6e5_level0_row2" class="row_heading level0 row2" >2</th>
-      <td id="T_ba6e5_row2_col0" class="data row2 col0" >El Banco</td>
-      <td id="T_ba6e5_row2_col1" class="data row2 col1" >desde 1976</td>
-      <td id="T_ba6e5_row2_col2" class="data row2 col2" >552</td>
-      <td id="T_ba6e5_row2_col3" class="data row2 col3" >3.000000</td>
-      <td id="T_ba6e5_row2_col4" class="data row2 col4" >22</td>
-      <td id="T_ba6e5_row2_col5" class="data row2 col5" >2</td>
-      <td id="T_ba6e5_row2_col6" class="data row2 col6" >365</td>
-      <td id="T_ba6e5_row2_col7" class="data row2 col7" >7984</td>
-      <td id="T_ba6e5_row2_col8" class="data row2 col8" >7031</td>
-      <td id="T_ba6e5_row2_col9" class="data row2 col9" >0.599000</td>
-      <td id="T_ba6e5_row2_col10" class="data row2 col10" >2.1e-15</td>
-      <td id="T_ba6e5_row2_col11" class="data row2 col11" >8.6e-15</td>
+      <th id="T_88256_level0_row2" class="row_heading level0 row2" >2</th>
+      <td id="T_88256_row2_col0" class="data row2 col0" >El Banco</td>
+      <td id="T_88256_row2_col1" class="data row2 col1" >desde 1976</td>
+      <td id="T_88256_row2_col2" class="data row2 col2" >552</td>
+      <td id="T_88256_row2_col3" class="data row2 col3" >3.000000</td>
+      <td id="T_88256_row2_col4" class="data row2 col4" >22</td>
+      <td id="T_88256_row2_col5" class="data row2 col5" >2</td>
+      <td id="T_88256_row2_col6" class="data row2 col6" >365</td>
+      <td id="T_88256_row2_col7" class="data row2 col7" >7984</td>
+      <td id="T_88256_row2_col8" class="data row2 col8" >7031</td>
+      <td id="T_88256_row2_col9" class="data row2 col9" >0.599000</td>
+      <td id="T_88256_row2_col10" class="data row2 col10" >2.1e-15</td>
+      <td id="T_88256_row2_col11" class="data row2 col11" >8.6e-15</td>
     </tr>
     <tr>
-      <th id="T_ba6e5_level0_row3" class="row_heading level0 row3" >3</th>
-      <td id="T_ba6e5_row3_col0" class="data row3 col0" >Puerto Salgar</td>
-      <td id="T_ba6e5_row3_col1" class="data row3 col1" >desde 1947</td>
-      <td id="T_ba6e5_row3_col2" class="data row3 col2" >1111</td>
-      <td id="T_ba6e5_row3_col3" class="data row3 col3" >3.800000</td>
-      <td id="T_ba6e5_row3_col4" class="data row3 col4" >19</td>
-      <td id="T_ba6e5_row3_col5" class="data row3 col5" >2</td>
-      <td id="T_ba6e5_row3_col6" class="data row3 col6" >366</td>
-      <td id="T_ba6e5_row3_col7" class="data row3 col7" >6190</td>
-      <td id="T_ba6e5_row3_col8" class="data row3 col8" >7160</td>
-      <td id="T_ba6e5_row3_col9" class="data row3 col9" >0.379000</td>
-      <td id="T_ba6e5_row3_col10" class="data row3 col10" >1e-42</td>
-      <td id="T_ba6e5_row3_col11" class="data row3 col11" >5e-42</td>
+      <th id="T_88256_level0_row3" class="row_heading level0 row3" >3</th>
+      <td id="T_88256_row3_col0" class="data row3 col0" >Puerto Salgar</td>
+      <td id="T_88256_row3_col1" class="data row3 col1" >desde 1947</td>
+      <td id="T_88256_row3_col2" class="data row3 col2" >1111</td>
+      <td id="T_88256_row3_col3" class="data row3 col3" >3.800000</td>
+      <td id="T_88256_row3_col4" class="data row3 col4" >19</td>
+      <td id="T_88256_row3_col5" class="data row3 col5" >2</td>
+      <td id="T_88256_row3_col6" class="data row3 col6" >366</td>
+      <td id="T_88256_row3_col7" class="data row3 col7" >6190</td>
+      <td id="T_88256_row3_col8" class="data row3 col8" >7160</td>
+      <td id="T_88256_row3_col9" class="data row3 col9" >0.379000</td>
+      <td id="T_88256_row3_col10" class="data row3 col10" >1e-42</td>
+      <td id="T_88256_row3_col11" class="data row3 col11" >5e-42</td>
     </tr>
     <tr>
-      <th id="T_ba6e5_level0_row4" class="row_heading level0 row4" >4</th>
-      <td id="T_ba6e5_row4_col0" class="data row4 col0" >San Roque</td>
-      <td id="T_ba6e5_row4_col1" class="data row4 col1" >desde 1976</td>
-      <td id="T_ba6e5_row4_col2" class="data row4 col2" >907</td>
-      <td id="T_ba6e5_row4_col3" class="data row4 col3" >4.900000</td>
-      <td id="T_ba6e5_row4_col4" class="data row4 col4" >33</td>
-      <td id="T_ba6e5_row4_col5" class="data row4 col5" >9</td>
-      <td id="T_ba6e5_row4_col6" class="data row4 col6" >376</td>
-      <td id="T_ba6e5_row4_col7" class="data row4 col7" >7260</td>
-      <td id="T_ba6e5_row4_col8" class="data row4 col8" >7057</td>
-      <td id="T_ba6e5_row4_col9" class="data row4 col9" >0.513000</td>
-      <td id="T_ba6e5_row4_col10" class="data row4 col10" >0.18</td>
-      <td id="T_ba6e5_row4_col11" class="data row4 col11" >0.31</td>
+      <th id="T_88256_level0_row4" class="row_heading level0 row4" >4</th>
+      <td id="T_88256_row4_col0" class="data row4 col0" >San Roque</td>
+      <td id="T_88256_row4_col1" class="data row4 col1" >desde 1976</td>
+      <td id="T_88256_row4_col2" class="data row4 col2" >907</td>
+      <td id="T_88256_row4_col3" class="data row4 col3" >4.900000</td>
+      <td id="T_88256_row4_col4" class="data row4 col4" >33</td>
+      <td id="T_88256_row4_col5" class="data row4 col5" >9</td>
+      <td id="T_88256_row4_col6" class="data row4 col6" >376</td>
+      <td id="T_88256_row4_col7" class="data row4 col7" >7260</td>
+      <td id="T_88256_row4_col8" class="data row4 col8" >7057</td>
+      <td id="T_88256_row4_col9" class="data row4 col9" >0.513000</td>
+      <td id="T_88256_row4_col10" class="data row4 col10" >0.18</td>
+      <td id="T_88256_row4_col11" class="data row4 col11" >0.31</td>
     </tr>
     <tr>
-      <th id="T_ba6e5_level0_row5" class="row_heading level0 row5" >5</th>
-      <td id="T_ba6e5_row5_col0" class="data row5 col0" >Tres Cruces</td>
-      <td id="T_ba6e5_row5_col1" class="data row5 col1" >desde 1976</td>
-      <td id="T_ba6e5_row5_col2" class="data row5 col2" >2198</td>
-      <td id="T_ba6e5_row5_col3" class="data row5 col3" >11.900000</td>
-      <td id="T_ba6e5_row5_col4" class="data row5 col4" >43</td>
-      <td id="T_ba6e5_row5_col5" class="data row5 col5" >24</td>
-      <td id="T_ba6e5_row5_col6" class="data row5 col6" >366</td>
-      <td id="T_ba6e5_row5_col7" class="data row5 col7" >7080</td>
-      <td id="T_ba6e5_row5_col8" class="data row5 col8" >7062</td>
-      <td id="T_ba6e5_row5_col9" class="data row5 col9" >0.471000</td>
-      <td id="T_ba6e5_row5_col10" class="data row5 col10" >8.3e-06</td>
-      <td id="T_ba6e5_row5_col11" class="data row5 col11" >2.5e-05</td>
+      <th id="T_88256_level0_row5" class="row_heading level0 row5" >5</th>
+      <td id="T_88256_row5_col0" class="data row5 col0" >Tres Cruces</td>
+      <td id="T_88256_row5_col1" class="data row5 col1" >desde 1976</td>
+      <td id="T_88256_row5_col2" class="data row5 col2" >2198</td>
+      <td id="T_88256_row5_col3" class="data row5 col3" >11.900000</td>
+      <td id="T_88256_row5_col4" class="data row5 col4" >43</td>
+      <td id="T_88256_row5_col5" class="data row5 col5" >24</td>
+      <td id="T_88256_row5_col6" class="data row5 col6" >366</td>
+      <td id="T_88256_row5_col7" class="data row5 col7" >7080</td>
+      <td id="T_88256_row5_col8" class="data row5 col8" >7062</td>
+      <td id="T_88256_row5_col9" class="data row5 col9" >0.471000</td>
+      <td id="T_88256_row5_col10" class="data row5 col10" >8.3e-06</td>
+      <td id="T_88256_row5_col11" class="data row5 col11" >2.5e-05</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
 <p>Dentro de su periodo operativo, cada estación conserva huecos genuinos de operación. Para la
-tarea principal importan los de Calamar (<span class="pasted-text">1.2</span> % de los días desde 1947) y
-los de Puerto Salgar (<span class="pasted-text">3.8</span> %). Para establecer su mecanismo se comparó el
+tarea principal importan los de Calamar (<span class="pasted-text">1,2</span> % de los días desde 1947) y
+los de Puerto Salgar (<span class="pasted-text">3,8</span> %). Para establecer su mecanismo se comparó el
 caudal de Calamar en los días con y sin registro de cada estación mediante la prueba de
 Mann-Whitney y el tamaño de efecto A de Vargha y Delaney, con corrección de Holm. Con muestras de
 este tamaño casi toda diferencia resulta significativa, de modo que la lectura se apoya en A: un
 valor de 0,5 indica que la ausencia no se relaciona con el caudal. Puerto Salgar
-(A = <span class="pasted-text">0.379</span>) y Coyongal (A = <span class="pasted-text">0.346</span>), esta última en las
+(A = <span class="pasted-text">0,379</span>) y Coyongal (A = <span class="pasted-text">0,346</span>), esta última en las
 tareas adicionales, tienen sus huecos concentrados en aguas bajas. El mecanismo es, por
 tanto, MAR respecto del caudal observado en Calamar y no MCAR: la probabilidad de faltar depende
 de una variable observada. De ese diagnóstico se siguen dos consecuencias: la imputación debe
@@ -1090,10 +1090,10 @@ condicional.</p>
 </table>
 </div></div></div>
 </div>
-<p>El hallazgo central del Entregable 1 se mantiene. En <span class="pasted-text">7</span> de los
+<p>La auditoría confirma el resultado del Entregable 1. En <span class="pasted-text">7</span> de los
 <span class="pasted-text">8</span> bloques quinquenales la relación entre el transporte publicado y el
 caudal es una potencia con R² superior a 0,997; el bloque restante (<span class="pasted-text">1985-1989</span>,
-R² = <span class="pasted-text">0.961</span>) es aquel en que el exponente pasa de 1,44 a 1,94, de modo que
+R² = <span class="pasted-text">0,961</span>) es aquel en que el exponente pasa de 1,44 a 1,94, de modo que
 mezcla dos ecuaciones. El cambio de exponente entre bloques delata sucesivas curvas de gasto
 aplicadas por el IDEAM. La serie de transporte
 es una transformación determinista del caudal y no aporta información independiente; queda
@@ -1127,11 +1127,11 @@ excluida de los predictores y del objetivo y se usa solo para localizar la desca
 </figure>
 </div>
 </div>
-<p>La descarga efectiva de Calamar es <span class="pasted-text">9,954</span> m³/s, y las ocho ecuaciones
+<p>La descarga efectiva de Calamar es <span class="pasted-text">9.954</span> m³/s, y las ocho ecuaciones
 históricas conducen a la misma clase modal, de modo que la posición del máximo depende de la
 distribución de frecuencias del caudal y no de la escala de la curva <span class="bibtex-citation" id="id2">[<a class="reference internal" href="09_reproducibilidad.html#id4" title="David B. Nash. Effective sediment-transporting discharge from magnitude-frequency analysis. The Journal of Geology, 102(1):79–95, 1994.">Nash, 1994</a>]</span>. La
 variable objetivo vale 1 cuando el caudal del día <em>t</em> + 15 cae en la banda de ±15 % alrededor
-de ese valor, entre <span class="pasted-text">8,461</span> y <span class="pasted-text">11,448</span> m³/s.</p>
+de ese valor, entre <span class="pasted-text">8.461</span> y <span class="pasted-text">11.448</span> m³/s.</p>
 </section>
 <section id="variable-objetivo">
 <h2>Variable objetivo<a class="headerlink" href="#variable-objetivo" title="Link to this heading">#</a></h2>
@@ -1169,9 +1169,9 @@ de ese valor, entre <span class="pasted-text">8,461</span> y <span class="pasted
 </figure>
 </div>
 </div>
-<p>La clase positiva representa el <span class="pasted-text">26.3</span> % de los <span class="pasted-text">22,612</span> días de
-entrenamiento (<span class="pasted-text">5,956</span> casos) y el <span class="pasted-text">25.2</span> % de los
-<span class="pasted-text">5,946</span> días de prueba. El desbalance global (unos tres días negativos por cada
+<p>La clase positiva representa el <span class="pasted-text">26,3</span> % de los <span class="pasted-text">22.612</span> días de
+entrenamiento (<span class="pasted-text">5.956</span> casos) y el <span class="pasted-text">25,2</span> % de los
+<span class="pasted-text">5.946</span> días de prueba. El desbalance global (unos tres días negativos por cada
 positivo) es moderado, pero la prevalencia anual varía entre cero en <span class="pasted-text">1957</span>,
 año de El Niño, y <span class="pasted-text">66</span> % en <span class="pasted-text">1971</span>, año de La Niña. Esa
 heterogeneidad tiene dos implicaciones metodológicas. La primera es que el accuracy no
@@ -1333,7 +1333,7 @@ distintas.</p>
 <p>Las series de caudal son positivas y sin valores imposibles (no hay ceros ni negativos). Las
 estaciones del alto Magdalena presentan asimetría positiva marcada, propia de cuencas de
 montaña con crecidas rápidas, mientras que Calamar es casi simétrica (asimetría de
-<span class="pasted-text">0.26</span>) porque la depresión momposina amortigua los picos. Los valores
+<span class="pasted-text">0,26</span>) porque la depresión momposina amortigua los picos. Los valores
 fuera de 1,5 veces el rango intercuartílico corresponden a crecidas y estiajes reales y se
 conservan; los modelos de árboles son invariantes a transformaciones monótonas y en los
 demás se aplica escalado estándar dentro del pipeline.</p>
@@ -1576,7 +1576,7 @@ inflación de varianza supera 10 en <span class="pasted-text">18</span> variable
 por <span class="math notranslate nohighlight">\(Q_{ef}\)</span>); esa redundancia exacta, heredada del Entregable 1, es inocua para los árboles y
 la absorbe la regularización en los modelos lineales. El resto de la multicolinealidad es física (rezagos sucesivos de una serie con autocorrelación de 0,999 y estaciones vecinas
 sobre el mismo cauce) y no se elimina por selección de variables; se trata con regularización
-en los modelos lineales, que es precisamente la segunda corrección solicitada.</p>
+en los modelos lineales, cuyo parámetro se ajusta en la sección de correcciones 2 y 3.</p>
 </section>
 <section id="componente-temporal">
 <h2>Componente temporal<a class="headerlink" href="#componente-temporal" title="Link to this heading">#</a></h2>
@@ -1616,7 +1616,7 @@ en los modelos lineales, que es precisamente la segunda corrección solicitada.<
 </div>
 </details>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\User\AppData\Local\Temp\ipykernel_7188\3636174615.py:5: InterpolationWarning: The test statistic is outside of the range of p-values available in the
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\User\AppData\Local\Temp\ipykernel_11176\3636174615.py:5: InterpolationWarning: The test statistic is outside of the range of p-values available in the
 look-up table. The actual p-value is greater than the p-value returned.
 
   p_adf = adfuller(s, autolag="AIC")[1]; p_kpss = kpss(s, regression="c", nlags="auto")[1]
@@ -1625,12 +1625,12 @@ look-up table. The actual p-value is greater than the p-value returned.
 <img alt="_images/bf1ee340408d62de757d404718074c4e8453a07e8db301b4f84dfb2a0b2e830c.png" src="_images/bf1ee340408d62de757d404718074c4e8453a07e8db301b4f84dfb2a0b2e830c.png" />
 </div>
 </div>
-<p>La autocorrelación del caudal diario es <span class="pasted-text">0.999</span> a un día, <span class="pasted-text">0.92</span>
-a quince y <span class="pasted-text">0.76</span> a treinta; la autocorrelación parcial a dos días es
-<span class="pasted-text">-0.22</span>, señal de que la dinámica de corto plazo está dominada por los dos
+<p>La autocorrelación del caudal diario es <span class="pasted-text">0,999</span> a un día, <span class="pasted-text">0,92</span>
+a quince y <span class="pasted-text">0,76</span> a treinta; la autocorrelación parcial a dos días es
+<span class="pasted-text">-0,22</span>, señal de que la dinámica de corto plazo está dominada por los dos
 primeros rezagos y que los siguientes aportan correcciones decrecientes. La prueba ADF rechaza
-la raíz unitaria (p = <span class="pasted-text">3.4e-28</span>) y la KPSS no rechaza la estacionariedad
-(p = <span class="pasted-text">0.10</span>); como sus hipótesis nulas son opuestas, la coincidencia respalda
+la raíz unitaria (p = <span class="pasted-text">3,4 × 10⁻²⁸</span>) y la KPSS no rechaza la estacionariedad
+(p = <span class="pasted-text">0,10</span>); como sus hipótesis nulas son opuestas, la coincidencia respalda
 que la serie es estacionaria en nivel alrededor de un ciclo estacional estable.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
@@ -1661,7 +1661,7 @@ que la serie es estacionaria en nivel alrededor de un ciclo estacional estable.<
 <p>La descomposición STL <span class="bibtex-citation" id="id5">[<a class="reference internal" href="09_reproducibilidad.html#id64" title="Robert B. Cleveland, William S. Cleveland, Jean E. McRae, and Irma Terpenning. STL: a seasonal-trend decomposition procedure based on loess. Journal of Official Statistics, 6(1):3–73, 1990.">Cleveland <em>et al.</em>, 1990</a>]</span> separa una componente estacional bimodal, con
 máximo principal en <span class="pasted-text">noviembre</span>, máximo secundario en <span class="pasted-text">julio</span> y mínimo
 en <span class="pasted-text">marzo</span>, de una tendencia que oscila en escala interanual. La fuerza de la estacionalidad, medida como la fracción de la varianza
-no tendencial que explica la componente estacional, es <span class="pasted-text">0.79</span>. Las
+no tendencial que explica la componente estacional, es <span class="pasted-text">0,79</span>. Las
 oscilaciones de la tendencia coinciden con la alternancia de El Niño y La Niña documentada para
 la cuenca <span class="bibtex-citation" id="id6">[<a class="reference internal" href="09_reproducibilidad.html#id7" title="Juan D. Restrepo and Björn Kjerfve. Magdalena river: interannual variability (1975–1995) and revised water discharge and sediment load estimates. Journal of Hydrology, 235(1-2):137–149, 2000.">Restrepo and Kjerfve, 2000</a>]</span> y constituyen la principal fuente de deriva entre periodos, que
 se cuantifica a continuación.</p>
@@ -1805,13 +1805,13 @@ se cuantifica a continuación.</p>
 Kolmogorov-Smirnov entre tres periodos. Con miles de días la prueba KS rechaza casi cualquier
 diferencia, por lo que la interpretación se apoya en el PSI: por debajo de 0,1 el desplazamiento
 se considera menor, entre 0,1 y 0,25 moderado y por encima de 0,25 severo. El caudal de Calamar
-y el objetivo son estables (PSI de <span class="pasted-text">0.023</span> entre el entrenamiento reciente y la
+y el objetivo son estables (PSI de <span class="pasted-text">0,023</span> entre el entrenamiento reciente y la
 prueba), y la prevalencia de la clase positiva es prácticamente la misma en ambos periodos, de
 modo que no hay desplazamiento de la distribución a priori. Puerto Salgar, la estación
-predictora de la tarea principal, también es estable (PSI de <span class="pasted-text">0.038</span>). Dos
+predictora de la tarea principal, también es estable (PSI de <span class="pasted-text">0,038</span>). Dos
 estaciones del bajo Magdalena, en cambio, muestran desplazamientos severos: Coyongal entre las dos mitades del entrenamiento
-(PSI = <span class="pasted-text">0.56</span>) y Tres Cruces entre el entrenamiento y la prueba
-(PSI = <span class="pasted-text">1.02</span>, con una media que pasa de unos 2.850 a 1.880 m³/s). Como el
+(PSI = <span class="pasted-text">0,56</span>) y Tres Cruces entre el entrenamiento y la prueba
+(PSI = <span class="pasted-text">1,02</span>, con una media que pasa de unos 2.850 a 1.880 m³/s). Como el
 caudal de Calamar, que integra el aporte de esas estaciones, no cambia en la misma proporción,
 el desplazamiento apunta a cambios en la curva de calibración o en la ubicación del sensor y no
 a un cambio hidrológico: es una deriva de medición. Ese hallazgo es un argumento adicional a
@@ -1929,8 +1929,8 @@ modelos comparados.</p>
 </div>
 <p>Los tiempos de tránsito de la onda de crecida hacia Calamar, estimados en el Entregable 1 por
 correlación cruzada sin usar información geográfica, crecen con la distancia al mar: su
-correlación de Spearman con la altitud es <span class="pasted-text">0.96</span> y la de Pearson con la latitud
-es <span class="pasted-text">-0.88</span>. Esa concordancia externa respalda el uso de cada estación desfasada
+correlación de Spearman con la altitud es <span class="pasted-text">0,96</span> y la de Pearson con la latitud
+es <span class="pasted-text">-0,88</span>. Esa concordancia externa respalda el uso de cada estación desfasada
 por su tiempo de tránsito.</p>
 </section>
 <section id="analisis-multivariado">
@@ -1982,19 +1982,20 @@ por su tiempo de tránsito.</p>
 </div>
 </div>
 <p>Las <span class="pasted-text">10</span> primeras componentes principales explican el 90 % de la varianza de
-<span class="pasted-text">31</span> predictores, y la primera concentra el <span class="pasted-text">49%</span>, lo que confirma la fuerte
+<span class="pasted-text">31</span> predictores, y la primera concentra el <span class="pasted-text">49 %</span>, lo que confirma la fuerte
 redundancia entre rezagos y estaciones. La proyección en el plano de las dos primeras
 componentes muestra que la clase positiva ocupa una franja de la primera componente, la que
 resume el nivel general de caudal, con días negativos a ambos lados: una
 frontera que ningún clasificador lineal puede trazar sin las variables de distancia a la
-descarga efectiva. Isolation Forest marca el <span class="pasted-text">13.3</span> % de los días como
+descarga efectiva. Isolation Forest marca el <span class="pasted-text">13,3</span> % de los días como
 atípicos multivariados, y el <span class="pasted-text">69</span> % de ellos corresponde a días con el
 caudal de Calamar en el decil superior o inferior: son crecidas y estiajes, eventos
 hidrológicamente válidos que se conservan. La distancia de Mahalanobis robusta (determinante de
 covarianza mínima sobre las primeras 20 variables, umbral χ² al 99,9 %) marca el
-<span class="pasted-text">23.3</span> %, una proporción incompatible con un umbral del 0,1 %: el resultado no
-señala atípicos sino que la distribución conjunta, con colas pesadas y relaciones no lineales
-entre rezagos, se aparta de la normalidad multivariada que ese umbral supone. Por esa razón la
+<span class="pasted-text">23,3</span> %, una proporción incompatible con un umbral del 0,1 %. Ese resultado
+indica que la distribución conjunta, con colas pesadas y relaciones no lineales entre rezagos, se
+aparta de la normalidad multivariada que el umbral supone, y no que una cuarta parte de los días
+sea atípica. Por esa razón la
 detección de atípicos se apoya en Isolation Forest, que no requiere ese supuesto.</p>
 </section>
 <section id="auditoria-de-fuga-de-datos">
@@ -2086,7 +2087,7 @@ detección de atípicos se apoya en Isolation Forest, que no requiere ese supues
 </div>
 <p>Todas las variables se construyen con información hasta el día <em>t</em> y el objetivo se ubica en
 <em>t</em> + 15, de modo que estarían disponibles en el momento de la predicción. El área bajo la
-curva ROC de cada predictor por separado alcanza un máximo de <span class="pasted-text">0.936</span>, por
+curva ROC de cada predictor por separado alcanza un máximo de <span class="pasted-text">0,936</span>, por
 debajo del umbral de alerta de 0,95; las variables más altas miden la cercanía del caudal
 actual a la banda, información legítima cuyo poder decae con el horizonte. No hay
 identificadores ni entidades repetidas entre particiones, porque la partición es cronológica y
@@ -2246,9 +2247,8 @@ este ajuste se generaliza a la validación anidada de los 140 modelos. Los inter
 recalculan con bootstrap estacionario <span class="bibtex-citation" id="id7">[<a class="reference internal" href="09_reproducibilidad.html#id49" title="Dimitris N. Politis and Joseph P. Romano. The stationary bootstrap. Journal of the American Statistical Association, 89(428):1303–1313, 1994.">Politis and Romano, 1994</a>]</span>, cuya longitud media de bloque
 (<span class="pasted-text">133</span> días) se elige con el criterio de Politis y White <span class="bibtex-citation" id="id8">[<a class="reference internal" href="09_reproducibilidad.html#id50" title="Dimitris N. Politis and Halbert White. Automatic block-length selection for the dependent bootstrap. Econometric Reviews, 23(1):53–70, 2004.">Politis and White, 2004</a>]</span>, y
 con corrección BCa estimada mediante un jackknife que elimina bloques completos. El intervalo
-por bloques es <span class="pasted-text">4.0</span> veces más ancho que el que remuestrea filas
-independientes: el informe original subestimaba la incertidumbre en esa proporción, exactamente
-el problema que señaló la retroalimentación.</p>
+por bloques es <span class="pasted-text">4,0</span> veces más ancho que el que remuestrea filas
+independientes; el informe anterior subestimaba la incertidumbre en esa proporción.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -2334,8 +2334,8 @@ el problema que señaló la retroalimentación.</p>
 <p>La última verificación compara, en los doce bloques externos, la imputación por mediana con
 una imputación iterativa que condiciona cada variable a las demás, la estrategia apropiada bajo
 un mecanismo MAR, y con la mediana acompañada de indicadores de faltante. La diferencia media de
-PR-AUC entre la imputación iterativa y la mediana es <span class="pasted-text">-0.0020</span>, y la prueba de
-Wilcoxon <span class="pasted-text">no permite distinguirlas</span> (p = <span class="pasted-text">0.57</span>). Con faltantes residuales de esta
+PR-AUC entre la imputación iterativa y la mediana es <span class="pasted-text">-0,0020</span>, y la prueba de
+Wilcoxon <span class="pasted-text">no permite distinguirlas</span> (p = <span class="pasted-text">0,57</span>). Con faltantes residuales de esta
 magnitud la elección del imputador no cambia las conclusiones, y se conserva la mediana por su
 menor costo dentro de los 140 modelos.</p>
 </section>
@@ -2377,7 +2377,7 @@ menor costo dentro de los 140 modelos.</p>
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">anterior</p>
-        <p class="prev-next-title">Trazabilidad de correcciones</p>
+        <p class="prev-next-title">Respuesta a la evaluación del Entregable 1</p>
       </div>
     </a>
     <a class="right-next"

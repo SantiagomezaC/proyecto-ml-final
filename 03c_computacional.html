@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -226,7 +226,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Proyecto</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Trazabilidad de correcciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Respuesta a la evaluación del Entregable 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_datos.html">Datos: ETL y análisis exploratorio</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos benchmark (Entregable 2)</span></p>
@@ -606,15 +606,15 @@ paralelización y el perfilamiento que hicieron viable el experimento.</p>
 <p>Los exponentes empíricos se estimaron con cinco tamaños de muestra entre 1.000 y 12.000 días y
 deben leerse como pendientes locales en ese rango, no como órdenes asintóticos. Con esa
 salvedad, la concordancia con la teoría es buena en los casos informativos. La SVC con núcleo
-RBF escala con un exponente de <span class="pasted-text">1.95</span>, muy cerca del comportamiento cuadrático
+RBF escala con un exponente de <span class="pasted-text">1,95</span>, muy cerca del comportamiento cuadrático
 esperado para el problema dual de libsvm, y es la razón por la que en el experimento se usó la
-aproximación de Nyström. El árbol de decisión (<span class="pasted-text">1.12</span>) y Random Forest
-(<span class="pasted-text">0.98</span>) siguen el orden <span class="math notranslate nohighlight">\(n\log n\)</span> del ordenamiento de los cortes, y
-la regresión logística (<span class="pasted-text">1.12</span>) el orden lineal por iteración más un
+aproximación de Nyström. El árbol de decisión (<span class="pasted-text">1,12</span>) y Random Forest
+(<span class="pasted-text">0,98</span>) siguen el orden <span class="math notranslate nohighlight">\(n\log n\)</span> del ordenamiento de los cortes, y
+la regresión logística (<span class="pasted-text">1,12</span>) el orden lineal por iteración más un
 número de iteraciones que crece levemente con n. El modelo original escala con un exponente de
-<span class="pasted-text">1.09</span>, lineal como predice la <a class="reference internal" href="05_modelo_original.html#prop-complejidad-ref"><span class="std std-ref">proposición 1</span></a>
-del capítulo 5. Los exponentes menores que uno de KNN (<span class="pasted-text">0.43</span>), que en el
-entrenamiento solo almacena los datos, y de XGBoost con histogramas (<span class="pasted-text">0.48</span>)
+<span class="pasted-text">1,09</span>, lineal como predice la <a class="reference internal" href="05_modelo_original.html#prop-complejidad-ref"><span class="std std-ref">proposición 1</span></a>
+del capítulo 5. Los exponentes menores que uno de KNN (<span class="pasted-text">0,43</span>), que en el
+entrenamiento solo almacena los datos, y de XGBoost con histogramas (<span class="pasted-text">0,48</span>)
 no contradicen la teoría: reflejan costos fijos (validación de datos, construcción de los
 histogramas, gestión de hilos) que dominan a tamaños pequeños, de modo que la pendiente en este
 rango subestima el orden asintótico.</p>
@@ -727,9 +727,9 @@ fuerza bruta (su tiempo por consulta es <span class="pasted-text">11</span> vece
 búsqueda exhaustiva vectorizada sobre una matriz densa aprovecha mejor la memoria caché que el
 recorrido de un árbol que poda poco. FAISS <span class="bibtex-citation" id="id1">[<a class="reference internal" href="09_reproducibilidad.html#id67" title="Jeff Johnson, Matthijs Douze, and Hervé Jégou. Billion-scale similarity search with GPUs. IEEE Transactions on Big Data, 7(3):535–547, 2021.">Johnson <em>et al.</em>, 2021</a>]</span> con índice plano calcula las mismas
 distancias exactas con instrucciones vectorizadas en precisión simple
-(<span class="pasted-text">1.7</span> veces), y el grafo HNSW <span class="bibtex-citation" id="id2">[<a class="reference internal" href="09_reproducibilidad.html#id68" title="Yu A. Malkov and D. A. Yashunin. Efficient and robust approximate nearest neighbor search using hierarchical navigable small world graphs. IEEE Transactions on Pattern Analysis and Machine Intelligence, 42(4):824–836, 2020.">Malkov and Yashunin, 2020</a>]</span> encuentra vecinos
-aproximados con <span class="pasted-text">18.6</span> veces menos tiempo y recupera el
-<span class="pasted-text">95.4%</span> de los 30 vecinos exactos. El compromiso entre exactitud y velocidad
+(<span class="pasted-text">1,7</span> veces), y el grafo HNSW <span class="bibtex-citation" id="id2">[<a class="reference internal" href="09_reproducibilidad.html#id68" title="Yu A. Malkov and D. A. Yashunin. Efficient and robust approximate nearest neighbor search using hierarchical navigable small world graphs. IEEE Transactions on Pattern Analysis and Machine Intelligence, 42(4):824–836, 2020.">Malkov and Yashunin, 2020</a>]</span> encuentra vecinos
+aproximados con <span class="pasted-text">18,6</span> veces menos tiempo y recupera el
+<span class="pasted-text">95,4 %</span> de los 30 vecinos exactos. El compromiso entre exactitud y velocidad
 es favorable en este problema porque la predicción promedia 30 vecinos: perder algunos y
 reemplazarlos por otros casi igual de cercanos apenas cambia la proporción de positivos.</p>
 </section>
@@ -1001,7 +1001,7 @@ subdiarias de toda la red.</p>
 <p>El método exacto ordena cada variable en cada nodo y evalúa todos los cortes posibles; el método
 por histogramas discretiza una vez cada variable en un número fijo de bins y acumula gradientes
 por bin, lo que reduce el costo por nivel de <span class="math notranslate nohighlight">\(O(n\,p\log n)\)</span> a <span class="math notranslate nohighlight">\(O(np + p\cdot\text{bins})\)</span>. La
-aceleración medida es de <span class="pasted-text">14.0</span> veces con PR-AUC prácticamente igual. La
+aceleración medida es de <span class="pasted-text">14,0</span> veces con PR-AUC prácticamente igual. La
 parada temprana sobre el último 15 % cronológico del entrenamiento detiene el ajuste en
 <span class="pasted-text">86</span> árboles. El modelo original usa la misma idea de histogramas,
 programada desde cero.</p>
@@ -1100,8 +1100,8 @@ programada desde cero.</p>
 estocástico eliminan el núcleo y escalan linealmente, pero pierden la frontera no lineal que el
 problema requiere. La aproximación de Nyström <span class="bibtex-citation" id="id4">[<a class="reference internal" href="09_reproducibilidad.html#id69" title="Christopher K. I. Williams and Matthias Seeger. Using the Nyström method to speed up kernel machines. In Advances in Neural Information Processing Systems, volume 13, 682–688. 2001.">Williams and Seeger, 2001</a>]</span> con 500 componentes proyecta los
 datos en un espacio de características donde el núcleo es aproximadamente un producto interno, y
-recupera la capacidad no lineal con un costo lineal en n: es <span class="pasted-text">2.5</span> veces más
-rápida que la SVC con una diferencia de <span class="pasted-text">-0.0099</span> en PR-AUC, y su inferencia es
+recupera la capacidad no lineal con un costo lineal en n: es <span class="pasted-text">2,5</span> veces más
+rápida que la SVC con una diferencia de <span class="pasted-text">-0,0099</span> en PR-AUC, y su inferencia es
 un orden de magnitud más rápida porque no depende del número de vectores de soporte. El costo se
 traslada a la memoria: la matriz de características de Nyström (<span class="math notranslate nohighlight">\(n \times 500\)</span> en doble
 precisión) eleva la memoria pico del ajuste de unos 7 MB a <span class="pasted-text">175</span> MB, un
@@ -1155,13 +1155,13 @@ optimizador, pliegue) es independiente, de modo que diez procesos de <code class
 <code class="docutils literal notranslate"><span class="pre">loky</span></code> ejecutan diez optimizaciones a la vez, cada una con estimadores de un solo hilo. Esta
 estrategia evita la sobresuscripción (diez procesos con Random Forest de diez hilos competirían
 por doce hilos) y resultó eficaz en el experimento real: las 1.344 optimizaciones de
-clasificación sumaron <span class="pasted-text">46.0</span> horas de tiempo de tarea y se completaron en
-<span class="pasted-text">4.6</span> horas de reloj, una concurrencia efectiva de
-<span class="pasted-text">10.0</span> procesos simultáneos. La <a class="reference internal" href="#fig-paralelo"><span class="std std-numref">Figura 15</span></a> muestra el
+clasificación sumaron <span class="pasted-text">46,0</span> horas de tiempo de tarea y se completaron en
+<span class="pasted-text">4,6</span> horas de reloj, una concurrencia efectiva de
+<span class="pasted-text">10,0</span> procesos simultáneos. La <a class="reference internal" href="#fig-paralelo"><span class="std std-numref">Figura 15</span></a> muestra el
 reverso de la medalla: con tareas muy cortas (diez ajustes de XGBoost de menos de medio segundo)
 el paralelismo entre procesos no acelera nada, porque el costo de lanzar los procesos y
 serializar los datos supera al del cómputo, mientras que el paralelismo interno de Random Forest
-alcanza una aceleración de <span class="pasted-text">4.0</span> con diez hilos. Ninguna curva se acerca a la
+alcanza una aceleración de <span class="pasted-text">4,0</span> con diez hilos. Ninguna curva se acerca a la
 ideal porque ocho de los diez núcleos del procesador son de eficiencia, más lentos que los dos de
 rendimiento, y la frecuencia baja con la carga sostenida. La lección es que el paralelismo debe
 aplicarse al nivel de grano grueso, el de las tareas de minutos, que es como se organizó el

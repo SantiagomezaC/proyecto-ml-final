@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -224,7 +224,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Proyecto</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Trazabilidad de correcciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Respuesta a la evaluación del Entregable 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_datos.html">Datos: ETL y análisis exploratorio</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos benchmark (Entregable 2)</span></p>
@@ -471,8 +471,8 @@
 </div>
 </details>
 </div>
-<p>La guía pide el análisis SHAP <span class="bibtex-citation" id="id1">[<a class="reference internal" href="09_reproducibilidad.html#id56" title="Scott M. Lundberg and Su-In Lee. A unified approach to interpreting model predictions. In Advances in Neural Information Processing Systems, volume 30. 2017.">Lundberg and Lee, 2017</a>]</span> del mejor modelo de cada tarea y su
-comparación con LIME en XGBoost. El modelo explicado aquí es <span class="pasted-text">XGBoost</span>, que
+<p>Este capítulo analiza el modelo de clasificación con SHAP <span class="bibtex-citation" id="id1">[<a class="reference internal" href="09_reproducibilidad.html#id56" title="Scott M. Lundberg and Su-In Lee. A unified approach to interpreting model predictions. In Advances in Neural Information Processing Systems, volume 30. 2017.">Lundberg and Lee, 2017</a>]</span> y compara sus
+explicaciones con las de LIME. El modelo explicado es <span class="pasted-text">XGBoost</span>, que
 ocupa el puesto <span class="pasted-text">2</span> entre los benchmarks de clasificación y admite el
 algoritmo TreeSHAP <span class="bibtex-citation" id="id2">[<a class="reference internal" href="09_reproducibilidad.html#id57" title="Scott M. Lundberg, Gabriel Erion, Hugh Chen, Alex DeGrave, Jordan M. Prutkin, Bala Nair, Ronit Katz, Jonathan Himmelfarb, Nisha Bansal, and Su-In Lee. From local explanations to global understanding with explainable AI for trees. Nature Machine Intelligence, 2(1):56–67, 2020.">Lundberg <em>et al.</em>, 2020</a>]</span>, que calcula los valores de Shapley de forma exacta y en
 tiempo polinómico recorriendo los caminos de cada árbol. Los valores se expresan en log-odds de
@@ -503,7 +503,7 @@ comparación con la de este benchmark se presentan en el capítulo 6.</p>
 </details>
 <div class="cell_output docutils container">
 <figure class="align-default" id="fig-shap-resumen">
-<img alt="_images/367a68b444dae780311b7e2dfb71179ade555b8408cffe72d752a38708265886.png" src="_images/367a68b444dae780311b7e2dfb71179ade555b8408cffe72d752a38708265886.png" />
+<img alt="_images/1a0b94fa4db0f79c4129e5ee2df70b69343d5c14daa8f64ad96a149a9dc435ab.png" src="_images/1a0b94fa4db0f79c4129e5ee2df70b69343d5c14daa8f64ad96a149a9dc435ab.png" />
 <figcaption>
 <p><span class="caption-number">Figura 19 </span><span class="caption-text">Gráfico resumen de SHAP en la prueba 2010-2026. Cada punto es un día; la posición horizontal es la contribución a la predicción (log-odds) y el color, el valor de la variable (rojo alto, azul bajo).</span><a class="headerlink" href="#fig-shap-resumen" title="Link to this image">#</a></p>
 </figcaption>
@@ -512,14 +512,14 @@ comparación con la de este benchmark se presentan en el capítulo 6.</p>
 </div>
 <p>Las tres variables con mayor contribución media son «<span class="pasted-text">Caudal actual en Calamar al cuadrado (m⁶/s²)</span>»,
 «<span class="pasted-text">Distancia del caudal actual a Q_ef (m³/s)</span>» y «<span class="pasted-text">Distancia relativa a Q_ef (–)</span>», y las cinco primeras concentran el
-<span class="pasted-text">67%</span> de la importancia total. El patrón de colores describe la regla
+<span class="pasted-text">67 %</span> de la importancia total. El patrón de colores describe la regla
 física que el modelo aprendió: una distancia grande a la descarga efectiva (rojo en la segunda
 fila) empuja la predicción hacia fuera de la banda, mientras que una distancia pequeña la empuja
 hacia dentro; el caudal actual al cuadrado actúa en el mismo sentido, con contribuciones
 negativas para los caudales bajos. El cambio diario del caudal y el rezago de un día aportan la
 tendencia de corto plazo: un río que sube se acerca a la banda desde abajo. Los armónicos
 estacionales contribuyen con signo coherente con el régimen bimodal. Puerto Salgar, en cambio,
-aporta apenas el <span class="pasted-text">0.6%</span> de la importancia: con un horizonte de quince
+aporta apenas el <span class="pasted-text">0,6 %</span> de la importancia: con un horizonte de quince
 días y un tránsito de veintiuno, su señal anticipada existe pero queda en buena parte contenida en
 el estado reciente de Calamar, lo que confirma lo observado en la comparación de diseños del
 capítulo 2.</p>
@@ -563,12 +563,12 @@ capítulo 2.</p>
 </figure>
 </div>
 </div>
-<p>El acierto (<span class="pasted-text">2021-08-22</span>, probabilidad <span class="pasted-text">0.977</span>) es un día en que el caudal
+<p>El acierto (<span class="pasted-text">2021-08-22</span>, probabilidad <span class="pasted-text">0,977</span>) es un día en que el caudal
 ya estaba cerca de la descarga efectiva; las contribuciones dominantes son
 «<span class="pasted-text">Distancia del caudal actual a Q_ef (m³/s); Distancia relativa a Q_ef (–); Caudal actual en Calamar al cuadrado (m⁶/s²)</span>», y todas empujan en el mismo sentido. El error elevado
 (<span class="pasted-text">2018-05-07</span>) es más instructivo: el modelo asignó una probabilidad de
-<span class="pasted-text">0.007</span> a un día que sí estuvo en la banda. El caudal de ese día era de
-<span class="pasted-text">6,906</span> m³/s y quince días después alcanzó <span class="pasted-text">8,497</span> m³/s, apenas
+<span class="pasted-text">0,007</span> a un día que sí estuvo en la banda. El caudal de ese día era de
+<span class="pasted-text">6.906</span> m³/s y quince días después alcanzó <span class="pasted-text">8.497</span> m³/s, apenas
 por encima del límite inferior de la banda (8.461 m³/s). Las variables que explican el error
 («<span class="pasted-text">Caudal actual en Calamar al cuadrado (m⁶/s²); Distancia del caudal actual a Q_ef (m³/s); Distancia relativa a Q_ef (–)</span>») describen un río todavía lejos de la banda, y el modelo no tenía cómo
 anticipar un ascenso de más de 1.500 m³/s en quince días que lo dejaría en el borde. Es un tipo
@@ -668,25 +668,138 @@ modela cuán lejos de los límites quedará el caudal y no solo de qué lado.</p
 </table>
 </div></div></div>
 </div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Concordancia SHAP-LIME en una muestra de 100 días de prueba próximos a un límite de la banda</span>
+<span class="c1"># (a menos del 5 % de Q_ef) y 100 días alejados (a más del 20 %)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">mannwhitneyu</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">DATOS_PROC</span>
+<span class="n">par</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">((</span><span class="n">DATOS_PROC</span> <span class="o">/</span> <span class="s2">"parametros.json"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))[</span><span class="s2">"calamar"</span><span class="p">]</span>
+<span class="n">yq</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">y_reg_test</span><span class="o">.</span><span class="n">values</span>
+<span class="n">d_lim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">yq</span> <span class="o">-</span> <span class="n">par</span><span class="p">[</span><span class="s2">"LIM"</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">yq</span> <span class="o">-</span> <span class="n">par</span><span class="p">[</span><span class="s2">"LIM"</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span> <span class="o">/</span> <span class="n">par</span><span class="p">[</span><span class="s2">"Q_EF"</span><span class="p">]</span>
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">SEED</span><span class="p">)</span>
+<span class="n">grupos</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"próximos al límite"</span><span class="p">:</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">d_lim</span> <span class="o">&lt;</span> <span class="mf">.05</span><span class="p">),</span> <span class="mi">100</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+          <span class="s2">"alejados del límite"</span><span class="p">:</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">d_lim</span> <span class="o">&gt;</span> <span class="mf">.20</span><span class="p">),</span> <span class="mi">100</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)}</span>
+<span class="n">Xf</span> <span class="o">=</span> <span class="n">Xte</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">Xtr</span><span class="o">.</span><span class="n">median</span><span class="p">())</span><span class="o">.</span><span class="n">values</span>
+<span class="n">muestra</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">g</span><span class="p">,</span> <span class="n">ids</span> <span class="ow">in</span> <span class="n">grupos</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">lime_exp</span><span class="o">.</span><span class="n">explain_instance</span><span class="p">(</span><span class="n">Xf</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">f</span><span class="p">,</span> <span class="n">num_features</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">3000</span><span class="p">)</span>
+        <span class="n">lw</span> <span class="o">=</span> <span class="p">{</span><span class="n">Xte</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span> <span class="n">w</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">as_map</span><span class="p">()[</span><span class="mi">1</span><span class="p">]}</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">sv</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">Xte</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="n">muestra</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"grupo"</span><span class="p">:</span> <span class="n">g</span><span class="p">,</span> <span class="s2">"R² del sustituto"</span><span class="p">:</span> <span class="n">e</span><span class="o">.</span><span class="n">score</span><span class="p">,</span>
+                        <span class="s2">"variables comunes (top 10)"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">lw</span><span class="p">)),</span>
+                        <span class="s2">"Spearman |LIME| vs |SHAP|"</span><span class="p">:</span> <span class="n">spearmanr</span><span class="p">([</span><span class="nb">abs</span><span class="p">(</span><span class="n">lw</span><span class="p">[</span><span class="n">c</span><span class="p">])</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">lw</span><span class="p">],</span> <span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">c</span><span class="p">])</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">lw</span><span class="p">])[</span><span class="mi">0</span><span class="p">],</span>
+                        <span class="s2">"signos coincidentes"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">lw</span><span class="p">[</span><span class="n">c</span><span class="p">])</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">c</span><span class="p">])</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">lw</span><span class="p">])})</span>
+<span class="n">muestra</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">muestra</span><span class="p">)</span>
+<span class="n">tab_m</span> <span class="o">=</span> <span class="n">muestra</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"grupo"</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+<span class="n">tab_m</span><span class="p">[</span><span class="s2">"p (Mann-Whitney)"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">muestra</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">muestra</span><span class="o">.</span><span class="n">grupo</span> <span class="o">==</span> <span class="s2">"próximos al límite"</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span>
+                                          <span class="n">muestra</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">muestra</span><span class="o">.</span><span class="n">grupo</span> <span class="o">==</span> <span class="s2">"alejados del límite"</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">())</span><span class="o">.</span><span class="n">pvalue</span>
+                             <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">tab_m</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">((</span><span class="s2">"Spearman |LIME| vs |SHAP|"</span><span class="p">,</span> <span class="s2">"rho"</span><span class="p">),</span> <span class="p">(</span><span class="s2">"signos coincidentes"</span><span class="p">,</span> <span class="s2">"sig"</span><span class="p">),</span> <span class="p">(</span><span class="s2">"R² del sustituto"</span><span class="p">,</span> <span class="s2">"r2"</span><span class="p">),</span>
+             <span class="p">(</span><span class="s2">"variables comunes (top 10)"</span><span class="p">,</span> <span class="s2">"com"</span><span class="p">)):</span>
+    <span class="n">glue</span><span class="p">(</span><span class="sa">f</span><span class="s2">"m_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">_borde"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">tab_m</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="s2">"próximos al límite"</span><span class="p">]),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">glue</span><span class="p">(</span><span class="sa">f</span><span class="s2">"m_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">_lejos"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">tab_m</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="s2">"alejados del límite"</span><span class="p">]),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">glue</span><span class="p">(</span><span class="sa">f</span><span class="s2">"m_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">_p"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">tab_m</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">c</span><span class="p">,</span> <span class="s2">"p (Mann-Whitney)"</span><span class="p">]),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">tab_m</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>grupo</th>
+      <th>alejados del límite</th>
+      <th>próximos al límite</th>
+      <th>p (Mann-Whitney)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>R² del sustituto</th>
+      <td>0.242</td>
+      <td>0.336</td>
+      <td>0.117</td>
+    </tr>
+    <tr>
+      <th>variables comunes (top 10)</th>
+      <td>7.000</td>
+      <td>7.000</td>
+      <td>0.785</td>
+    </tr>
+    <tr>
+      <th>Spearman |LIME| vs |SHAP|</th>
+      <td>0.758</td>
+      <td>0.733</td>
+      <td>0.357</td>
+    </tr>
+    <tr>
+      <th>signos coincidentes</th>
+      <td>1.000</td>
+      <td>0.900</td>
+      <td>0.001</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
 <p>LIME <span class="bibtex-citation" id="id3">[<a class="reference internal" href="09_reproducibilidad.html#id59" title="Marco Tulio Ribeiro, Sameer Singh, and Carlos Guestrin. &quot;why should I trust you?&quot;: explaining the predictions of any classifier. In Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, 1135–1144. 2016.">Ribeiro <em>et al.</em>, 2016</a>]</span> explica cada predicción ajustando un modelo lineal ponderado a
 perturbaciones de la observación en un entorno local, mientras que SHAP distribuye la predicción
 entre las variables según los valores de Shapley, que cumplen eficiencia (la suma de las
 contribuciones es exactamente la diferencia entre la predicción y el valor esperado), simetría y
 aditividad. En el día acertado ambos métodos coinciden: comparten <span class="pasted-text">9</span> de
 las diez variables más importantes y la correlación de rangos entre sus magnitudes es
-<span class="pasted-text">0.89</span>, aunque el sustituto lineal de LIME solo explica un
-R² = <span class="pasted-text">0.45</span> del modelo en el entorno. En el día con error, la coincidencia
+<span class="pasted-text">0,89</span>, aunque el sustituto lineal de LIME solo explica un
+R² = <span class="pasted-text">0,45</span> del modelo en el entorno. En el día con error, la coincidencia
 cae a <span class="pasted-text">5</span> variables comunes y el R² del sustituto local a
-<span class="pasted-text">0.14</span>. La divergencia tiene una causa precisa: ese día está cerca de una
-región donde la probabilidad cambia bruscamente (el borde de la banda), y una aproximación lineal
-del entorno no representa bien una función con esa curvatura, mientras que TreeSHAP calcula las
+<span class="pasted-text">0,14</span>.</p>
+<p>Dos observaciones no bastan para establecer un patrón, por lo que la comparación se extendió a una
+muestra de cien días de prueba próximos a un límite de la banda y cien alejados de él (tabla
+anterior). La muestra matiza lo observado en los dos días. La correlación de rangos entre las
+magnitudes de LIME y SHAP es similar en ambos grupos (<span class="pasted-text">0,73</span> en los días
+próximos y <span class="pasted-text">0,76</span> en los alejados, medianas; p = <span class="pasted-text">0,36</span>,
+Mann-Whitney), el R² del sustituto local tampoco difiere (p = <span class="pasted-text">0,12</span>) y ambos
+métodos coinciden en una mediana de <span class="pasted-text">7</span> de las diez variables más
+relevantes. La caída del R² en el día con error no es, por tanto, una propiedad general de los
+días próximos al límite. La diferencia sistemática está en el signo: la proporción de variables a
+las que ambos métodos asignan el mismo sentido de contribución es de
+<span class="pasted-text">1,00</span> en los días alejados y baja a <span class="pasted-text">0,90</span> en los
+próximos (p = <span class="pasted-text">0,001</span>). Cerca de un límite, LIME invierte el sentido de alguna de
+las variables secundarias, aunque identifica bien cuáles son relevantes y en qué orden.</p>
+<p>La inversión de signos tiene dos causas. Cerca de un límite, la probabilidad predicha cambia
+bruscamente con el caudal, y una aproximación lineal ajustada a perturbaciones del entorno
+promedia contribuciones de ambos lados del límite, que tienen signo opuesto, mientras que TreeSHAP calcula las
 contribuciones exactas del modelo de árboles sin aproximarlo. Además, LIME discretiza las
-variables continuas en cuartiles y perturba cada una de forma independiente, lo que genera puntos
-poco plausibles cuando las variables están tan correlacionadas como los rezagos de un caudal. En
-general, cabe esperar que ambas técnicas diverjan cuando el modelo es fuertemente no lineal en el
-entorno de la observación, cuando las variables están correlacionadas y cuando la observación
-está cerca de una frontera de decisión; en esos casos, la explicación de SHAP es la más fiel al
-modelo.</p>
+variables continuas en cuartiles y perturba cada una de forma independiente, lo que genera
+combinaciones poco plausibles cuando las variables están tan correlacionadas como los rezagos de un
+caudal con autocorrelación de 0,999. Cabe esperar, por tanto, que ambas técnicas diverjan cuando
+el modelo es fuertemente no lineal en el entorno de la observación, cuando las variables están
+correlacionadas y cuando la observación está cerca de una frontera de decisión. En esos casos la
+explicación de SHAP es la más fiel al modelo, y la de LIME debe leerse en cuanto a las
+variables que identifica y su importancia relativa, pero no en cuanto al sentido de las
+contribuciones secundarias.</p>
 </section>
 </section>
 

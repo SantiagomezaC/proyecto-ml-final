@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -61,6 +61,8 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"tex": {"tags": "ams"}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '03a_clasificacion';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="_static/logo.png"/>
@@ -224,7 +226,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Proyecto</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Trazabilidad de correcciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Respuesta a la evaluación del Entregable 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_datos.html">Datos: ETL y análisis exploratorio</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos benchmark (Entregable 2)</span></p>
@@ -808,20 +810,190 @@ y la semilla, está en <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 <p>La mejor combinación es <span class="pasted-text">Random Forest</span> con ponderación por clase y búsqueda
-aleatoria, con una PR-AUC externa de <span class="pasted-text">0.910</span> ± <span class="pasted-text">0.075</span>, y
+aleatoria, con una PR-AUC externa de <span class="pasted-text">0,910</span> ± <span class="pasted-text">0,075</span>, y
 las diez primeras posiciones de la tabla maestra son variantes de Random Forest separadas por
 menos de una centésima. XGBoost aparece como el segundo algoritmo, con la combinación ADASYN y
 búsqueda aleatoria, y su desviación entre bloques es la menor de las mejores combinaciones. En el
-otro extremo, <span class="pasted-text">Naive Bayes</span> (<span class="pasted-text">0.705</span>) paga el supuesto de
+otro extremo, <span class="pasted-text">Naive Bayes</span> (<span class="pasted-text">0,705</span>) paga el supuesto de
 independencia condicional entre predictores que son, en buena parte, rezagos casi idénticos de la
 misma serie.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dificultad de cada bloque externo: proporción de días positivos que exigen anticipar una entrada</span>
+<span class="c1"># a la banda (caudal fuera de ella en t y dentro en t + 15)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">spearmanr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">DATOS_PROC</span>
+<span class="n">LIM</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">((</span><span class="n">DATOS_PROC</span> <span class="o">/</span> <span class="s2">"parametros.json"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))[</span><span class="s2">"calamar"</span><span class="p">][</span><span class="s2">"LIM"</span><span class="p">]</span>
+<span class="n">q_hoy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">calamar_cuad</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">en_hoy</span> <span class="o">=</span> <span class="p">(</span><span class="n">q_hoy</span> <span class="o">&gt;=</span> <span class="n">LIM</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">q_hoy</span> <span class="o">&lt;=</span> <span class="n">LIM</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">yb</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">y_clf</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">filas</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">D</span><span class="o">.</span><span class="n">pliegues</span><span class="p">:</span>
+    <span class="n">te</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s2">"test"</span><span class="p">]</span>
+    <span class="n">filas</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"pliegue"</span><span class="p">:</span> <span class="n">p</span><span class="p">[</span><span class="s2">"pliegue"</span><span class="p">],</span> <span class="s2">"prevalencia"</span><span class="p">:</span> <span class="n">yb</span><span class="p">[</span><span class="n">te</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span>
+                  <span class="s2">"positivos que entran a la banda"</span><span class="p">:</span> <span class="n">yb</span><span class="p">[</span><span class="n">te</span><span class="p">][</span><span class="o">~</span><span class="n">en_hoy</span><span class="p">[</span><span class="n">te</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="n">yb</span><span class="p">[</span><span class="n">te</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="mi">1</span><span class="p">),</span>
+                  <span class="s2">"caudal máximo en t+15 (m³/s)"</span><span class="p">:</span> <span class="n">D</span><span class="o">.</span><span class="n">y_reg</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">te</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()})</span>
+<span class="n">dif_blq</span> <span class="o">=</span> <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"pliegue"</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">bloque</span><span class="o">=</span><span class="p">(</span><span class="s2">"bloque"</span><span class="p">,</span> <span class="s2">"first"</span><span class="p">),</span> <span class="o">**</span><span class="p">{</span><span class="s2">"PR-AUC media (112 combinaciones)"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"pr_auc"</span><span class="p">,</span> <span class="s2">"mean"</span><span class="p">)})</span>
+           <span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">filas</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"pliegue"</span><span class="p">)))</span>
+<span class="n">rho_e</span><span class="p">,</span> <span class="n">p_e</span> <span class="o">=</span> <span class="n">spearmanr</span><span class="p">(</span><span class="n">dif_blq</span><span class="p">[</span><span class="s2">"PR-AUC media (112 combinaciones)"</span><span class="p">],</span> <span class="n">dif_blq</span><span class="p">[</span><span class="s2">"positivos que entran a la banda"</span><span class="p">])</span>
+<span class="n">rho_p</span><span class="p">,</span> <span class="n">p_p</span> <span class="o">=</span> <span class="n">spearmanr</span><span class="p">(</span><span class="n">dif_blq</span><span class="p">[</span><span class="s2">"PR-AUC media (112 combinaciones)"</span><span class="p">],</span> <span class="n">dif_blq</span><span class="o">.</span><span class="n">prevalencia</span><span class="p">)</span>
+<span class="n">peor</span> <span class="o">=</span> <span class="n">dif_blq</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">dif_blq</span><span class="p">[</span><span class="s2">"PR-AUC media (112 combinaciones)"</span><span class="p">]</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()]</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"rho_entrada"</span><span class="p">,</span> <span class="n">rho_e</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span> <span class="n">glue</span><span class="p">(</span><span class="s2">"p_entrada"</span><span class="p">,</span> <span class="n">p_e</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"rho_prev"</span><span class="p">,</span> <span class="n">rho_p</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span> <span class="n">glue</span><span class="p">(</span><span class="s2">"p_prev"</span><span class="p">,</span> <span class="n">p_p</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"entrada_peor"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">peor</span><span class="p">[</span><span class="s2">"positivos que entran a la banda"</span><span class="p">]),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"prev_peor"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">peor</span><span class="o">.</span><span class="n">prevalencia</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"entrada_med"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">dif_blq</span><span class="p">[</span><span class="s2">"positivos que entran a la banda"</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"qmax_peor"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">peor</span><span class="p">[</span><span class="s2">"caudal máximo en t+15 (m³/s)"</span><span class="p">]),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">dif_blq</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"bloque"</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>PR-AUC media (112 combinaciones)</th>
+      <th>prevalencia</th>
+      <th>positivos que entran a la banda</th>
+      <th>caudal máximo en t+15 (m³/s)</th>
+    </tr>
+    <tr>
+      <th>bloque</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1986-1987</th>
+      <td>0.835</td>
+      <td>0.262</td>
+      <td>0.314</td>
+      <td>11649.0</td>
+    </tr>
+    <tr>
+      <th>1988-1989</th>
+      <td>0.784</td>
+      <td>0.201</td>
+      <td>0.408</td>
+      <td>13844.0</td>
+    </tr>
+    <tr>
+      <th>1990-1991</th>
+      <td>0.835</td>
+      <td>0.152</td>
+      <td>0.270</td>
+      <td>10586.0</td>
+    </tr>
+    <tr>
+      <th>1992-1993</th>
+      <td>0.864</td>
+      <td>0.130</td>
+      <td>0.316</td>
+      <td>10304.0</td>
+    </tr>
+    <tr>
+      <th>1994-1995</th>
+      <td>0.929</td>
+      <td>0.344</td>
+      <td>0.187</td>
+      <td>10236.0</td>
+    </tr>
+    <tr>
+      <th>1996-1997</th>
+      <td>0.966</td>
+      <td>0.259</td>
+      <td>0.159</td>
+      <td>11784.0</td>
+    </tr>
+    <tr>
+      <th>1998-1999</th>
+      <td>0.939</td>
+      <td>0.479</td>
+      <td>0.131</td>
+      <td>13663.0</td>
+    </tr>
+    <tr>
+      <th>2000-2001</th>
+      <td>0.901</td>
+      <td>0.301</td>
+      <td>0.273</td>
+      <td>11233.0</td>
+    </tr>
+    <tr>
+      <th>2002-2003</th>
+      <td>0.931</td>
+      <td>0.117</td>
+      <td>0.176</td>
+      <td>11322.0</td>
+    </tr>
+    <tr>
+      <th>2004-2005</th>
+      <td>0.769</td>
+      <td>0.193</td>
+      <td>0.475</td>
+      <td>13549.0</td>
+    </tr>
+    <tr>
+      <th>2006-2007</th>
+      <td>0.876</td>
+      <td>0.412</td>
+      <td>0.292</td>
+      <td>14494.0</td>
+    </tr>
+    <tr>
+      <th>2008-2009</th>
+      <td>0.523</td>
+      <td>0.098</td>
+      <td>0.417</td>
+      <td>14909.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
 <p>La <a class="reference internal" href="#fig-cajas-modelos"><span class="std std-numref">Figura 7</span></a> muestra que la variabilidad entre bloques supera con amplitud la
-diferencia entre los mejores modelos. El bloque <span class="pasted-text">2008-2009</span> es el más difícil para
-todos (PR-AUC media de <span class="pasted-text">0.52</span> entre las 112 combinaciones): coincide con
-el ascenso hacia la crecida de 2008, uno de los máximos anuales del registro, y con la transición
-hacia La Niña de 2010-2011, de modo que el río atraviesa la banda en ascensos rápidos que el
-estado actual anticipa mal. Esa dispersión es la razón de que las conclusiones de este capítulo
-se apoyen en pruebas sobre bloques pareados y no en las medias.</p>
+diferencia entre los mejores modelos, y la tabla anterior permite identificar su causa. La
+dificultad de un bloque depende menos de cuántos días están en la banda que de cuántos de ellos
+exigen anticipar una entrada: días en que el caudal todavía está fuera de la banda en <em>t</em> y la
+alcanza en <em>t</em> + 15. La correlación de Spearman entre la PR-AUC media del bloque y la proporción
+de positivos de ese tipo es de <span class="pasted-text">-0,93</span> (p = <span class="pasted-text">1,2 × 10⁻⁵</span>, doce
+bloques), mientras que la correlación con la prevalencia (<span class="pasted-text">0,47</span>,
+p = <span class="pasted-text">0,12</span>) no es significativa. El bloque <span class="pasted-text">2008-2009</span>, el más
+difícil para todos los modelos (PR-AUC media de <span class="pasted-text">0,52</span> entre las 112
+combinaciones), reúne dos condiciones desfavorables: una prevalencia de apenas
+<span class="pasted-text">9,8 %</span>, que reduce la PR-AUC alcanzable, y un <span class="pasted-text">42 %</span> de
+positivos que son entradas a la banda, frente a una mediana de <span class="pasted-text">28 %</span> en los
+doce bloques. Hidrológicamente, el bloque contiene la crecida de 2008, cuyo caudal máximo
+(<span class="pasted-text">14.909</span> m³/s) es el tercero más alto del periodo de entrenamiento, y el río
+atraviesa la banda en ascensos y descensos rápidos que el estado actual anticipa mal. La
+variabilidad entre bloques tiene, por tanto, un origen físico identificable y no es ruido de
+estimación; por esa razón las conclusiones de este capítulo se apoyan en pruebas sobre bloques
+pareados y no en comparaciones de medias.</p>
 </section>
 <section id="efecto-del-balanceo-de-clases">
 <h2>Efecto del balanceo de clases<a class="headerlink" href="#efecto-del-balanceo-de-clases" title="Link to this heading">#</a></h2>
@@ -1003,17 +1175,128 @@ se apoyen en pruebas sobre bloques pareados y no en las medias.</p>
 </div></div></div>
 </div>
 <p>El balanceo no mejora la discriminación. La PR-AUC, que evalúa el orden de los puntajes y no
-depende del umbral, apenas cambia con SMOTE (<span class="pasted-text">-0.0008</span>, no
-significativo) o con la ponderación por clase (<span class="pasted-text">-0.0019</span>), y
-empeora con ADASYN (<span class="pasted-text">-0.0178</span>, significativo tras Holm). Lo que sí
+depende del umbral, apenas cambia con SMOTE (<span class="pasted-text">-0,0008</span>, no
+significativo) o con la ponderación por clase (<span class="pasted-text">-0,0019</span>), y
+empeora con ADASYN (<span class="pasted-text">-0,0178</span>, significativo tras Holm). Lo que sí
 cambia es el punto de operación con el umbral de 0,5: la exhaustividad sube entre
-<span class="pasted-text">0.08</span> y <span class="pasted-text">0.12</span> puntos a costa de la
-precisión, y el F1 queda igual o baja. La lectura es la esperada para un desbalance moderado (26 %
-de positivos): las tres técnicas desplazan el umbral efectivo hacia la clase minoritaria, lo
+<span class="pasted-text">0,08</span> y <span class="pasted-text">0,12</span> puntos a costa de la
+precisión, y el F1 queda igual o baja. Este comportamiento es el esperado para un desbalance
+moderado (26 % de positivos): las tres técnicas desplazan el umbral efectivo hacia la clase minoritaria, lo
 que equivale a cambiar el costo relativo de los errores, pero no aportan información nueva sobre
-qué días están en la banda. ADASYN resulta perjudicial porque concentra los sintéticos cerca de la
-frontera, justamente donde la autocorrelación hace que los vecinos de un día positivo sean sus
-propios días contiguos, de modo que interpola casi duplicados de los casos más ambiguos.</p>
+qué días están en la banda.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mecanismo de ADASYN en el entrenamiento del último bloque: cercanía temporal de los vecinos que usa</span>
+<span class="c1"># para interpolar y concentración de su peso en los positivos próximos al límite de la banda</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">NearestNeighbors</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">pliegues</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">];</span> <span class="n">tr</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s2">"train"</span><span class="p">]</span>
+<span class="n">Xa</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">tr</span><span class="p">];</span> <span class="n">Za</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">Xa</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">Xa</span><span class="o">.</span><span class="n">median</span><span class="p">()))</span>
+<span class="n">ya</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">y_clf</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">tr</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">);</span> <span class="n">pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">ya</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">iv</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Za</span><span class="p">[</span><span class="n">pos</span><span class="p">])</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">Za</span><span class="p">[</span><span class="n">pos</span><span class="p">])</span>
+<span class="n">dias</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pos</span><span class="p">[</span><span class="n">iv</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]]</span> <span class="o">-</span> <span class="n">pos</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">ia</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Za</span><span class="p">)</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">Za</span><span class="p">[</span><span class="n">pos</span><span class="p">])</span>
+<span class="n">r_ad</span> <span class="o">=</span> <span class="p">(</span><span class="n">ya</span><span class="p">[</span><span class="n">ia</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>                  <span class="c1"># dificultad local con que ADASYN pondera cada positivo</span>
+<span class="n">w_ad</span> <span class="o">=</span> <span class="n">r_ad</span> <span class="o">/</span> <span class="n">r_ad</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">q15</span> <span class="o">=</span> <span class="n">D</span><span class="o">.</span><span class="n">y_reg</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">tr</span><span class="p">][</span><span class="n">pos</span><span class="p">]</span>
+<span class="n">QEF</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">((</span><span class="n">DATOS_PROC</span> <span class="o">/</span> <span class="s2">"parametros.json"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))[</span><span class="s2">"calamar"</span><span class="p">][</span><span class="s2">"Q_EF"</span><span class="p">]</span>
+<span class="n">borde</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">q15</span> <span class="o">-</span> <span class="n">LIM</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">q15</span> <span class="o">-</span> <span class="n">LIM</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">/</span> <span class="n">QEF</span> <span class="o">&lt;</span> <span class="mf">0.05</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"ad_med_dias"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">dias</span><span class="p">)),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"ad_frac7"</span><span class="p">,</span> <span class="nb">float</span><span class="p">((</span><span class="n">dias</span> <span class="o">&lt;=</span> <span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"ad_frac_r"</span><span class="p">,</span> <span class="nb">float</span><span class="p">((</span><span class="n">r_ad</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"ad_peso_borde"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">w_ad</span><span class="p">[</span><span class="n">borde</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"ad_pos_borde"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">borde</span><span class="o">.</span><span class="n">mean</span><span class="p">()),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"indicador"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Mediana de la separación temporal con los 5 vecinos positivos (días)"</span><span class="p">,</span>
+                            <span class="s2">"Vecinos positivos a 7 días o menos"</span><span class="p">,</span> <span class="s2">"Positivos con al menos un vecino negativo"</span><span class="p">,</span>
+                            <span class="s2">"Positivos a menos del 5 </span><span class="si">% d</span><span class="s2">e Q_ef de un límite"</span><span class="p">,</span> <span class="s2">"Peso de ADASYN asignado a esos positivos"</span><span class="p">],</span>
+              <span class="s2">"valor"</span><span class="p">:</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">dias</span><span class="p">),</span> <span class="p">(</span><span class="n">dias</span> <span class="o">&lt;=</span> <span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="p">(</span><span class="n">r_ad</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">borde</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">w_ad</span><span class="p">[</span><span class="n">borde</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()]})</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  File "C:\Users\User\miniconda3\envs\ml-final\Lib\site-packages\joblib\externals\loky\backend\context.py", line 257, in _count_physical_cores
+    cpu_info = subprocess.run(
+               ^^^^^^^^^^^^^^^
+  File "C:\Users\User\miniconda3\envs\ml-final\Lib\subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\User\miniconda3\envs\ml-final\Lib\subprocess.py", line 1026, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+  File "C:\Users\User\miniconda3\envs\ml-final\Lib\subprocess.py", line 1538, in _execute_child
+    hp, ht, pid, tid = _winapi.CreateProcess(executable, args,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>indicador</th>
+      <th>valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Mediana de la separación temporal con los 5 ve...</td>
+      <td>3.000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Vecinos positivos a 7 días o menos</td>
+      <td>0.836</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Positivos con al menos un vecino negativo</td>
+      <td>0.182</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Positivos a menos del 5 % de Q_ef de un límite</td>
+      <td>0.309</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Peso de ADASYN asignado a esos positivos</td>
+      <td>0.805</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>El efecto negativo de ADASYN se explica por la interacción entre su regla de muestreo y la
+estructura temporal de los datos. ADASYN genera más sintéticos alrededor de los positivos que
+tienen negativos entre sus vecinos, y solo el <span class="pasted-text">18 %</span> de los positivos cumple
+esa condición; como esos días se ubican cerca de los límites de la banda, el
+<span class="pasted-text">81 %</span> del peso de muestreo recae en positivos situados a menos del 5 % de
+<span class="math notranslate nohighlight">\(Q_{ef}\)</span> de un límite, aunque estos representan solo el <span class="pasted-text">31 %</span> de la clase.
+Además, los vecinos positivos con que interpola son, en la práctica, días contiguos del mismo
+episodio: la separación temporal mediana es de <span class="pasted-text">3</span> días y el
+<span class="pasted-text">84 %</span> de los vecinos está a una semana o menos. El método produce, por tanto,
+casi duplicados de los casos más ambiguos de cada episodio y desplaza la frontera hacia la región
+donde la etiqueta es menos fiable. SMOTE, que reparte los sintéticos de manera uniforme entre los
+positivos, no presenta esa concentración, y su efecto sobre la PR-AUC no es significativo.</p>
 </section>
 <section id="desempeno-en-la-prueba-reservada">
 <h2>Desempeño en la prueba reservada<a class="headerlink" href="#desempeno-en-la-prueba-reservada" title="Link to this heading">#</a></h2>
@@ -1240,7 +1523,7 @@ entrenamiento (1947-2009), se reentrenó el pipeline y se evaluó una única vez
 </figure>
 </div>
 </div>
-<p>En la prueba reservada, Random Forest y SVM empatan en PR-AUC (<span class="pasted-text">0.950</span>),
+<p>En la prueba reservada, Random Forest y SVM empatan en PR-AUC (<span class="pasted-text">0,950</span>),
 seguidos de XGBoost y KNN; Random Forest obtiene además el mejor F1 y el menor Brier. Los valores
 de la prueba superan a las medias externas porque el periodo 2010-2026 no contiene un tramo tan
 desfavorable como el bloque 2008-2009, lo que refuerza la conveniencia de evaluar sobre muchos
@@ -1436,10 +1719,10 @@ comparación entre modelos no depende de esa elección, que se deja al usuario d
 <p>La calibración separa a los modelos con más claridad que la discriminación. La SVM produce
 puntajes sin calibrar, porque su función de decisión se transforma con una logística fija, y su
 error de calibración esperado es alto; lo mismo ocurre con <span class="pasted-text">Naive Bayes</span>
-(ECE = <span class="pasted-text">0.193</span>), cuyas probabilidades se concentran en los extremos por el
+(ECE = <span class="pasted-text">0,193</span>), cuyas probabilidades se concentran en los extremos por el
 supuesto de independencia. La recalibración de Platt, ajustada con las predicciones fuera de
 muestra del bucle externo y nunca con la prueba, reduce el ECE de <span class="pasted-text">Naive Bayes</span> a
-<span class="pasted-text">0.017</span> y el de la SVM por debajo de 0,011, y mejora el Brier de todos
+<span class="pasted-text">0,017</span> y el de la SVM por debajo de 0,011, y mejora el Brier de todos
 los modelos salvo la regresión logística, que ya estaba bien calibrada por construcción: su
 pérdida logarítmica es una regla propia y la decisión tomada en las predicciones fuera de muestra
 fue, correctamente, no recalibrarla. La regresión isotónica logra reducciones similares; se
@@ -1513,11 +1796,11 @@ predicciones fuera de muestra fue favorable.</p>
 <p>Todas las métricas de este capítulo se reportan como media ± desviación estándar sobre los doce
 bloques externos y no como valores puntuales. Para el mejor benchmark, la sensibilidad a la
 semilla de inicialización (cinco semillas, con los hiperparámetros elegidos en cada bloque) es
-pequeña: la desviación media entre semillas dentro de un bloque es de <span class="pasted-text">0.0058</span>,
-frente a una desviación entre bloques de <span class="pasted-text">0.0785</span>. La aleatoriedad del
+pequeña: la desviación media entre semillas dentro de un bloque es de <span class="pasted-text">0,0058</span>,
+frente a una desviación entre bloques de <span class="pasted-text">0,0785</span>. La aleatoriedad del
 algoritmo pesa, por tanto, mucho menos que la variabilidad hidrológica entre periodos. Al mismo
 tiempo, las diez mejores combinaciones de la tabla maestra se separan en apenas
-<span class="pasted-text">0.0042</span> de PR-AUC media, una diferencia del mismo orden que la variabilidad
+<span class="pasted-text">0,0042</span> de PR-AUC media, una diferencia del mismo orden que la variabilidad
 entre semillas y muy inferior a la variabilidad entre bloques. Las diferencias entre los mejores
 benchmarks no son, por tanto, mayores que la variabilidad intrínseca de cada uno, y decidir entre
 ellos exige las pruebas formales de la sección de comparación estadística.</p>

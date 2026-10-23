@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -226,7 +226,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Proyecto</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Trazabilidad de correcciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Respuesta a la evaluación del Entregable 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_datos.html">Datos: ETL y análisis exploratorio</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos benchmark (Entregable 2)</span></p>
@@ -578,12 +578,13 @@ dirigidas entre finalistas con corrección de Holm y tamaños del efecto.</p>
 </div></div></div>
 </div>
 <p>La prueba de Friedman sobre los doce bloques externos rechaza que las 112 combinaciones tengan
-el mismo rango medio (χ² = <span class="pasted-text">751.5</span> con <span class="pasted-text">111</span> grados de
-libertad, p = <span class="pasted-text">9.4e-96</span>). La diferencia crítica de Nemenyi con 112 modelos y doce
-bloques es de <span class="pasted-text">57.7</span> rangos, y solo <span class="pasted-text">685</span> de los
-<span class="pasted-text">6,216</span> pares la superan. Esa cifra ilustra el problema de escala que
-plantea la guía: con tantos modelos, el control familiar vuelve indistinguibles casi todas las
-combinaciones vecinas, y la comparación informativa debe hacerse entre finalistas.</p>
+el mismo rango medio (χ² = <span class="pasted-text">751,5</span> con <span class="pasted-text">111</span> grados de
+libertad, p = <span class="pasted-text">9,4 × 10⁻⁹⁶</span>). La diferencia crítica de Nemenyi con 112 modelos y doce
+bloques es de <span class="pasted-text">57,7</span> rangos, y solo <span class="pasted-text">685</span> de los
+<span class="pasted-text">6.216</span> pares la superan. Con doce bloques y 112 modelos, el control del
+error familiar vuelve indistinguibles casi todas las combinaciones vecinas; la potencia de la
+prueba se concentra en las diferencias extremas, y la comparación informativa debe hacerse entre
+finalistas.</p>
 </section>
 <section id="etapa-2-diagrama-de-diferencia-critica-entre-los-mejores-de-cada-modelo">
 <h3>Etapa 2: diagrama de diferencia crítica entre los mejores de cada modelo<a class="headerlink" href="#etapa-2-diagrama-de-diferencia-critica-entre-los-mejores-de-cada-modelo" title="Link to this heading">#</a></h3>
@@ -825,12 +826,12 @@ combinaciones vecinas, y la comparación informativa debe hacerse entre finalist
 </div></div></div>
 </div>
 <p>Entre las mejores combinaciones de los siete modelos, Friedman rechaza la igualdad
-(χ² = <span class="pasted-text">36.5</span>, p = <span class="pasted-text">2.2e-06</span>; la corrección F de Iman y Davenport
-da <span class="pasted-text">11.3</span>), pero la diferencia crítica de <span class="pasted-text">2.60</span> rangos solo separa
+(χ² = <span class="pasted-text">36,5</span>, p = <span class="pasted-text">2,2 × 10⁻⁶</span>; la corrección F de Iman y Davenport
+da <span class="pasted-text">11,3</span>), pero la diferencia crítica de <span class="pasted-text">2,60</span> rangos solo separa
 a Naive Bayes de los cuatro mejores modelos. Random Forest, XGBoost, SVM y KNN forman un grupo
 estadísticamente indistinguible, al que se suman la regresión logística y el árbol en el límite
-de la significancia. En los términos de la guía, el ranking de los benchmarks es robusto en sus
-extremos y difuso en el centro.</p>
+de la significancia. El ordenamiento de los benchmarks es, por tanto, robusto en sus extremos y
+difuso en el centro.</p>
 </section>
 <section id="comparaciones-dirigidas-en-la-prueba-reservada-delong-con-holm">
 <h3>Comparaciones dirigidas en la prueba reservada: DeLong con Holm<a class="headerlink" href="#comparaciones-dirigidas-en-la-prueba-reservada-delong-con-holm" title="Link to this heading">#</a></h3>
@@ -927,13 +928,12 @@ extremos y difuso en el centro.</p>
 <p>La prueba de DeLong sobre la prueba reservada no distingue a Random Forest de XGBoost
 (p ajustado de 0,14), pero sí declara significativas sus ventajas sobre KNN, y la de XGBoost
 sobre KNN, tras la corrección de Holm. El intervalo de confianza por bootstrap estacionario de la
-misma diferencia de AUC, en cambio, contiene el cero en los tres casos. La discrepancia no es
-casual: DeLong estima la varianza del AUC suponiendo que los días de prueba son independientes, y
-con una autocorrelación de 0,99 la muestra efectiva es mucho menor que los 5.946 días, de modo
-que sus p-valores resultan optimistas. Esta es la razón por la que la guía restringe DeLong en
-datos temporales, y por la que en este trabajo las conclusiones se apoyan en el bootstrap por
-bloques (con longitud media de <span class="pasted-text">133</span> días) y en las pruebas sobre bloques
-externos.</p>
+misma diferencia de AUC, en cambio, contiene el cero en los tres casos. La discrepancia se debe a
+que DeLong estima la varianza del AUC suponiendo que los días de prueba son independientes; con
+una autocorrelación de 0,99 la muestra efectiva es mucho menor que los 5.946 días, y sus p-valores
+resultan optimistas. Por esa razón DeLong se reporta solo como prueba complementaria, y las
+conclusiones se apoyan en el bootstrap por bloques (con longitud media de <span class="pasted-text">133</span>
+días) y en las pruebas sobre bloques externos.</p>
 </section>
 <section id="intervalos-de-confianza-y-tamanos-del-efecto">
 <h3>Intervalos de confianza y tamaños del efecto<a class="headerlink" href="#intervalos-de-confianza-y-tamanos-del-efecto" title="Link to this heading">#</a></h3>

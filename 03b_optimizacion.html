@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -226,7 +226,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Proyecto</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Trazabilidad de correcciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Respuesta a la evaluación del Entregable 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_datos.html">Datos: ETL y análisis exploratorio</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos benchmark (Entregable 2)</span></p>
@@ -567,11 +567,11 @@
 </div>
 <p>La comparación usa como bloque cada tupla (modelo, balanceo, pliegue externo), de modo que los
 cuatro optimizadores se comparan sobre exactamente los mismos <span class="pasted-text">336</span>
-problemas. La prueba de Friedman da χ² = <span class="pasted-text">8.3</span>
-(p = <span class="pasted-text">0.04</span>), con rangos medios de <span class="pasted-text">2.54</span> para la rejilla,
-<span class="pasted-text">2.45</span> para la búsqueda aleatoria, <span class="pasted-text">2.63</span> para TPE y
-<span class="pasted-text">2.38</span> para el algoritmo genético; la diferencia crítica de Nemenyi es
-<span class="pasted-text">0.256</span>.</p>
+problemas. La prueba de Friedman da χ² = <span class="pasted-text">8,3</span>
+(p = <span class="pasted-text">0,04</span>), con rangos medios de <span class="pasted-text">2,54</span> para la rejilla,
+<span class="pasted-text">2,45</span> para la búsqueda aleatoria, <span class="pasted-text">2,63</span> para TPE y
+<span class="pasted-text">2,38</span> para el algoritmo genético; la diferencia crítica de Nemenyi es
+<span class="pasted-text">0,256</span>.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -814,16 +814,16 @@ llega antes, que responde la curva de convergencia.</p>
 </table>
 </div></div></div>
 </div>
-<p>La guía pide demostrar con evidencia cuantitativa, y no solo visual, que los métodos bayesiano y
-genético pueden ser más eficientes que la rejilla y la búsqueda aleatoria. La evidencia es
-mixta. Frente a la rejilla, la ventaja es clara y grande: a mitad de presupuesto (t = 8), TPE ha
-recorrido el <span class="pasted-text">96.4%</span> de la mejora alcanzable y el algoritmo genético el
-<span class="pasted-text">95.0%</span>, frente al <span class="pasted-text">84.3%</span> de la rejilla, con
+<p>La hipótesis de que los métodos bayesiano y genético son más eficientes que la rejilla y la
+búsqueda aleatoria se evaluó con medidas cuantitativas de progreso, además de la inspección de las
+curvas. La evidencia es mixta. Frente a la rejilla, la ventaja es clara y grande: a mitad de presupuesto (t = 8), TPE ha
+recorrido el <span class="pasted-text">96,4 %</span> de la mejora alcanzable y el algoritmo genético el
+<span class="pasted-text">95,0 %</span>, frente al <span class="pasted-text">84,3 %</span> de la rejilla, con
 diferencias significativas tras la corrección de Holm y tamaños de efecto de Cliff grandes
 (0,58 y 0,49). El área bajo la curva anytime, que resume la calidad alcanzada por unidad de
-presupuesto, ordena los métodos de la misma forma: <span class="pasted-text">0.942</span> para TPE,
-<span class="pasted-text">0.926</span> para la búsqueda aleatoria, <span class="pasted-text">0.922</span>
-para el genético y <span class="pasted-text">0.730</span> para la rejilla. La rejilla pierde porque
+presupuesto, ordena los métodos de la misma forma: <span class="pasted-text">0,942</span> para TPE,
+<span class="pasted-text">0,926</span> para la búsqueda aleatoria, <span class="pasted-text">0,922</span>
+para el genético y <span class="pasted-text">0,730</span> para la rejilla. La rejilla pierde porque
 recorre el espacio en un orden sistemático y gasta sus primeras evaluaciones en un extremo del
 dominio; además, con varios parámetros asigna pocos niveles a cada uno, la debilidad descrita
 por Bergstra y Bengio <span class="bibtex-citation" id="id1">[<a class="reference internal" href="09_reproducibilidad.html#id29" title="James Bergstra and Yoshua Bengio. Random search for hyper-parameter optimization. Journal of Machine Learning Research, 13:281–305, 2012.">Bergstra and Bengio, 2012</a>]</span>.</p>
@@ -840,7 +840,7 @@ muestreo aleatorio. La forma de las curvas (<a class="reference internal" href="
 búsqueda aleatoria y el genético coinciden en las primeras seis evaluaciones porque ambos parten
 de configuraciones extraídas con la misma semilla, y a partir de la sexta, cuando TPE empieza a
 explotar su modelo sustituto, su curva se separa de las demás y termina en
-<span class="pasted-text">99.0%</span> de la mejora alcanzable, frente a <span class="pasted-text">97.4%</span> de la
+<span class="pasted-text">99,0 %</span> de la mejora alcanzable, frente a <span class="pasted-text">97,4 %</span> de la
 búsqueda aleatoria.</p>
 </section>
 <section id="diversidad-genetica-y-convergencia-prematura">
@@ -874,7 +874,7 @@ búsqueda aleatoria.</p>
 </figure>
 </div>
 </div>
-<p>La diversidad de la población cae en promedio un <span class="pasted-text">65%</span> entre la población
+<p>La diversidad de la población cae en promedio un <span class="pasted-text">65 %</span> entre la población
 inicial y la última generación. Es una convergencia rápida, esperable con una población de seis
 individuos, selección por torneo de tamaño tres y elitismo, que en dos generaciones concentran
 la población alrededor de los mejores individuos. En un problema de optimización general sería
@@ -983,11 +983,11 @@ ronda hasta que queda una con el presupuesto completo. La métrica de fidelidad 
 PR-AUC de la validación interna, calculada con modelos de menos árboles; el factor de reducción
 de 3 equilibra el número de rondas (cuatro) con el riesgo de eliminar demasiado pronto una
 configuración que solo destaca con muchos árboles, riesgo que crece con factores mayores. En
-XGBoost el método ahorra el <span class="pasted-text">54%</span> del tiempo frente a la búsqueda
+XGBoost el método ahorra el <span class="pasted-text">54 %</span> del tiempo frente a la búsqueda
 aleatoria sobre los mismos 27 candidatos con fidelidad completa, con una diferencia de
-<span class="pasted-text">-0.0011</span> en la PR-AUC del bloque externo; en Random Forest ahorra el
-<span class="pasted-text">80%</span>, con una diferencia de
-<span class="pasted-text">+0.0058</span>.</p>
+<span class="pasted-text">-0,0011</span> en la PR-AUC del bloque externo; en Random Forest ahorra el
+<span class="pasted-text">80 %</span>, con una diferencia de
+<span class="pasted-text">+0,0058</span>.</p>
 <p>El ahorro proviene de que la mayoría de las configuraciones se descartan tras evaluarse con
 pocos árboles: en Random Forest se ajustaron 2.916 árboles en total frente a 19.683 de la búsqueda
 completa, y en XGBoost 7.128 frente a 48.600. La calidad de la configuración elegida no se

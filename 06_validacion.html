@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -226,7 +226,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Proyecto</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Trazabilidad de correcciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Respuesta a la evaluación del Entregable 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_datos.html">Datos: ETL y análisis exploratorio</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos benchmark (Entregable 2)</span></p>
@@ -744,8 +744,8 @@ siete modelos benchmark y el modelo original.</p>
 </div>
 <p>Cada prueba descansa en supuestos que se verificaron antes de interpretarla. Las diferencias de
 PR-AUC por bloque entre el modelo original y <span class="pasted-text">Random Forest</span> se apartan moderadamente de
-la normalidad (Shapiro-Wilk, p = <span class="pasted-text">0.037</span>) y tienen una asimetría positiva de
-<span class="pasted-text">0.83</span>, producida por los bloques difíciles, donde la ventaja del original es
+la normalidad (Shapiro-Wilk, p = <span class="pasted-text">0,037</span>) y tienen una asimetría positiva de
+<span class="pasted-text">0,83</span>, producida por los bloques difíciles, donde la ventaja del original es
 mayor. Con doce bloques, ese apartamiento debilita la prueba t, que por eso se usa como apoyo, y
 convierte a la prueba de Wilcoxon, que no supone normalidad y es poco sensible a una asimetría
 moderada, en la prueba principal; ninguna de las dos depende de que la ventaja sea igual en
@@ -753,11 +753,11 @@ todos los bloques. Los bloques no son
 independientes en sentido estricto, porque comparten días de entrenamiento: la ventana crece y
 cada modelo se entrena con los bloques anteriores. La t de Nadeau y Bengio <span class="bibtex-citation" id="id1">[<a class="reference internal" href="09_reproducibilidad.html#id40" title="Claude Nadeau and Yoshua Bengio. Inference for the generalization error. Machine Learning, 52:239–281, 2003.">Nadeau and Bengio, 2003</a>]</span>
 corrige precisamente esa dependencia inflando la varianza por el factor
-<span class="math notranslate nohighlight">\((1/k + n_{\text{test}}/n_{\text{train}})\)</span>, con una razón media de <span class="pasted-text">0.041</span>. La
-autocorrelación de las diferencias entre bloques consecutivos es <span class="pasted-text">-0.28</span>,
+<span class="math notranslate nohighlight">\((1/k + n_{\text{test}}/n_{\text{train}})\)</span>, con una razón media de <span class="pasted-text">0,041</span>. La
+autocorrelación de las diferencias entre bloques consecutivos es <span class="pasted-text">-0,28</span>,
 pequeña y negativa, de modo que no hay arrastre de la ventaja entre bloques vecinos. En
 cambio, DeLong y McNemar suponen independencia entre días, que la autocorrelación del caudal
-viola de forma grave; por eso la Tabla 3 de la guía los restringe en datos temporales, y aquí se
+viola de forma grave; por eso su uso en datos temporales es cuestionable, y aquí se
 reportan como complemento sin contar para el requisito R3. Su lugar lo ocupa el bootstrap
 estacionario sobre la prueba reservada, que respeta la dependencia.</p>
 </section>
@@ -940,15 +940,15 @@ estacionario sobre la prueba reservada, que respeta la dependencia.</p>
 <p>La <a class="reference internal" href="#fig-bloques-original"><span class="std std-numref">Figura 22</span></a> resume el resultado central: el modelo original obtiene la
 mayor PR-AUC en <span class="pasted-text">12</span> de los 12 bloques frente al conjunto de los siete
 benchmarks, y supera a <span class="pasted-text">Random Forest</span> en <span class="pasted-text">12</span> de 12. Su PR-AUC
-externa media es <span class="pasted-text">0.9428</span> ± <span class="pasted-text">0.0534</span>, frente a
-<span class="pasted-text">0.9101</span> ± <span class="pasted-text">0.0755</span> del mejor benchmark, una diferencia de
-<span class="pasted-text">0.0327</span>, y su desviación entre bloques es también menor.</p>
-<p>La secuencia de pruebas sigue la ruta que la guía sugiere para clasificación. La prueba global
+externa media es <span class="pasted-text">0,9428</span> ± <span class="pasted-text">0,0534</span>, frente a
+<span class="pasted-text">0,9101</span> ± <span class="pasted-text">0,0755</span> del mejor benchmark, una diferencia de
+<span class="pasted-text">0,0327</span>, y su desviación entre bloques es también menor.</p>
+<p>La secuencia de pruebas parte de una prueba global y desciende a comparaciones dirigidas. La prueba global
 de Friedman, con el modelo original incluido en el universo de ocho modelos, rechaza la igualdad
-de rangos (χ² = <span class="pasted-text">56.42</span>, p = <span class="pasted-text">7.8e-10</span>), y el original ocupa el rango
-medio <span class="pasted-text">1.00</span>, es decir, el primer lugar en todos los bloques. La diferencia
-crítica de Nemenyi con ocho modelos y doce bloques es de <span class="pasted-text">3.03</span> rangos, y la
-distancia entre el original y Random Forest (<span class="pasted-text">3.25</span>) no la supera: Nemenyi,
+de rangos (χ² = <span class="pasted-text">56,42</span>, p = <span class="pasted-text">7,8 × 10⁻¹⁰</span>), y el original ocupa el rango
+medio <span class="pasted-text">1,00</span>, es decir, el primer lugar en todos los bloques. La diferencia
+crítica de Nemenyi con ocho modelos y doce bloques es de <span class="pasted-text">3,03</span> rangos, y la
+distancia entre el original y Random Forest (<span class="pasted-text">3,25</span>) no la supera: Nemenyi,
 diseñado para controlar el error en las 28 comparaciones posibles entre los ocho modelos, carece
 de potencia con doce bloques y no permite separar a los dos primeros. Por eso la guía admite,
 como post-hoc del procedimiento global, la prueba de Wilcoxon con corrección de Holm, que solo
@@ -963,8 +963,8 @@ reservada 2010-2026 estima una diferencia de PR-AUC de 0,016, con un intervalo B
 [0,006; 0,033] que excluye el cero (p = 0,0015). Tras un segundo ajuste de Holm sobre la familia
 de estas tres pruebas, las tres siguen por debajo de 0,05. El tamaño del efecto no es
 despreciable con ninguno de los dos criterios de la guía: el δ de Cliff es
-<span class="pasted-text">0.347</span>, un efecto mediano según los umbrales de Romano et al. <span class="bibtex-citation" id="id3">[<a class="reference internal" href="09_reproducibilidad.html#id55" title="Jeanine Romano, Jeffrey D. Kromrey, Jesse Coraggio, and Jeff Skowronek. Appropriate statistics for ordinal level data: should we really be using t-test and Cohen's d for evaluating group differences on the NSSE and other surveys? In Annual Meeting of the Florida Association of Institutional Research. 2006.">Romano <em>et al.</em>, 2006</a>]</span>,
-y la d de Cohen de las diferencias pareadas es <span class="pasted-text">0.99</span>, un efecto grande. El δ de
+<span class="pasted-text">0,347</span>, un efecto mediano según los umbrales de Romano et al. <span class="bibtex-citation" id="id3">[<a class="reference internal" href="09_reproducibilidad.html#id55" title="Jeanine Romano, Jeffrey D. Kromrey, Jesse Coraggio, and Jeff Skowronek. Appropriate statistics for ordinal level data: should we really be using t-test and Cohen's d for evaluating group differences on the NSSE and other surveys? In Annual Meeting of the Florida Association of Institutional Research. 2006.">Romano <em>et al.</em>, 2006</a>]</span>,
+y la d de Cohen de las diferencias pareadas es <span class="pasted-text">0,99</span>, un efecto grande. El δ de
 Cliff no pareado subestima la ventaja porque compara las distribuciones completas de PR-AUC por
 bloque, cuya variación entre años húmedos y secos es mayor que la diferencia entre modelos;
 la d pareada, que elimina esa variación, la refleja mejor.</p>
@@ -1256,7 +1256,7 @@ En El Banco obtiene la mayor PR-AUC media, pero por un margen pequeño frente a 
 en solo la mitad de los bloques. En Tres Cruces, la estación con menor desempeño de todos los
 modelos y la que mostró deriva de medición en el capítulo 2, queda prácticamente empatado con
 Random Forest. La prueba de Friedman sobre los 36 bloques de las tres tareas ubica al modelo
-original con rango medio <span class="pasted-text">2.50</span> (p = <span class="pasted-text">3.8e-18</span>). El
+original con rango medio <span class="pasted-text">2,50</span> (p = <span class="pasted-text">3,8 × 10⁻¹⁸</span>). El
 modelo original obtiene la mayor PR-AUC media en <span class="pasted-text">2</span> de las tres tareas y
 queda empatado en la tercera. La conclusión es que la ventaja del modelo original se reproduce en
 otras estaciones, aunque no en todas, y que su magnitud depende de la estación: es grande donde la
@@ -1401,14 +1401,14 @@ amortiguados) y se diluye donde la serie es más ruidosa o tiene problemas de me
 </div></div></div>
 </div>
 <p>La sensibilidad al peso <span class="math notranslate nohighlight">\(\lambda\)</span> (<a class="reference internal" href="#fig-robustez"><span class="std std-numref">Figura 25</span></a>a) tiene la forma que predice la teoría.
-Con <span class="math notranslate nohighlight">\(\lambda = 0\)</span> la PR-AUC media es <span class="pasted-text">0.920</span>; crece de forma monótona hasta
-<span class="math notranslate nohighlight">\(\lambda \approx 1\)</span> y luego se estabiliza en <span class="pasted-text">0.940</span>, de modo que el modelo es
+Con <span class="math notranslate nohighlight">\(\lambda = 0\)</span> la PR-AUC media es <span class="pasted-text">0,920</span>; crece de forma monótona hasta
+<span class="math notranslate nohighlight">\(\lambda \approx 1\)</span> y luego se estabiliza en <span class="pasted-text">0,940</span>, de modo que el modelo es
 poco sensible al valor exacto una vez que la supervisión continua tiene un peso comparable al de
 la tarea. Esa meseta explica que la optimización bayesiana haya elegido valores de <span class="math notranslate nohighlight">\(\lambda\)</span> muy
 distintos entre pliegues sin que el desempeño cambie.</p>
 <p>Bajo perturbaciones (<a class="reference internal" href="#fig-robustez"><span class="std std-numref">Figura 25</span></a>b), el modelo original conserva su ventaja sobre el
 mejor benchmark en todos los escenarios: la diferencia de PR-AUC va de
-<span class="pasted-text">+0.006</span> a <span class="pasted-text">+0.076</span>, y el escenario menos favorable es
+<span class="pasted-text">+0,006</span> a <span class="pasted-text">+0,076</span>, y el escenario menos favorable es
 «<span class="pasted-text">ruido 0.05</span>». La ventaja es mayor cuando se reduce el tamaño de entrenamiento, el
 mismo patrón observado en el problema sintético del capítulo 5: con una cuarta parte de los días,
 el benchmark pierde mucho más que el modelo original, porque la supervisión continua compensa
@@ -1416,7 +1416,7 @@ en parte la escasez de casos. El desbalance inducido, al reducir la prevalencia 
 ambos modelos en proporción similar, y el ruido multiplicativo del 10 % en los predictores, que
 simula errores de medición del caudal, degrada a ambos sin invertir el orden. La variabilidad
 entre semillas es pequeña frente a la variabilidad entre bloques: la desviación media entre
-cinco semillas es <span class="pasted-text">0.0029</span> para el modelo original y <span class="pasted-text">0.0058</span>
+cinco semillas es <span class="pasted-text">0,0029</span> para el modelo original y <span class="pasted-text">0,0058</span>
 para el benchmark, un orden de magnitud por debajo de la diferencia entre ambos, de modo que la
 ventaja no depende de una inicialización afortunada.</p>
 </section>
@@ -1626,7 +1626,7 @@ conclusiones.</p>
 <p>Ambos modelos se apoyan en la misma información, el caudal actual y su distancia a la descarga
 efectiva, pero la distribuyen de forma distinta: la variable más importante del modelo original
 es «<span class="pasted-text">Caudal actual en Calamar al cuadrado (m⁶/s²)</span>» y la del benchmark, «<span class="pasted-text">Distancia relativa a Q_ef (–)</span>», y la correlación de rangos
-entre sus vectores de importancia es de <span class="pasted-text">0.43</span>. La diferencia es coherente con
+entre sus vectores de importancia es de <span class="pasted-text">0,43</span>. La diferencia es coherente con
 el mecanismo de BLGB, que traslada la banda a cada observación a través del caudal de referencia:
 la distancia al umbral ya está incorporada en los límites móviles <span class="math notranslate nohighlight">\(l\)</span> y <span class="math notranslate nohighlight">\(u\)</span>, de modo que el modelo
 no necesita aprenderla de las variables de distancia y se concentra en la dinámica del cambio.

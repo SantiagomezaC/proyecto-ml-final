@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -61,6 +61,8 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"tex": {"tags": "ams"}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '03d_regresion';</script>
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="icon" href="_static/logo.png"/>
@@ -224,7 +226,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Proyecto</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Trazabilidad de correcciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Respuesta a la evaluación del Entregable 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_datos.html">Datos: ETL y análisis exploratorio</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos benchmark (Entregable 2)</span></p>
@@ -1056,7 +1058,7 @@ clasificación de la banda que en la regresión del caudal, y esa asimetría es 
 modelo original.</p>
 <p>Las pruebas de supuestos rechazan la homocedasticidad (White), la independencia (BDS y
 Ljung-Box) y la normalidad (Jarque-Bera) en todos los modelos, y la autocorrelación de orden uno
-del residuo del mejor modelo es <span class="pasted-text">0.97</span>. Ese resultado no es, por sí mismo,
+del residuo del mejor modelo es <span class="pasted-text">0,97</span>. Ese resultado no es, por sí mismo,
 señal de mala especificación: con un horizonte de quince días, los errores de días consecutivos
 comparten catorce de sus quince días de evolución no observada, de modo que el residuo tiene por
 construcción una estructura de media móvil de orden catorce. La consecuencia práctica es que
@@ -1091,6 +1093,7 @@ de largo plazo y bootstrap estacionario.</p>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">s2</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">s2</span><span class="o">.</span><span class="n">prueba</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">SED</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Prueba reservada"</span><span class="p">)</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="n">LIM</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">((</span><span class="n">DATOS_PROC</span> <span class="o">/</span> <span class="s2">"parametros.json"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))[</span><span class="s2">"calamar"</span><span class="p">][</span><span class="s2">"LIM"</span><span class="p">]</span>
+<span class="n">yte</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">yte</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">axhspan</span><span class="p">(</span><span class="o">*</span><span class="n">LIM</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">ALE</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.07</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Banda de descarga efectiva"</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s2">"Caudal en t+15 (m³/s)"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">NOMBRES_MODELO</span><span class="p">[</span><span class="n">mejor_reg</span><span class="p">]</span><span class="si">}</span><span class="s2">: observado frente a predicho"</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">ncol</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">);</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -1107,6 +1110,110 @@ de largo plazo y bootstrap estacionario.</p>
 </figure>
 </div>
 </div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Error por segmento y frente a la persistencia, y acierto del lado de la banda en la prueba</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="n">q_act</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">calamar_cuad</span><span class="o">.</span><span class="n">values</span><span class="p">);</span> <span class="n">q_act_te</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">X_test</span><span class="o">.</span><span class="n">calamar_cuad</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">seg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+    <span class="p">{</span><span class="s2">"segmento"</span><span class="p">:</span> <span class="s2">"Entrenamiento 1947-2009 (dentro de muestra)"</span><span class="p">,</span> <span class="s2">"RMSE modelo"</span><span class="p">:</span> <span class="n">rmse</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">y_reg</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">r</span><span class="p">[</span><span class="s2">"pred_train"</span><span class="p">]),</span>
+     <span class="s2">"RMSE persistencia"</span><span class="p">:</span> <span class="n">rmse</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">y_reg</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">q_act</span><span class="p">)},</span>
+    <span class="p">{</span><span class="s2">"segmento"</span><span class="p">:</span> <span class="s2">"Validación externa 1986-2009 (fuera de muestra)"</span><span class="p">,</span> <span class="s2">"RMSE modelo"</span><span class="p">:</span> <span class="n">rmse</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">y_reg</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">idx_val</span><span class="p">],</span> <span class="n">p_val</span><span class="p">),</span>
+     <span class="s2">"RMSE persistencia"</span><span class="p">:</span> <span class="n">rmse</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">y_reg</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">idx_val</span><span class="p">],</span> <span class="n">q_act</span><span class="p">[</span><span class="n">idx_val</span><span class="p">])},</span>
+    <span class="p">{</span><span class="s2">"segmento"</span><span class="p">:</span> <span class="s2">"Prueba reservada 2010-2026"</span><span class="p">,</span> <span class="s2">"RMSE modelo"</span><span class="p">:</span> <span class="n">rmse</span><span class="p">(</span><span class="n">yte</span><span class="p">,</span> <span class="n">r</span><span class="p">[</span><span class="s2">"pred_test"</span><span class="p">]),</span>
+     <span class="s2">"RMSE persistencia"</span><span class="p">:</span> <span class="n">rmse</span><span class="p">(</span><span class="n">yte</span><span class="p">,</span> <span class="n">q_act_te</span><span class="p">)}])</span>
+<span class="n">seg</span><span class="p">[</span><span class="s2">"reducción frente a la persistencia"</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">seg</span><span class="p">[</span><span class="s2">"RMSE modelo"</span><span class="p">]</span> <span class="o">/</span> <span class="n">seg</span><span class="p">[</span><span class="s2">"RMSE persistencia"</span><span class="p">]</span>
+<span class="n">mej_blq</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="o">-</span> <span class="n">rmse</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">"y_test"</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="s2">"pred"</span><span class="p">])</span> <span class="o">/</span> <span class="n">rmse</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">"y_test"</span><span class="p">],</span> <span class="n">q_act</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s2">"idx_test"</span><span class="p">]])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">val</span><span class="p">]</span>
+<span class="n">dentro</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">q</span><span class="p">:</span> <span class="p">(</span><span class="n">q</span> <span class="o">&gt;=</span> <span class="n">LIM</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">q</span> <span class="o">&lt;=</span> <span class="n">LIM</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">d_lim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">yte</span> <span class="o">-</span> <span class="n">LIM</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">yte</span> <span class="o">-</span> <span class="n">LIM</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">/</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span>
+    <span class="p">(</span><span class="n">DATOS_PROC</span> <span class="o">/</span> <span class="s2">"parametros.json"</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">))[</span><span class="s2">"calamar"</span><span class="p">][</span><span class="s2">"Q_EF"</span><span class="p">]</span>
+<span class="n">lado</span> <span class="o">=</span> <span class="n">dentro</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="s2">"pred_test"</span><span class="p">])</span> <span class="o">==</span> <span class="n">dentro</span><span class="p">(</span><span class="n">yte</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">((</span><span class="s2">"tr"</span><span class="p">,</span> <span class="s2">"val"</span><span class="p">,</span> <span class="s2">"te"</span><span class="p">),</span> <span class="n">seg</span><span class="p">[</span><span class="s2">"RMSE modelo"</span><span class="p">]):</span>
+    <span class="n">glue</span><span class="p">(</span><span class="sa">f</span><span class="s2">"seg_rmse_</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"mejora_blq_min"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">mej_blq</span><span class="p">)),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">);</span> <span class="n">glue</span><span class="p">(</span><span class="s2">"mejora_blq_max"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">mej_blq</span><span class="p">)),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"lado_global"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">lado</span><span class="o">.</span><span class="n">mean</span><span class="p">()),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"lado_borde"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">lado</span><span class="p">[</span><span class="n">d_lim</span> <span class="o">&lt;</span> <span class="mf">.05</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">glue</span><span class="p">(</span><span class="s2">"lado_lejos"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">lado</span><span class="p">[</span><span class="n">d_lim</span> <span class="o">&gt;</span> <span class="mf">.20</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">seg</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>segmento</th>
+      <th>RMSE modelo</th>
+      <th>RMSE persistencia</th>
+      <th>reducción frente a la persistencia</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Entrenamiento 1947-2009 (dentro de muestra)</td>
+      <td>612.722</td>
+      <td>1044.298</td>
+      <td>0.413</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Validación externa 1986-2009 (fuera de muestra)</td>
+      <td>580.289</td>
+      <td>1021.987</td>
+      <td>0.432</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Prueba reservada 2010-2026</td>
+      <td>642.767</td>
+      <td>984.829</td>
+      <td>0.347</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>La <a class="reference internal" href="#fig-reg-series"><span class="std std-numref">Figura 16</span></a> y la tabla anterior permiten evaluar el sobreajuste y la estabilidad
+temporal del mejor regresor. El error dentro de muestra en el entrenamiento
+(<span class="pasted-text">613</span> m³/s) es del mismo orden que el error fuera de muestra en la
+validación externa (<span class="pasted-text">580</span> m³/s) y en la prueba reservada
+(<span class="pasted-text">643</span> m³/s), lo que descarta un sobreajuste apreciable: la
+regularización del modelo, elegida en la validación anidada, limita su capacidad a la estructura
+que se repite entre décadas. La reducción del error frente a la persistencia se mantiene en todos
+los bloques externos, entre el <span class="pasted-text">27 %</span> y el
+<span class="pasted-text">52 %</span>, y no se degrada en la prueba, de modo que la relación aprendida no
+depende de un periodo particular. En la figura, las mayores desviaciones coinciden con los picos
+de las crecidas y con los ascensos abruptos desde el estiaje, que el estado actual del río no
+anticipa.</p>
+<p>Para la tarea de clasificación interesa además si el caudal previsto cae del lado correcto de los
+límites de la banda. En la prueba, el regresor acierta el lado en el
+<span class="pasted-text">94,5 %</span> de los días; el acierto es del <span class="pasted-text">100 %</span> cuando el
+caudal observado queda a más del 20 % de <span class="math notranslate nohighlight">\(Q_{ef}\)</span> de un límite y cae al
+<span class="pasted-text">74,6 %</span> cuando queda a menos del 5 %. Un error de unos 640 m³/s, pequeño en
+términos relativos, basta para cambiar la clase de los días próximos a los límites, que es donde
+se concentran los errores de todos los clasificadores.</p>
 </section>
 <section id="analisis-de-residuos">
 <h2>Análisis de residuos<a class="headerlink" href="#analisis-de-residuos" title="Link to this heading">#</a></h2>
@@ -1150,9 +1257,9 @@ de residuo frente a predicción no muestra un sesgo sistemático en la mayor par
 por encima de unos 12.500 m³/s, donde los residuos son mayoritariamente negativos: el modelo
 sobreestima las crecidas mayores, que en el entrenamiento son pocas. Muestra también
 heterocedasticidad: la correlación de Spearman entre el error absoluto y la predicción es
-<span class="pasted-text">-0.22</span>, de modo que los errores grandes se concentran en caudales previstos
+<span class="pasted-text">-0,22</span>, de modo que los errores grandes se concentran en caudales previstos
 bajos e intermedios, que corresponden a los ascensos rápidos desde el estiaje que el estado actual
-anticipa mal. La curtosis en exceso del residuo es <span class="pasted-text">0.74</span>, con colas algo más
+anticipa mal. La curtosis en exceso del residuo es <span class="pasted-text">0,74</span>, con colas algo más
 pesadas que la normal. Ambos rasgos son relevantes para el modelo original: una dispersión que
 cambia con el estado del río es justamente lo que BLGB modela con su segundo ensamble, el del
 logaritmo de σ.</p>

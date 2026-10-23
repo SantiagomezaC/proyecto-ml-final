@@ -34,7 +34,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -226,7 +226,7 @@
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Proyecto</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Trazabilidad de correcciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Respuesta a la evaluación del Entregable 1</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_datos.html">Datos: ETL y análisis exploratorio</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos benchmark (Entregable 2)</span></p>
@@ -872,7 +872,7 @@ pérdida desciende en cada ronda y σ respeta sus cotas.</p>
 </div>
 <p>En el problema sintético la ventaja de la supervisión continua es mayor cuanto menor es la
 muestra: con 250 observaciones BLGB supera al clasificador XGBoost en
-<span class="pasted-text">0.272</span> puntos de PR-AUC y con 4.000, en <span class="pasted-text">0.293</span>. El patrón
+<span class="pasted-text">0,272</span> puntos de PR-AUC y con 4.000, en <span class="pasted-text">0,293</span>. El patrón
 es el esperado si el beneficio proviene de la información que la etiqueta binaria descarta, y
 anticipa que la ganancia en el Magdalena será relevante, porque la autocorrelación reduce el
 tamaño efectivo de la muestra a una fracción de sus días.</p>
@@ -1003,10 +1003,10 @@ tamaño efectivo de la muestra a una fracción de sus días.</p>
 <p>La ablación retira cada componente por separado, con los hiperparámetros que la validación
 anidada eligió en cada pliegue, y compara contra el modelo completo con la prueba de Wilcoxon
 y corrección de Holm. Retirar la supervisión continua (<span class="math notranslate nohighlight">\(\lambda = 0\)</span>) cambia la PR-AUC media en
-<span class="pasted-text">-0.0225</span>; imponer una dispersión constante, en <span class="pasted-text">-0.0007</span>;
-eliminar la búsqueda lineal, en <span class="pasted-text">+0.0000</span>; y reducir el modelo a la verosimilitud
+<span class="pasted-text">-0,0225</span>; imponer una dispersión constante, en <span class="pasted-text">-0,0007</span>;
+eliminar la búsqueda lineal, en <span class="pasted-text">+0,0000</span>; y reducir el modelo a la verosimilitud
 pura (<span class="math notranslate nohighlight">\(\lambda = 100\)</span>, equivalente al enfoque de dos etapas dentro del mismo algoritmo), en
-<span class="pasted-text">-0.0042</span>.</p>
+<span class="pasted-text">-0,0042</span>.</p>
 <p>La lectura de estas cifras es nítida en un punto y matizada en los demás. La supervisión continua
 es el componente que más aporta: sin ella el modelo pierde más de dos centésimas de PR-AUC y su
 desviación entre bloques casi se duplica, lo que confirma que la ganancia del modelo proviene de
