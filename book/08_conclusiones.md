@@ -89,15 +89,28 @@ los usuarios una curva de probabilidad en el tiempo y no un único valor a quinc
 
 ## Declaración de autoría y uso de herramientas
 
-Esta sección debe ser completada y firmada por los autores antes de la entrega, conforme a la
-Sección 13 de la guía del Entregable 3. Debe indicar qué partes del trabajo (código, análisis,
-redacción, figuras, dashboard) se apoyaron en herramientas de software o de inteligencia
-artificial, para qué se usaron, y declarar que los autores comprenden y pueden defender cada
-línea del código y cada resultado presentado.
+El proyecto partió de una revisión bibliográfica sobre hidrología y geomorfología fluvial, en
+particular sobre el transporte de sedimentos, el análisis magnitud-frecuencia y el concepto de
+descarga efectiva, así como sobre los antecedentes del río Magdalena. A partir de la información
+retenida en esa revisión, los autores plantearon la idea del proyecto: convertir la descarga
+efectiva, un descriptor geomorfológico de largo plazo, en un objetivo de predicción anticipada
+para la estación Calamar.
 
-| Autor | Contribución | Firma |
-|---|---|---|
-| Kevin Clemente Rosario | | |
-| Manuel Santiago Meza Castro | | |
+Las herramientas de inteligencia artificial generativa se emplearon como apoyo en el diseño del
+modelo original (Band-Likelihood Gradient Boosting). Las decisiones sobre el problema, los datos,
+la formulación hidrológica y la interpretación de los resultados corresponden a los autores, que
+declaran comprender y poder defender cada parte del código, del análisis y de los resultados
+presentados en este informe y en el dashboard.
 
-**Herramientas utilizadas y propósito:** *(completar por el equipo)*
+| Etapa | Responsable |
+|---|---|
+| Revisión bibliográfica | Kevin Clemente Rosario y Manuel Santiago Meza Castro |
+| Entregable 1: base de datos, análisis exploratorio y modelo base | Kevin Clemente Rosario |
+| Entregable 2: 140 modelos, optimización y comparación estadística | Manuel Santiago Meza Castro |
+| Entregable 3: modelo original, validación, dashboard e informe | Kevin Clemente Rosario y Manuel Santiago Meza Castro |
+
+Firmado,
+
+**Kevin Clemente Rosario** · Geólogo · Estudiante de M.Sc.
+
+**Manuel Santiago Meza Castro** · Estudiante de Geología y de M.Sc.
