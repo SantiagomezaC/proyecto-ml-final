@@ -190,3 +190,9 @@ html, body { overflow-x: hidden; max-width: 100%; }
 .autor-nombre { font-weight: 700; font-size: 1.05rem; color: var(--tinta); letter-spacing: -.01em; }
 .autor-rol { color: var(--rio); font-size: .9rem; font-weight: 500; margin-top: .1rem; }
 .autores-pie { color: var(--neutro); font-size: .82rem; margin: .7rem 0 0 .2rem; }
+
+/* ---------- Marca institucional del encabezado ---------- */
+.hero-marca { display: flex; align-items: center; gap: .85rem; }
+.hero-logo { height: 46px; width: auto; opacity: .82; }
+.hero-marca .etiqueta { padding-left: .85rem; border-left: 1px solid rgba(255,255,255,.35); line-height: 1.3; }
+@media (max-width: 576px) { .hero-logo { height: 38px; } }

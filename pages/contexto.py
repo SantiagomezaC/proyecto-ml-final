@@ -72,7 +72,11 @@ def layout():
     return html.Div([
         html.Section(dbc.Row([
             dbc.Col([
-                html.Div("Proyecto de investigación · Machine Learning", className="etiqueta mb-2"),
+                html.Div([
+                    html.Img(src=dash.get_asset_url("logo_uninorte_blanco.png"),
+                             alt="Logotipo de la Universidad del Norte", className="hero-logo"),
+                    html.Span("Proyecto de investigación · Machine Learning", className="etiqueta"),
+                ], className="hero-marca mb-3"),
                 html.H1("¿Cuándo volverá el Magdalena a mover la mayor parte de su sedimento?"),
                 html.P("Este tablero predice, con quince días de anticipación, si el caudal del río en "
                        "Calamar caerá dentro de la banda de descarga efectiva: el rango de caudales que, "
