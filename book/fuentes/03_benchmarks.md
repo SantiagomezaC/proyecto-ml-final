@@ -189,3 +189,38 @@ el bucle interno con la porción interna de entrenamiento, el reentrenamiento ex
 entrenamiento del bloque, y el modelo final con 1947-2009. Las particiones externas se
 calculan una vez y se guardan en `data/processed/pliegues_calamar.json`; todos los modelos,
 incluido el modelo original del capítulo 5, leen ese mismo archivo.
+
+## Implementación del protocolo
+
+Las funciones siguientes implementan el protocolo de este capítulo y se muestran tal como están
+en el repositorio. `construir_tarea` (`src/features.py`) define la variable objetivo a partir del
+caudal desplazado quince días; `separar_prueba` y `pliegues_externos` (`src/splits.py`) generan la
+prueba reservada y los doce bloques externos con la separación de 30 días; `cv_interna` es el
+bucle interno.
+
+```{code-cell} ipython3
+---
+tags: [remove-input]
+---
+import inspect
+from IPython.display import Code
+from src import features, splits, models, optim, experiment
+Code("\n\n".join(inspect.getsource(f) for f in (features.construir_tarea, splits.separar_prueba,
+                                                 splits.pliegues_externos, splits.cv_interna)), language="python")
+```
+
+`construir_pipeline` (`src/models.py`) encadena la imputación, el escalado, el balanceo y el
+modelo, de modo que todo lo que aprende de los datos se ajusta solo con el entrenamiento del
+pliegue; el sobremuestreo vive en un `imblearn.Pipeline` y nunca toca la validación ni la prueba.
+`evaluar_config` (`src/optim.py`) es la función objetivo que reciben los cuatro optimizadores, y
+`ejecutar_tarea` (`src/experiment.py`) es la tarea elemental de la validación anidada: optimiza en
+el bucle interno, reentrena con el entrenamiento externo y evalúa una sola vez en el bloque.
+
+```{code-cell} ipython3
+---
+tags: [remove-input]
+---
+Code("\n\n".join(inspect.getsource(f) for f in (models.construir_pipeline, optim.evaluar_config,
+                                                 experiment.ejecutar_tarea)), language="python")
+```
+

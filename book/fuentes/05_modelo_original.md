@@ -260,14 +260,41 @@ intervalo de predicción del caudal futuro: el dashboard lo usa para mostrar, ju
 probabilidad de banda, el rango de caudales esperado. Las dependencias numéricas se limitan a
 numpy y a `scipy.special.ndtr` para la función de distribución normal.
 
+Los bloques siguientes muestran el núcleo del algoritmo tal como está en
+`src/original_model.py`. El primero contiene la probabilidad de banda {eq}`eq-prob`, la pérdida
+híbrida {eq}`eq-perdida` y los gradientes y hessianos {eq}`eq-gbce` y {eq}`eq-gnll`.
+
 ```{code-cell} ipython3
 ---
-tags: [hide-input]
+tags: [remove-input]
 ---
 import inspect
+from IPython.display import Code
 from src import original_model as om
-fuente = inspect.getsource(om.gradientes) + "\n" + inspect.getsource(om.construir_arbol)
-print(fuente)
+Code("\n\n".join(inspect.getsource(f) for f in (om.probabilidad_banda, om.perdida_hibrida, om.gradientes)),
+     language="python")
+```
+
+El segundo construye cada árbol por niveles: acumula gradientes y hessianos por bin con
+`np.bincount`, evalúa la ganancia {eq}`eq-ganancia` en todos los cortes y asigna a cada hoja el
+paso de Newton regularizado.
+
+```{code-cell} ipython3
+---
+tags: [remove-input]
+---
+Code(inspect.getsource(om.construir_arbol), language="python")
+```
+
+El tercero es el ciclo de boosting: en cada ronda ajusta un árbol para μ y otro para s, aplica la
+búsqueda lineal de Armijo del {ref}`teorema 2 <teo-descenso-ref>` y controla la parada temprana
+con la entropía cruzada del tramo cronológico de validación.
+
+```{code-cell} ipython3
+---
+tags: [remove-input]
+---
+Code(inspect.getsource(om.BandLikelihoodBoosting._boosting), language="python")
 ```
 
 ## Pruebas unitarias

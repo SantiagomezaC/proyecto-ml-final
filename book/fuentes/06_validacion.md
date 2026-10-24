@@ -153,6 +153,33 @@ pr = pd.read_csv(E / "pruebas_original.csv")
 pr
 ```
 
+La tabla anterior se calcula en `scripts/estadistica.py`, cuya función `pruebas_original` aplica
+en orden Friedman y Nemenyi, Wilcoxon con Holm, la t de Nadeau y Bengio, la prueba bayesiana de
+rangos con signo, el bootstrap estacionario sobre la prueba reservada y, como complemento,
+DeLong y McNemar. Las funciones de cada prueba están en `src/stats_tests.py`; ambos códigos se
+muestran a continuación.
+
+```{code-cell} ipython3
+---
+tags: [remove-input]
+---
+import inspect
+from IPython.display import Code
+from src import stats_tests as stt
+Code("\n\n".join(inspect.getsource(f) for f in (stt.friedman, stt.nemenyi, stt.wilcoxon_holm, stt.holm,
+                                                 stt.nadeau_bengio, stt.delta_cliff, stt.d_cohen_pareado,
+                                                 stt.indices_estacionario, stt.bootstrap_bloques)),
+     language="python")
+```
+
+```{code-cell} ipython3
+---
+tags: [remove-input]
+---
+from scripts import estadistica as est_script
+Code(inspect.getsource(est_script.pruebas_original), language="python")
+```
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
