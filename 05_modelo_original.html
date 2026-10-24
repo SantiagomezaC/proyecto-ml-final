@@ -73,7 +73,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="es"/>
   <meta name="docsearch:version" content="" />
-    <meta name="docbuild:last-update" content="2026-10-23"/>
+    <meta name="docbuild:last-update" content="2026-10-24"/>
   
     
     <script src="_static/searchtools.js"></script>
@@ -676,115 +676,438 @@ tiempo empírico al variar <span class="math notranslate nohighlight">\(n\)</spa
 intervalo de predicción del caudal futuro: el dashboard lo usa para mostrar, junto con la
 probabilidad de banda, el rango de caudales esperado. Las dependencias numéricas se limitan a
 numpy y a <code class="docutils literal notranslate"><span class="pre">scipy.special.ndtr</span></code> para la función de distribución normal.</p>
-<div class="cell tag_hide-input docutils container">
-<details class="admonition hide above-input">
-<summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
-</summary>
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">inspect</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">src</span><span class="w"> </span><span class="kn">import</span> <span class="n">original_model</span> <span class="k">as</span> <span class="n">om</span>
-<span class="n">fuente</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getsource</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">gradientes</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getsource</span><span class="p">(</span><span class="n">om</span><span class="o">.</span><span class="n">construir_arbol</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">fuente</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</details>
+<p>Los bloques siguientes muestran el núcleo del algoritmo tal como está en
+<code class="docutils literal notranslate"><span class="pre">src/original_model.py</span></code>. El primero contiene la probabilidad de banda <a class="reference internal" href="#equation-eq-prob">(2)</a>, la pérdida
+híbrida <a class="reference internal" href="#equation-eq-perdida">(3)</a> y los gradientes y hessianos <a class="reference internal" href="#equation-eq-gbce">(5)</a> y <a class="reference internal" href="#equation-eq-gnll">(6)</a>.</p>
+<div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>def gradientes(mu, s, l, u, y, z, lam):
-    """Gradientes y hessianos (Gauss-Newton) respecto de μ y s = log σ.
+<div class="output text_html"><style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.output_html .hll { background-color: #ffffcc }
+.output_html { background: #f8f8f8; }
+.output_html .c { color: #3D7B7B; font-style: italic } /* Comment */
+.output_html .err { border: 1px solid #F00 } /* Error */
+.output_html .k { color: #008000; font-weight: bold } /* Keyword */
+.output_html .o { color: #666 } /* Operator */
+.output_html .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.output_html .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.output_html .cp { color: #9C6500 } /* Comment.Preproc */
+.output_html .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.output_html .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.output_html .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.output_html .gd { color: #A00000 } /* Generic.Deleted */
+.output_html .ge { font-style: italic } /* Generic.Emph */
+.output_html .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.output_html .gr { color: #E40000 } /* Generic.Error */
+.output_html .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.output_html .gi { color: #008400 } /* Generic.Inserted */
+.output_html .go { color: #717171 } /* Generic.Output */
+.output_html .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.output_html .gs { font-weight: bold } /* Generic.Strong */
+.output_html .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.output_html .gt { color: #04D } /* Generic.Traceback */
+.output_html .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.output_html .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.output_html .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.output_html .kp { color: #008000 } /* Keyword.Pseudo */
+.output_html .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.output_html .kt { color: #B00040 } /* Keyword.Type */
+.output_html .m { color: #666 } /* Literal.Number */
+.output_html .s { color: #BA2121 } /* Literal.String */
+.output_html .na { color: #687822 } /* Name.Attribute */
+.output_html .nb { color: #008000 } /* Name.Builtin */
+.output_html .nc { color: #00F; font-weight: bold } /* Name.Class */
+.output_html .no { color: #800 } /* Name.Constant */
+.output_html .nd { color: #A2F } /* Name.Decorator */
+.output_html .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.output_html .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.output_html .nf { color: #00F } /* Name.Function */
+.output_html .nl { color: #767600 } /* Name.Label */
+.output_html .nn { color: #00F; font-weight: bold } /* Name.Namespace */
+.output_html .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.output_html .nv { color: #19177C } /* Name.Variable */
+.output_html .ow { color: #A2F; font-weight: bold } /* Operator.Word */
+.output_html .w { color: #BBB } /* Text.Whitespace */
+.output_html .mb { color: #666 } /* Literal.Number.Bin */
+.output_html .mf { color: #666 } /* Literal.Number.Float */
+.output_html .mh { color: #666 } /* Literal.Number.Hex */
+.output_html .mi { color: #666 } /* Literal.Number.Integer */
+.output_html .mo { color: #666 } /* Literal.Number.Oct */
+.output_html .sa { color: #BA2121 } /* Literal.String.Affix */
+.output_html .sb { color: #BA2121 } /* Literal.String.Backtick */
+.output_html .sc { color: #BA2121 } /* Literal.String.Char */
+.output_html .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.output_html .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.output_html .s2 { color: #BA2121 } /* Literal.String.Double */
+.output_html .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.output_html .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.output_html .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.output_html .sx { color: #008000 } /* Literal.String.Other */
+.output_html .sr { color: #A45A77 } /* Literal.String.Regex */
+.output_html .s1 { color: #BA2121 } /* Literal.String.Single */
+.output_html .ss { color: #19177C } /* Literal.String.Symbol */
+.output_html .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.output_html .fm { color: #00F } /* Name.Function.Magic */
+.output_html .vc { color: #19177C } /* Name.Variable.Class */
+.output_html .vg { color: #19177C } /* Name.Variable.Global */
+.output_html .vi { color: #19177C } /* Name.Variable.Instance */
+.output_html .vm { color: #19177C } /* Name.Variable.Magic */
+.output_html .il { color: #666 } /* Literal.Number.Integer.Long */</style><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">probabilidad_banda</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""p = Φ((u−μ)/σ) − Φ((l−μ)/σ) y los términos intermedios."""</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="n">l</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">sig</span><span class="p">,</span> <span class="p">(</span><span class="n">u</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">sig</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">ndtr</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">-</span> <span class="n">ndtr</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_EPS</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">_EPS</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">p</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">sig</span>
 
-    Término de banda, con dp/dμ = (φ(a) − φ(b))/σ y dp/ds = aφ(a) − bφ(b):
-        g = (p − y)/(p(1 − p)) · dp/dθ,   h = (dp/dθ)²/(p(1 − p)).
-    Término gaussiano (información de Fisher):
-        g_μ = −(z − μ)/σ²,  h_μ = 1/σ²,   g_s = 1 − r²,  h_s = 2.
-    """
-    p, a, b, sig = probabilidad_banda(mu, s, l, u)
-    pa, pb = _phi(a), _phi(b)
-    dp_mu = (pa - pb) / sig
-    dp_s = a * pa - b * pb
-    w = 1.0 / (p * (1 - p))
-    g_mu, g_s = (p - y) * w * dp_mu, (p - y) * w * dp_s
-    h_mu, h_s = w * dp_mu ** 2, w * dp_s ** 2
-    if z is not None and lam &gt; 0:
-        r = (z - mu) / sig
-        g_mu = g_mu - lam * r / sig
-        h_mu = h_mu + lam / sig ** 2
-        g_s = g_s + lam * (1 - r * r)
-        h_s = h_s + 2 * lam
-    return g_mu, h_mu + 1e-9, g_s, h_s + 1e-9
 
-def construir_arbol(Xb: np.ndarray, g: np.ndarray, h: np.ndarray, n_bins: int, profundidad: int,
-                    min_hess: float, reg_lambda: float, gamma: float,
-                    columnas: np.ndarray) -&gt; _Arbol:
-    """Crece un árbol por niveles maximizando la ganancia de segundo orden.
+<span class="k">def</span><span class="w"> </span><span class="nf">perdida_hibrida</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">lam</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Pérdida media: entropía cruzada de la banda + λ · NLL gaussiana del cambio logarítmico."""</span>
+    <span class="n">p</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">sig</span> <span class="o">=</span> <span class="n">probabilidad_banda</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+    <span class="n">bce</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="o">-</span><span class="n">p</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">z</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">lam</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">bce</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">sig</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">bce</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="n">lam</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span> <span class="o">+</span> <span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 
-    Para un nodo con sumas (G, H) dividido en (G_L, H_L) y (G_R, H_R):
 
-        ganancia = ½ [G_L²/(H_L+λ) + G_R²/(H_R+λ) − G²/(H+λ)] − γ,
+<span class="k">def</span><span class="w"> </span><span class="nf">gradientes</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">lam</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Gradientes y hessianos (Gauss-Newton) respecto de μ y s = log σ.</span>
 
-    y el valor de cada hoja es −G/(H+λ), el paso de Newton regularizado. Los histogramas de
-    todos los nodos de un nivel se calculan con una sola llamada a ``np.bincount``.
-
-    Complejidad por nivel: O(n·k + m·k·B), con k columnas, B bins y m nodos del nivel.
-    """
-    n = len(g)
-    k = len(columnas)
-    sub = Xb[:, columnas].astype(np.int64)            # (n, k)
-    offs = (np.arange(k, dtype=np.int64) * n_bins)[None, :]
-    arbol = _Arbol()
-    raiz = arbol._nuevo(-g.sum() / (h.sum() + reg_lambda))
-    nodo_de = np.zeros(n, dtype=np.int64)              # nodo actual de cada observación
-    frontera = [raiz]
-    for _ in range(profundidad):
-        if not frontera:
-            break
-        pos = {nd: j for j, nd in enumerate(frontera)}
-        local = np.full(len(arbol.valor), -1, dtype=np.int64)
-        for nd, j in pos.items():
-            local[nd] = j
-        loc = local[nodo_de]
-        vivos = loc &gt;= 0
-        if not vivos.any():
-            break
-        m = len(frontera)
-        idx = (loc[vivos, None] * (k * n_bins) + offs + sub[vivos]).ravel()
-        tam = m * k * n_bins
-        G = np.bincount(idx, weights=np.repeat(g[vivos], k), minlength=tam).reshape(m, k, n_bins)
-        H = np.bincount(idx, weights=np.repeat(h[vivos], k), minlength=tam).reshape(m, k, n_bins)
-        GL, HL = np.cumsum(G, axis=2), np.cumsum(H, axis=2)
-        Gt, Ht = GL[:, :, -1:], HL[:, :, -1:]
-        GR, HR = Gt - GL, Ht - HL
-        with np.errstate(divide="ignore", invalid="ignore"):
-            ganancia = 0.5 * (GL ** 2 / (HL + reg_lambda) + GR ** 2 / (HR + reg_lambda)
-                              - Gt ** 2 / (Ht + reg_lambda)) - gamma
-        ganancia[(HL &lt; min_hess) | (HR &lt; min_hess)] = -np.inf
-        ganancia[:, :, -1] = -np.inf                   # el último bin no separa nada
-        plano = ganancia.reshape(m, -1)
-        mejor = plano.argmax(axis=1)
-        nueva_frontera = []
-        for j, nd in enumerate(frontera):
-            gmax = plano[j, mejor[j]]
-            if not np.isfinite(gmax) or gmax &lt;= 0:
-                continue
-            f_loc, b = divmod(int(mejor[j]), n_bins)
-            gl, hl = GL[j, f_loc, b], HL[j, f_loc, b]
-            gr, hr = GR[j, f_loc, b], HR[j, f_loc, b]
-            iz = arbol._nuevo(-gl / (hl + reg_lambda))
-            de = arbol._nuevo(-gr / (hr + reg_lambda))
-            arbol.feat[nd], arbol.umbral[nd] = int(columnas[f_loc]), b
-            arbol.izq[nd], arbol.der[nd] = iz, de
-            en_nodo = nodo_de == nd
-            a_izq = en_nodo &amp; (Xb[:, columnas[f_loc]] &lt;= b)
-            nodo_de[en_nodo] = de
-            nodo_de[a_izq] = iz
-            nueva_frontera += [iz, de]
-        frontera = nueva_frontera
-    return arbol.congelar()
+<span class="sd">    Término de banda, con dp/dμ = (φ(a) − φ(b))/σ y dp/ds = aφ(a) − bφ(b):</span>
+<span class="sd">        g = (p − y)/(p(1 − p)) · dp/dθ,   h = (dp/dθ)²/(p(1 − p)).</span>
+<span class="sd">    Término gaussiano (información de Fisher):</span>
+<span class="sd">        g_μ = −(z − μ)/σ²,  h_μ = 1/σ²,   g_s = 1 − r²,  h_s = 2.</span>
+<span class="sd">    """</span>
+    <span class="n">p</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">sig</span> <span class="o">=</span> <span class="n">probabilidad_banda</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+    <span class="n">pa</span><span class="p">,</span> <span class="n">pb</span> <span class="o">=</span> <span class="n">_phi</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">_phi</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+    <span class="n">dp_mu</span> <span class="o">=</span> <span class="p">(</span><span class="n">pa</span> <span class="o">-</span> <span class="n">pb</span><span class="p">)</span> <span class="o">/</span> <span class="n">sig</span>
+    <span class="n">dp_s</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">pa</span> <span class="o">-</span> <span class="n">b</span> <span class="o">*</span> <span class="n">pb</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">))</span>
+    <span class="n">g_mu</span><span class="p">,</span> <span class="n">g_s</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">w</span> <span class="o">*</span> <span class="n">dp_mu</span><span class="p">,</span> <span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">w</span> <span class="o">*</span> <span class="n">dp_s</span>
+    <span class="n">h_mu</span><span class="p">,</span> <span class="n">h_s</span> <span class="o">=</span> <span class="n">w</span> <span class="o">*</span> <span class="n">dp_mu</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">w</span> <span class="o">*</span> <span class="n">dp_s</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">if</span> <span class="n">z</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">lam</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">sig</span>
+        <span class="n">g_mu</span> <span class="o">=</span> <span class="n">g_mu</span> <span class="o">-</span> <span class="n">lam</span> <span class="o">*</span> <span class="n">r</span> <span class="o">/</span> <span class="n">sig</span>
+        <span class="n">h_mu</span> <span class="o">=</span> <span class="n">h_mu</span> <span class="o">+</span> <span class="n">lam</span> <span class="o">/</span> <span class="n">sig</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">g_s</span> <span class="o">=</span> <span class="n">g_s</span> <span class="o">+</span> <span class="n">lam</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span><span class="p">)</span>
+        <span class="n">h_s</span> <span class="o">=</span> <span class="n">h_s</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">lam</span>
+    <span class="k">return</span> <span class="n">g_mu</span><span class="p">,</span> <span class="n">h_mu</span> <span class="o">+</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="n">g_s</span><span class="p">,</span> <span class="n">h_s</span> <span class="o">+</span> <span class="mf">1e-9</span>
 </pre></div>
+</div></div>
 </div>
+<p>El segundo construye cada árbol por niveles: acumula gradientes y hessianos por bin con
+<code class="docutils literal notranslate"><span class="pre">np.bincount</span></code>, evalúa la ganancia <a class="reference internal" href="#equation-eq-ganancia">(7)</a> en todos los cortes y asigna a cada hoja el
+paso de Newton regularizado.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.output_html .hll { background-color: #ffffcc }
+.output_html { background: #f8f8f8; }
+.output_html .c { color: #3D7B7B; font-style: italic } /* Comment */
+.output_html .err { border: 1px solid #F00 } /* Error */
+.output_html .k { color: #008000; font-weight: bold } /* Keyword */
+.output_html .o { color: #666 } /* Operator */
+.output_html .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.output_html .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.output_html .cp { color: #9C6500 } /* Comment.Preproc */
+.output_html .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.output_html .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.output_html .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.output_html .gd { color: #A00000 } /* Generic.Deleted */
+.output_html .ge { font-style: italic } /* Generic.Emph */
+.output_html .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.output_html .gr { color: #E40000 } /* Generic.Error */
+.output_html .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.output_html .gi { color: #008400 } /* Generic.Inserted */
+.output_html .go { color: #717171 } /* Generic.Output */
+.output_html .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.output_html .gs { font-weight: bold } /* Generic.Strong */
+.output_html .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.output_html .gt { color: #04D } /* Generic.Traceback */
+.output_html .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.output_html .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.output_html .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.output_html .kp { color: #008000 } /* Keyword.Pseudo */
+.output_html .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.output_html .kt { color: #B00040 } /* Keyword.Type */
+.output_html .m { color: #666 } /* Literal.Number */
+.output_html .s { color: #BA2121 } /* Literal.String */
+.output_html .na { color: #687822 } /* Name.Attribute */
+.output_html .nb { color: #008000 } /* Name.Builtin */
+.output_html .nc { color: #00F; font-weight: bold } /* Name.Class */
+.output_html .no { color: #800 } /* Name.Constant */
+.output_html .nd { color: #A2F } /* Name.Decorator */
+.output_html .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.output_html .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.output_html .nf { color: #00F } /* Name.Function */
+.output_html .nl { color: #767600 } /* Name.Label */
+.output_html .nn { color: #00F; font-weight: bold } /* Name.Namespace */
+.output_html .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.output_html .nv { color: #19177C } /* Name.Variable */
+.output_html .ow { color: #A2F; font-weight: bold } /* Operator.Word */
+.output_html .w { color: #BBB } /* Text.Whitespace */
+.output_html .mb { color: #666 } /* Literal.Number.Bin */
+.output_html .mf { color: #666 } /* Literal.Number.Float */
+.output_html .mh { color: #666 } /* Literal.Number.Hex */
+.output_html .mi { color: #666 } /* Literal.Number.Integer */
+.output_html .mo { color: #666 } /* Literal.Number.Oct */
+.output_html .sa { color: #BA2121 } /* Literal.String.Affix */
+.output_html .sb { color: #BA2121 } /* Literal.String.Backtick */
+.output_html .sc { color: #BA2121 } /* Literal.String.Char */
+.output_html .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.output_html .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.output_html .s2 { color: #BA2121 } /* Literal.String.Double */
+.output_html .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.output_html .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.output_html .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.output_html .sx { color: #008000 } /* Literal.String.Other */
+.output_html .sr { color: #A45A77 } /* Literal.String.Regex */
+.output_html .s1 { color: #BA2121 } /* Literal.String.Single */
+.output_html .ss { color: #19177C } /* Literal.String.Symbol */
+.output_html .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.output_html .fm { color: #00F } /* Name.Function.Magic */
+.output_html .vc { color: #19177C } /* Name.Variable.Class */
+.output_html .vg { color: #19177C } /* Name.Variable.Global */
+.output_html .vi { color: #19177C } /* Name.Variable.Instance */
+.output_html .vm { color: #19177C } /* Name.Variable.Magic */
+.output_html .il { color: #666 } /* Literal.Number.Integer.Long */</style><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">construir_arbol</span><span class="p">(</span><span class="n">Xb</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">h</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">profundidad</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                    <span class="n">min_hess</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">reg_lambda</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">gamma</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                    <span class="n">columnas</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Arbol</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Crece un árbol por niveles maximizando la ganancia de segundo orden.</span>
+
+<span class="sd">    Para un nodo con sumas (G, H) dividido en (G_L, H_L) y (G_R, H_R):</span>
+
+<span class="sd">        ganancia = ½ [G_L²/(H_L+λ) + G_R²/(H_R+λ) − G²/(H+λ)] − γ,</span>
+
+<span class="sd">    y el valor de cada hoja es −G/(H+λ), el paso de Newton regularizado. Los histogramas de</span>
+<span class="sd">    todos los nodos de un nivel se calculan con una sola llamada a ``np.bincount``.</span>
+
+<span class="sd">    Complejidad por nivel: O(n·k + m·k·B), con k columnas, B bins y m nodos del nivel.</span>
+<span class="sd">    """</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">columnas</span><span class="p">)</span>
+    <span class="n">sub</span> <span class="o">=</span> <span class="n">Xb</span><span class="p">[:,</span> <span class="n">columnas</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>            <span class="c1"># (n, k)</span>
+    <span class="n">offs</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span> <span class="o">*</span> <span class="n">n_bins</span><span class="p">)[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
+    <span class="n">arbol</span> <span class="o">=</span> <span class="n">_Arbol</span><span class="p">()</span>
+    <span class="n">raiz</span> <span class="o">=</span> <span class="n">arbol</span><span class="o">.</span><span class="n">_nuevo</span><span class="p">(</span><span class="o">-</span><span class="n">g</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">+</span> <span class="n">reg_lambda</span><span class="p">))</span>
+    <span class="n">nodo_de</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>              <span class="c1"># nodo actual de cada observación</span>
+    <span class="n">frontera</span> <span class="o">=</span> <span class="p">[</span><span class="n">raiz</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">profundidad</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">frontera</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="p">{</span><span class="n">nd</span><span class="p">:</span> <span class="n">j</span> <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">nd</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frontera</span><span class="p">)}</span>
+        <span class="n">local</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arbol</span><span class="o">.</span><span class="n">valor</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">nd</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">pos</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">local</span><span class="p">[</span><span class="n">nd</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+        <span class="n">loc</span> <span class="o">=</span> <span class="n">local</span><span class="p">[</span><span class="n">nodo_de</span><span class="p">]</span>
+        <span class="n">vivos</span> <span class="o">=</span> <span class="n">loc</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">vivos</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+            <span class="k">break</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">frontera</span><span class="p">)</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">loc</span><span class="p">[</span><span class="n">vivos</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">n_bins</span><span class="p">)</span> <span class="o">+</span> <span class="n">offs</span> <span class="o">+</span> <span class="n">sub</span><span class="p">[</span><span class="n">vivos</span><span class="p">])</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+        <span class="n">tam</span> <span class="o">=</span> <span class="n">m</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="n">n_bins</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="n">vivos</span><span class="p">],</span> <span class="n">k</span><span class="p">),</span> <span class="n">minlength</span><span class="o">=</span><span class="n">tam</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">)</span>
+        <span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">bincount</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">h</span><span class="p">[</span><span class="n">vivos</span><span class="p">],</span> <span class="n">k</span><span class="p">),</span> <span class="n">minlength</span><span class="o">=</span><span class="n">tam</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">n_bins</span><span class="p">)</span>
+        <span class="n">GL</span><span class="p">,</span> <span class="n">HL</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">Gt</span><span class="p">,</span> <span class="n">Ht</span> <span class="o">=</span> <span class="n">GL</span><span class="p">[:,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:],</span> <span class="n">HL</span><span class="p">[:,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">GR</span><span class="p">,</span> <span class="n">HR</span> <span class="o">=</span> <span class="n">Gt</span> <span class="o">-</span> <span class="n">GL</span><span class="p">,</span> <span class="n">Ht</span> <span class="o">-</span> <span class="n">HL</span>
+        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">):</span>
+            <span class="n">ganancia</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">GL</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">HL</span> <span class="o">+</span> <span class="n">reg_lambda</span><span class="p">)</span> <span class="o">+</span> <span class="n">GR</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">HR</span> <span class="o">+</span> <span class="n">reg_lambda</span><span class="p">)</span>
+                              <span class="o">-</span> <span class="n">Gt</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">Ht</span> <span class="o">+</span> <span class="n">reg_lambda</span><span class="p">))</span> <span class="o">-</span> <span class="n">gamma</span>
+        <span class="n">ganancia</span><span class="p">[(</span><span class="n">HL</span> <span class="o">&lt;</span> <span class="n">min_hess</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">HR</span> <span class="o">&lt;</span> <span class="n">min_hess</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="n">ganancia</span><span class="p">[:,</span> <span class="p">:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>                   <span class="c1"># el último bin no separa nada</span>
+        <span class="n">plano</span> <span class="o">=</span> <span class="n">ganancia</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">mejor</span> <span class="o">=</span> <span class="n">plano</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">nueva_frontera</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">nd</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">frontera</span><span class="p">):</span>
+            <span class="n">gmax</span> <span class="o">=</span> <span class="n">plano</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">mejor</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">gmax</span><span class="p">)</span> <span class="ow">or</span> <span class="n">gmax</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">f_loc</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">mejor</span><span class="p">[</span><span class="n">j</span><span class="p">]),</span> <span class="n">n_bins</span><span class="p">)</span>
+            <span class="n">gl</span><span class="p">,</span> <span class="n">hl</span> <span class="o">=</span> <span class="n">GL</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">f_loc</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">HL</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">f_loc</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>
+            <span class="n">gr</span><span class="p">,</span> <span class="n">hr</span> <span class="o">=</span> <span class="n">GR</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">f_loc</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">HR</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">f_loc</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>
+            <span class="n">iz</span> <span class="o">=</span> <span class="n">arbol</span><span class="o">.</span><span class="n">_nuevo</span><span class="p">(</span><span class="o">-</span><span class="n">gl</span> <span class="o">/</span> <span class="p">(</span><span class="n">hl</span> <span class="o">+</span> <span class="n">reg_lambda</span><span class="p">))</span>
+            <span class="n">de</span> <span class="o">=</span> <span class="n">arbol</span><span class="o">.</span><span class="n">_nuevo</span><span class="p">(</span><span class="o">-</span><span class="n">gr</span> <span class="o">/</span> <span class="p">(</span><span class="n">hr</span> <span class="o">+</span> <span class="n">reg_lambda</span><span class="p">))</span>
+            <span class="n">arbol</span><span class="o">.</span><span class="n">feat</span><span class="p">[</span><span class="n">nd</span><span class="p">],</span> <span class="n">arbol</span><span class="o">.</span><span class="n">umbral</span><span class="p">[</span><span class="n">nd</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">columnas</span><span class="p">[</span><span class="n">f_loc</span><span class="p">]),</span> <span class="n">b</span>
+            <span class="n">arbol</span><span class="o">.</span><span class="n">izq</span><span class="p">[</span><span class="n">nd</span><span class="p">],</span> <span class="n">arbol</span><span class="o">.</span><span class="n">der</span><span class="p">[</span><span class="n">nd</span><span class="p">]</span> <span class="o">=</span> <span class="n">iz</span><span class="p">,</span> <span class="n">de</span>
+            <span class="n">en_nodo</span> <span class="o">=</span> <span class="n">nodo_de</span> <span class="o">==</span> <span class="n">nd</span>
+            <span class="n">a_izq</span> <span class="o">=</span> <span class="n">en_nodo</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">Xb</span><span class="p">[:,</span> <span class="n">columnas</span><span class="p">[</span><span class="n">f_loc</span><span class="p">]]</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">)</span>
+            <span class="n">nodo_de</span><span class="p">[</span><span class="n">en_nodo</span><span class="p">]</span> <span class="o">=</span> <span class="n">de</span>
+            <span class="n">nodo_de</span><span class="p">[</span><span class="n">a_izq</span><span class="p">]</span> <span class="o">=</span> <span class="n">iz</span>
+            <span class="n">nueva_frontera</span> <span class="o">+=</span> <span class="p">[</span><span class="n">iz</span><span class="p">,</span> <span class="n">de</span><span class="p">]</span>
+        <span class="n">frontera</span> <span class="o">=</span> <span class="n">nueva_frontera</span>
+    <span class="k">return</span> <span class="n">arbol</span><span class="o">.</span><span class="n">congelar</span><span class="p">()</span>
+</pre></div>
+</div></div>
 </div>
+<p>El tercero es el ciclo de boosting: en cada ronda ajusta un árbol para μ y otro para s, aplica la
+búsqueda lineal de Armijo del <a class="reference internal" href="#teo-descenso-ref"><span class="std std-ref">teorema 2</span></a> y controla la parada temprana
+con la entropía cruzada del tramo cronológico de validación.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><style>pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+.output_html .hll { background-color: #ffffcc }
+.output_html { background: #f8f8f8; }
+.output_html .c { color: #3D7B7B; font-style: italic } /* Comment */
+.output_html .err { border: 1px solid #F00 } /* Error */
+.output_html .k { color: #008000; font-weight: bold } /* Keyword */
+.output_html .o { color: #666 } /* Operator */
+.output_html .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+.output_html .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+.output_html .cp { color: #9C6500 } /* Comment.Preproc */
+.output_html .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+.output_html .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+.output_html .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
+.output_html .gd { color: #A00000 } /* Generic.Deleted */
+.output_html .ge { font-style: italic } /* Generic.Emph */
+.output_html .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
+.output_html .gr { color: #E40000 } /* Generic.Error */
+.output_html .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.output_html .gi { color: #008400 } /* Generic.Inserted */
+.output_html .go { color: #717171 } /* Generic.Output */
+.output_html .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.output_html .gs { font-weight: bold } /* Generic.Strong */
+.output_html .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.output_html .gt { color: #04D } /* Generic.Traceback */
+.output_html .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.output_html .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.output_html .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.output_html .kp { color: #008000 } /* Keyword.Pseudo */
+.output_html .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.output_html .kt { color: #B00040 } /* Keyword.Type */
+.output_html .m { color: #666 } /* Literal.Number */
+.output_html .s { color: #BA2121 } /* Literal.String */
+.output_html .na { color: #687822 } /* Name.Attribute */
+.output_html .nb { color: #008000 } /* Name.Builtin */
+.output_html .nc { color: #00F; font-weight: bold } /* Name.Class */
+.output_html .no { color: #800 } /* Name.Constant */
+.output_html .nd { color: #A2F } /* Name.Decorator */
+.output_html .ni { color: #717171; font-weight: bold } /* Name.Entity */
+.output_html .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
+.output_html .nf { color: #00F } /* Name.Function */
+.output_html .nl { color: #767600 } /* Name.Label */
+.output_html .nn { color: #00F; font-weight: bold } /* Name.Namespace */
+.output_html .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.output_html .nv { color: #19177C } /* Name.Variable */
+.output_html .ow { color: #A2F; font-weight: bold } /* Operator.Word */
+.output_html .w { color: #BBB } /* Text.Whitespace */
+.output_html .mb { color: #666 } /* Literal.Number.Bin */
+.output_html .mf { color: #666 } /* Literal.Number.Float */
+.output_html .mh { color: #666 } /* Literal.Number.Hex */
+.output_html .mi { color: #666 } /* Literal.Number.Integer */
+.output_html .mo { color: #666 } /* Literal.Number.Oct */
+.output_html .sa { color: #BA2121 } /* Literal.String.Affix */
+.output_html .sb { color: #BA2121 } /* Literal.String.Backtick */
+.output_html .sc { color: #BA2121 } /* Literal.String.Char */
+.output_html .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.output_html .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.output_html .s2 { color: #BA2121 } /* Literal.String.Double */
+.output_html .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
+.output_html .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.output_html .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
+.output_html .sx { color: #008000 } /* Literal.String.Other */
+.output_html .sr { color: #A45A77 } /* Literal.String.Regex */
+.output_html .s1 { color: #BA2121 } /* Literal.String.Single */
+.output_html .ss { color: #19177C } /* Literal.String.Symbol */
+.output_html .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.output_html .fm { color: #00F } /* Name.Function.Magic */
+.output_html .vc { color: #19177C } /* Name.Variable.Class */
+.output_html .vg { color: #19177C } /* Name.Variable.Global */
+.output_html .vi { color: #19177C } /* Name.Variable.Instance */
+.output_html .vm { color: #19177C } /* Name.Variable.Magic */
+.output_html .il { color: #666 } /* Literal.Number.Integer.Long */</style><div class="highlight"><pre><span></span>    <span class="k">def</span><span class="w"> </span><span class="nf">_boosting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Xb</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">idx_tr</span><span class="p">,</span> <span class="n">idx_va</span><span class="p">,</span> <span class="n">n_rondas</span><span class="p">):</span>
+        <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="n">lam</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lambda_hibrido</span> <span class="k">if</span> <span class="n">z</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mf">0.0</span>
+        <span class="n">p_feat</span> <span class="o">=</span> <span class="n">Xb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">ztr</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">z</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">z</span><span class="p">[</span><span class="n">idx_tr</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">z</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">mu0</span><span class="p">,</span> <span class="n">s0</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ztr</span><span class="p">)),</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ztr</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">sigma_min</span><span class="p">)))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Sin caudal futuro: σ inicial unitaria y μ centrado en la banda</span>
+            <span class="n">mu0</span><span class="p">,</span> <span class="n">s0</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">l</span><span class="p">[</span><span class="n">idx_tr</span><span class="p">]</span> <span class="o">+</span> <span class="n">u</span><span class="p">[</span><span class="n">idx_tr</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)),</span> <span class="mf">0.0</span>
+        <span class="n">s0</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_clip_s</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">s0</span><span class="p">]))[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">mu</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">mu0</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">s0</span><span class="p">)</span>
+        <span class="n">arboles_mu</span><span class="p">,</span> <span class="n">arboles_s</span><span class="p">,</span> <span class="n">pasos</span><span class="p">,</span> <span class="n">historial</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">mejor_va</span><span class="p">,</span> <span class="n">mejor_iter</span><span class="p">,</span> <span class="n">sin_mejora</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">L</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">ss</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">perdida_hibrida</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">ss</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">l</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">u</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span>
+                                   <span class="kc">None</span> <span class="k">if</span> <span class="n">z</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">z</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">lam</span><span class="p">)</span>
+
+        <span class="n">perdida_actual</span> <span class="o">=</span> <span class="n">L</span><span class="p">(</span><span class="n">idx_tr</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_rondas</span><span class="p">):</span>
+            <span class="n">filas</span> <span class="o">=</span> <span class="n">idx_tr</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">submuestreo</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">filas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">idx_tr</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">idx_tr</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">submuestreo</span><span class="p">)),</span>
+                                           <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">p_feat</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">p_feat</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">columnas</span><span class="p">))),</span>
+                                      <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+            <span class="n">g_mu</span><span class="p">,</span> <span class="n">h_mu</span><span class="p">,</span> <span class="n">g_s</span><span class="p">,</span> <span class="n">h_s</span> <span class="o">=</span> <span class="n">gradientes</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="n">filas</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">filas</span><span class="p">],</span> <span class="n">l</span><span class="p">[</span><span class="n">filas</span><span class="p">],</span> <span class="n">u</span><span class="p">[</span><span class="n">filas</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">filas</span><span class="p">],</span>
+                                              <span class="kc">None</span> <span class="k">if</span> <span class="n">z</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">z</span><span class="p">[</span><span class="n">filas</span><span class="p">],</span> <span class="n">lam</span><span class="p">)</span>
+            <span class="n">a_mu</span> <span class="o">=</span> <span class="n">construir_arbol</span><span class="p">(</span><span class="n">Xb</span><span class="p">[</span><span class="n">filas</span><span class="p">],</span> <span class="n">g_mu</span><span class="p">,</span> <span class="n">h_mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_bins</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profundidad</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">min_hess</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">reg_lambda</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span><span class="p">,</span> <span class="n">cols</span><span class="p">)</span>
+            <span class="n">d_mu</span> <span class="o">=</span> <span class="n">a_mu</span><span class="o">.</span><span class="n">predecir</span><span class="p">(</span><span class="n">Xb</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">heterocedastico</span><span class="p">:</span>
+                <span class="n">a_s</span> <span class="o">=</span> <span class="n">construir_arbol</span><span class="p">(</span><span class="n">Xb</span><span class="p">[</span><span class="n">filas</span><span class="p">],</span> <span class="n">g_s</span><span class="p">,</span> <span class="n">h_s</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_bins</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">profundidad</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">min_hess</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">reg_lambda</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span><span class="p">,</span> <span class="n">cols</span><span class="p">)</span>
+                <span class="n">d_s</span> <span class="o">=</span> <span class="n">a_s</span><span class="o">.</span><span class="n">predecir</span><span class="p">(</span><span class="n">Xb</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">a_s</span><span class="p">,</span> <span class="n">d_s</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+
+            <span class="c1"># Búsqueda lineal de Armijo: el paso se reduce a la mitad hasta que la pérdida</span>
+            <span class="c1"># de entrenamiento disminuye; si no disminuye tras 8 intentos, la ronda se rechaza.</span>
+            <span class="n">g_full</span> <span class="o">=</span> <span class="n">gradientes</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="n">idx_tr</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">idx_tr</span><span class="p">],</span> <span class="n">l</span><span class="p">[</span><span class="n">idx_tr</span><span class="p">],</span> <span class="n">u</span><span class="p">[</span><span class="n">idx_tr</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">idx_tr</span><span class="p">],</span>
+                                <span class="kc">None</span> <span class="k">if</span> <span class="n">z</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">z</span><span class="p">[</span><span class="n">idx_tr</span><span class="p">],</span> <span class="n">lam</span><span class="p">)</span>
+            <span class="n">pendiente</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">g_full</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">d_mu</span><span class="p">[</span><span class="n">idx_tr</span><span class="p">])</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">g_full</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">d_s</span><span class="p">[</span><span class="n">idx_tr</span><span class="p">]))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx_tr</span><span class="p">)</span>
+            <span class="n">eta</span><span class="p">,</span> <span class="n">aceptado</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tasa</span><span class="p">,</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">busqueda_lineal</span> <span class="k">else</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">mu_n</span><span class="p">,</span> <span class="n">s_n</span> <span class="o">=</span> <span class="n">mu</span> <span class="o">+</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">d_mu</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clip_s</span><span class="p">(</span><span class="n">s</span> <span class="o">+</span> <span class="n">eta</span> <span class="o">*</span> <span class="n">d_s</span><span class="p">)</span>
+                <span class="n">nueva</span> <span class="o">=</span> <span class="n">L</span><span class="p">(</span><span class="n">idx_tr</span><span class="p">,</span> <span class="n">mu_n</span><span class="p">,</span> <span class="n">s_n</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">busqueda_lineal</span> <span class="ow">or</span> <span class="n">nueva</span> <span class="o">&lt;=</span> <span class="n">perdida_actual</span> <span class="o">+</span> <span class="mf">1e-4</span> <span class="o">*</span> <span class="n">eta</span> <span class="o">*</span> <span class="nb">min</span><span class="p">(</span><span class="n">pendiente</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">):</span>
+                    <span class="n">aceptado</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+                <span class="n">eta</span> <span class="o">*=</span> <span class="mf">0.5</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">aceptado</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="n">mu</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">perdida_actual</span> <span class="o">=</span> <span class="n">mu_n</span><span class="p">,</span> <span class="n">s_n</span><span class="p">,</span> <span class="n">nueva</span>
+            <span class="n">arboles_mu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a_mu</span><span class="p">)</span>
+            <span class="n">arboles_s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a_s</span><span class="p">)</span>
+            <span class="n">pasos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eta</span><span class="p">)</span>
+            <span class="n">reg</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"iter"</span><span class="p">:</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"perdida_train"</span><span class="p">:</span> <span class="n">perdida_actual</span><span class="p">,</span> <span class="s2">"paso"</span><span class="p">:</span> <span class="n">eta</span><span class="p">}</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx_va</span><span class="p">):</span>
+                <span class="n">p_va</span> <span class="o">=</span> <span class="n">probabilidad_banda</span><span class="p">(</span><span class="n">mu</span><span class="p">[</span><span class="n">idx_va</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="n">idx_va</span><span class="p">],</span> <span class="n">l</span><span class="p">[</span><span class="n">idx_va</span><span class="p">],</span> <span class="n">u</span><span class="p">[</span><span class="n">idx_va</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">yv</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">idx_va</span><span class="p">]</span>
+                <span class="n">bce_va</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">yv</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p_va</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">yv</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="o">-</span><span class="n">p_va</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+                <span class="n">reg</span><span class="p">[</span><span class="s2">"bce_validacion"</span><span class="p">]</span> <span class="o">=</span> <span class="n">bce_va</span>
+                <span class="k">if</span> <span class="n">bce_va</span> <span class="o">&lt;</span> <span class="n">mejor_va</span> <span class="o">-</span> <span class="mf">1e-6</span><span class="p">:</span>
+                    <span class="n">mejor_va</span><span class="p">,</span> <span class="n">mejor_iter</span><span class="p">,</span> <span class="n">sin_mejora</span> <span class="o">=</span> <span class="n">bce_va</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">sin_mejora</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">if</span> <span class="n">sin_mejora</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">paciencia</span><span class="p">:</span>
+                        <span class="n">historial</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span>
+                        <span class="k">break</span>
+            <span class="n">historial</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reg</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">idx_va</span><span class="p">):</span>
+            <span class="n">arboles_mu</span><span class="p">,</span> <span class="n">arboles_s</span><span class="p">,</span> <span class="n">pasos</span> <span class="o">=</span> <span class="p">(</span><span class="n">arboles_mu</span><span class="p">[:</span><span class="n">mejor_iter</span><span class="p">],</span> <span class="n">arboles_s</span><span class="p">[:</span><span class="n">mejor_iter</span><span class="p">],</span>
+                                            <span class="n">pasos</span><span class="p">[:</span><span class="n">mejor_iter</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mejor_iter</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arboles_mu</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"mu0"</span><span class="p">:</span> <span class="n">mu0</span><span class="p">,</span> <span class="s2">"s0"</span><span class="p">:</span> <span class="n">s0</span><span class="p">,</span> <span class="s2">"arboles_mu"</span><span class="p">:</span> <span class="n">arboles_mu</span><span class="p">,</span> <span class="s2">"arboles_s"</span><span class="p">:</span> <span class="n">arboles_s</span><span class="p">,</span>
+                <span class="s2">"pasos"</span><span class="p">:</span> <span class="n">pasos</span><span class="p">,</span> <span class="s2">"historial"</span><span class="p">:</span> <span class="n">historial</span><span class="p">,</span> <span class="s2">"mejor_iter"</span><span class="p">:</span> <span class="n">mejor_iter</span><span class="p">}</span>
+</pre></div>
+</div></div>
 </div>
 </section>
 <section id="pruebas-unitarias">
@@ -809,7 +1132,7 @@ def construir_arbol(Xb: np.ndarray, g: np.ndarray, h: np.ndarray, n_bins: int, p
 </details>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>..............................                                           [100%]
-30 passed in 3.75s
+30 passed in 3.88s
 </pre></div>
 </div>
 </div>
@@ -1132,7 +1455,7 @@ Por Kevin Clemente Rosario y Manuel Santiago Meza Castro
   
   <div class="footer-item">
     <p class="last-updated">
-  Actualizado por última vez en 2026-10-23.
+  Actualizado por última vez en 2026-10-24.
   <br/>
 </p>
   </div>
