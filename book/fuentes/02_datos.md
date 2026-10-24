@@ -266,6 +266,22 @@ distribución de frecuencias del caudal y no de la escala de la curva {cite}`nas
 variable objetivo vale 1 cuando el caudal del día *t* + 15 cae en la banda de ±15 % alrededor
 de ese valor, entre {glue:text}`lim_inf:,.0f` y {glue:text}`lim_sup:,.0f` m³/s.
 
+La auditoría y la descarga efectiva se calculan en `src/etl.py` con las funciones siguientes:
+`curva_gasto` ajusta la potencia Qs = a·Q^b por mínimos cuadrados en escala logarítmica,
+`auditoria_transporte` la repite en cada quinquenio y `descarga_efectiva` construye el análisis
+magnitud-frecuencia y devuelve la clase de mayor carga.
+
+```{code-cell} ipython3
+---
+tags: [remove-input]
+---
+import inspect
+from IPython.display import Code
+from src import etl
+Code("\n\n".join(inspect.getsource(f) for f in (etl.curva_gasto, etl.auditoria_transporte, etl.descarga_efectiva)),
+     language="python")
+```
+
 ## Variable objetivo
 
 ```{code-cell} ipython3

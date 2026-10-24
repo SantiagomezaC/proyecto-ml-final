@@ -350,6 +350,20 @@ privilegiar la exhaustividad, y el umbral puede bajarse a partir de la curva de 
 costo directo y conviene la precisión. Al reportar la PR-AUC, que integra todos los umbrales, la
 comparación entre modelos no depende de esa elección, que se deja al usuario del dashboard.
 
+Las métricas de todas las combinaciones se calculan con `metricas_clf` (`src/experiment.py`) a
+partir del puntaje continuo de la clase positiva; la PR-AUC es la precisión promedio de
+scikit-learn. El error de calibración se calcula con `ece` (`src/evaluation.py`).
+
+```{code-cell} ipython3
+---
+tags: [remove-input]
+---
+import inspect
+from IPython.display import Code
+from src import experiment as exp_mod, evaluation as ev_mod
+Code(inspect.getsource(exp_mod.metricas_clf) + "\n\n" + inspect.getsource(ev_mod.ece), language="python")
+```
+
 ## Calibración de probabilidades
 
 ```{code-cell} ipython3

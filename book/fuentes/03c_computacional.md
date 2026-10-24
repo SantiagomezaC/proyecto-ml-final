@@ -88,6 +88,20 @@ no contradicen la teoría: reflejan costos fijos (validación de datos, construc
 histogramas, gestión de hilos) que dominan a tamaños pequeños, de modo que la pendiente en este
 rango subestima el orden asintótico.
 
+Los tiempos de esta sección los mide `scripts/computational.py`. La función `escalamiento`
+entrena cada modelo con muestras de 1.000 a 12.000 días y registra el tiempo; el exponente
+empírico es la pendiente de la regresión de log(tiempo) sobre log(n).
+
+```{code-cell} ipython3
+---
+tags: [remove-input]
+---
+import inspect
+from IPython.display import Code
+from scripts import computational as comp
+Code("\n\n".join(inspect.getsource(f) for f in (comp.cronometrar, comp.escalamiento)), language="python")
+```
+
 ## Variantes eficientes por modelo
 
 ### KNN: estructuras de indexación y vecinos aproximados
@@ -203,6 +217,18 @@ traslada a la memoria: la matriz de características de Nyström ($n \times 500$
 precisión) eleva la memoria pico del ajuste de unos 7 MB a {glue:text}`ny_mem:.0f` MB, un
 compromiso aceptable en esta máquina pero que habría que vigilar con muestras mucho mayores.
 
+Las variantes eficientes de KNN, XGBoost y la SVM se miden con las funciones siguientes del
+mismo script, que entrenan la versión estándar y la optimizada sobre los mismos datos y
+registran tiempo, memoria y PR-AUC.
+
+```{code-cell} ipython3
+---
+tags: [remove-input]
+---
+Code("\n\n".join(inspect.getsource(f) for f in (comp.knn_variantes, comp.xgb_variantes, comp.svm_variantes)),
+     language="python")
+```
+
 ## Paralelización
 
 ```{code-cell} ipython3
@@ -254,6 +280,13 @@ aplicarse al nivel de grano grueso, el de las tareas de minutos, que es como se 
 experimento. Con 1.680 optimizaciones y una duración típica de minutos, herramientas distribuidas como Dask o Ray
 no se justificaron: el cuello de botella es el número de núcleos, no la coordinación. El equipo
 no tiene GPU NVIDIA, de modo que la aceleración con `device='cuda'` de XGBoost no pudo medirse.
+
+```{code-cell} ipython3
+---
+tags: [remove-input]
+---
+Code(inspect.getsource(comp.paralelizacion), language="python")
+```
 
 ## Perfilamiento
 
