@@ -59,9 +59,9 @@ def pruebas_original(tabla, mejores, n_tr, n_te):
     filas.append({"prueba": "Friedman (ómnibus) sobre 8 modelos", "hipótesis nula": "Todos los modelos tienen el mismo rango medio",
                   "supuestos": f"Bloques externos pareados ({fr['n_bloques']}); particiones cronológicas walk-forward",
                   "estadístico": f"χ² = {fr['chi2']:.2f} (gl = {fr['gl']}); F_ID = {fr['F_iman_davenport']:.2f}",
-                  "p crudo": fr["p"], "p ajustado": fr["p"], "efecto": f"rango medio del original = {fr['rangos']['original']:.2f}",
+                  "p crudo": fr["p"], "p ajustado": fr["p"], "efecto": f"rango medio del propuesto = {fr['rangos']['original']:.2f}",
                   "conclusión": "Se rechaza H0" if fr["p"] < ALFA else "No se rechaza H0", "confirmatoria": False})
-    filas.append({"prueba": f"Nemenyi: original frente a {NOMBRES_MODELO[ref]}", "hipótesis nula": "Igual rango medio",
+    filas.append({"prueba": f"Nemenyi: propuesto frente a {NOMBRES_MODELO[ref]}", "hipótesis nula": "Igual rango medio",
                   "supuestos": "Post-hoc de Friedman, control del error familiar",
                   "estadístico": f"|Δ rango| = {par_ref.dif_rangos:.2f}; CD = {ne['cd']:.2f}",
                   "p crudo": par_ref.p_nemenyi, "p ajustado": par_ref.p_nemenyi,
@@ -96,8 +96,8 @@ def pruebas_original(tabla, mejores, n_tr, n_te):
     filas.append({"prueba": "Bayesiana de rangos con signo (ROPE ±0,01)",
                   "hipótesis nula": "— (probabilidades posteriores de cada región)",
                   "supuestos": "Proceso de Dirichlet sobre las diferencias por bloque (Benavoli et al., 2017)",
-                  "estadístico": f"P(original mejor) = {bs['p_A_mejor']:.3f}; P(equiv.) = {bs['p_equivalentes']:.3f}",
-                  "p crudo": np.nan, "p ajustado": np.nan, "efecto": f"P(benchmark mejor) = {bs['p_B_mejor']:.3f}",
+                  "estadístico": f"P(propuesto mejor) = {bs['p_A_mejor']:.3f}; P(equiv.) = {bs['p_equivalentes']:.3f}",
+                  "p crudo": np.nan, "p ajustado": np.nan, "efecto": f"P(referencia mejor) = {bs['p_B_mejor']:.3f}",
                   "conclusión": "Superioridad práctica (P > 0,95)" if bs["p_A_mejor"] > 0.95 else "No concluyente",
                   "confirmatoria": False})
     # 5. Bootstrap estacionario BCa de la diferencia de PR-AUC en la prueba 2010-2026
@@ -125,7 +125,7 @@ def pruebas_original(tabla, mejores, n_tr, n_te):
     # 6. DeLong en la prueba (complementaria por la dependencia temporal)
     dl = delong(y, s_o, s_r)
     filas.append({"prueba": "DeLong (AUC-ROC, prueba 2010-2026; complementaria)",
-                  "hipótesis nula": "AUC del original ≤ AUC del benchmark",
+                  "hipótesis nula": "AUC del propuesto ≤ AUC del mejor modelo de referencia",
                   "supuestos": "Supone independencia entre días: se reporta como complemento, no se incluye entre las confirmatorias",
                   "estadístico": f"z = {dl['z']:.2f}; AUC {dl['auc_a']:.4f} frente a {dl['auc_b']:.4f}",
                   "p crudo": dl["p_unilateral"], "p ajustado": dl["p_unilateral"], "efecto": f"Δ AUC = {dl['dif']:.4f}",
@@ -294,8 +294,8 @@ def main():
 
     mej = mejores.sort_values("pr_auc_mean", ascending=False)
     textos = {
-        "texto_lideres": (f"El modelo original encabeza la tabla con PR-AUC externa de {medias['original']:.3f}; el mejor "
-                          f"benchmark es {NOMBRES_MODELO[mej.iloc[0].modelo]} ({mej.iloc[0].pr_auc_mean:.3f}). "
+        "texto_lideres": (f"El modelo propuesto encabeza la tabla con PR-AUC externa de {medias['original']:.3f}; el mejor "
+                          f"modelo de referencia es {NOMBRES_MODELO[mej.iloc[0].modelo]} ({mej.iloc[0].pr_auc_mean:.3f}). "
                           "La desviación entre bloques refleja la variabilidad hidrológica interanual."),
         "texto_mcs": (f"El conjunto de confianza al 90 % retiene {len(finalistas)} de 28 combinaciones; la de menor "
                       f"pérdida es {mejor.replace('|', ' · ')}. Las combinaciones fuera del conjunto son "

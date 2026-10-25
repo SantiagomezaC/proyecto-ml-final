@@ -1,4 +1,4 @@
 {
-  "texto_lideres": "El modelo original encabeza la tabla con PR-AUC externa de 0.943; el mejor benchmark es Random Forest (0.910). La desviación entre bloques refleja la variabilidad hidrológica interanual.",
+  "texto_lideres": "El modelo propuesto encabeza la tabla con PR-AUC externa de 0.943; el mejor modelo de referencia es Random Forest (0.910). La desviación entre bloques refleja la variabilidad hidrológica interanual.",
   "texto_mcs": "El conjunto de confianza al 90 % retiene 5 de 28 combinaciones; la de menor pérdida es svr · bayes. Las combinaciones fuera del conjunto son significativamente peores que la mejor."
 }

@@ -1,4 +1,4 @@
-"""Sección 3: modelos, predicción en vivo, diagnóstico, comparación estadística y modelo original."""
+"""Sección 3: modelos, predicción en vivo, diagnóstico, comparación estadística y modelo propuesto."""
 import os
 
 import dash
@@ -146,7 +146,7 @@ def tab_prediccion():
                          "variable para explorar escenarios.", className="small text-muted mt-2"),
             ])), lg=4),
             dbc.Col(tarjeta("2. Ajuste las variables de entrada", html.Div([
-                html.Div("Variables con mayor contribución media (SHAP) del modelo original:",
+                html.Div("Variables con mayor contribución media (SHAP) del modelo propuesto:",
                          className="small text-muted mb-2"),
                 dbc.Row([_entrada(c) for c in PRINCIPALES], className="g-2"),
                 dbc.Accordion([dbc.AccordionItem(
@@ -159,7 +159,7 @@ def tab_prediccion():
         html.Div(id="p-alertas"),
         dbc.Row([
             dbc.Col(html.Div(id="p-resultado"), lg=4),
-            dbc.Col(tarjeta("Caudal previsto por el modelo original", grafico("p-intervalo"),
+            dbc.Col(tarjeta("Caudal previsto por el modelo propuesto", grafico("p-intervalo"),
                             id_insight="p-intervalo-txt"), lg=8),
         ], className="g-3 mb-3"),
         tarjeta("Por qué el modelo predice esto", grafico("p-shap"), id_insight="p-shap-txt",
@@ -202,7 +202,7 @@ def predecir(_, nombre, valores, fecha):
     ref = entrada.get("calamar_cuad")
     if ref is None or ref <= 0:
         alertas.append(dbc.Alert("El caudal actual al cuadrado (calamar_cuad) debe ser positivo: es la "
-                                 "referencia del modelo original.", color="danger"))
+                                 "referencia del modelo propuesto.", color="danger"))
         return html.Div(), vacia(""), "", vacia(""), "", alertas
     X = pd.DataFrame([{c: (np.nan if entrada[c] is None else float(entrada[c])) for c in COLS}])
     try:
@@ -319,7 +319,7 @@ def tab_comparacion():
             dbc.Col(tarjeta("Diagrama de diferencia crítica", dcc.Graph(
                 figure=diagrama_cd(rangos, cd["cd"], NOMBRES_MODELO["original"]),
                 config={"displayModeBar": False}),
-                subtitulo=f"Mejor combinación de cada modelo y modelo original; {cd['n_bloques']} bloques "
+                subtitulo=f"Mejor combinación de cada modelo de referencia y modelo propuesto; {cd['n_bloques']} bloques "
                           "externos, PR-AUC",
                 insight=(f"Friedman: χ² = {cd['friedman']['chi2']:.2f}, p = {cd['friedman']['p']:.2g} "
                          f"(Iman-Davenport F = {cd['friedman']['F_iman_davenport']:.2f}). Los modelos unidos "
@@ -347,7 +347,7 @@ def tab_comparacion():
 
 
 # ---------------------------------------------------------------------------
-# Pestaña 5: modelo original
+# Pestaña 5: modelo propuesto
 # ---------------------------------------------------------------------------
 PSEUDO = """Entrada: X (n×p), y ∈ {0,1}ⁿ, caudal futuro q, referencia Q_ref, banda [L, U], λ, η, T, d
 Salida: ensambles F_μ y F_s;  p(x) = Φ((u−μ)/σ) − Φ((l−μ)/σ)
@@ -467,6 +467,6 @@ def layout():
             dbc.Tab(tab_prediccion(), label="Predicción en vivo", tab_id="t2", className="pt-3"),
             dbc.Tab(tab_diagnostico(), label="Diagnóstico", tab_id="t3", className="pt-3"),
             dbc.Tab(tab_comparacion(), label="Comparación estadística", tab_id="t4", className="pt-3"),
-            dbc.Tab(tab_original(), label="Modelo original", tab_id="t5", className="pt-3"),
+            dbc.Tab(tab_original(), label="Modelo propuesto", tab_id="t5", className="pt-3"),
         ], active_tab=os.environ.get("TAB_INICIAL", "t1")),
     ])

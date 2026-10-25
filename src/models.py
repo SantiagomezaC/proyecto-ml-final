@@ -1,4 +1,4 @@
-"""Catálogo de modelos benchmark, técnicas de balanceo y espacios de búsqueda.
+"""Catálogo de modelos de referencia, técnicas de balanceo y espacios de búsqueda.
 
 ``construir_pipeline`` arma el pipeline completo (imputación, escalado, balanceo y
 modelo) a partir de un diccionario de hiperparámetros. Todos los pasos se ajustan
@@ -35,7 +35,7 @@ NOMBRES_MODELO = {
     "knn": "KNN", "naive_bayes": "Naive Bayes", "logistica": "Regresión logística",
     "arbol": "Árbol de decisión", "random_forest": "Random Forest", "xgboost": "XGBoost",
     "svm": "SVM", "ridge": "Ridge", "lasso": "Lasso", "svr": "SVR",
-    "original": "BLGB (modelo original)",
+    "original": "BLGB (modelo propuesto)",
 }
 NOMBRES_BALANCEO = {"ninguno": "Sin balanceo", "smote": "SMOTE", "adasyn": "ADASYN",
                     "balanced": "class_weight"}
@@ -65,7 +65,7 @@ class KNNBalanceado(KNeighborsClassifier):
 
 
 # ---------------------------------------------------------------------------
-# Espacios de búsqueda (rangos justificados en el capítulo de benchmarks)
+# Espacios de búsqueda (rangos justificados en el capítulo de modelos de referencia)
 # ---------------------------------------------------------------------------
 ESPACIOS_CLF = {
     "knn": [Param("n_neighbors", "int", 5, 200, log=True),

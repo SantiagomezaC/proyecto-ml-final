@@ -59,7 +59,7 @@ PASOS = [
     ("03", "140 modelos", "7 algoritmos × 4 balanceos × 4 optimizadores, más 28 de regresión"),
     ("04", "Validación anidada", "12 bloques externos de 2 años, validación interna cronológica"),
     ("05", "Comparación estadística", "Friedman-Nemenyi, Wilcoxon-Holm, Nadeau-Bengio, MCS"),
-    ("06", "Modelo original", "Boosting de verosimilitud de banda (BLGB), programado en numpy"),
+    ("06", "Modelo propuesto", "Boosting de verosimilitud de banda (BLGB), programado en numpy"),
     ("07", "Producción", "Artefactos serializados, dashboard y despliegue en Render"),
 ]
 
@@ -107,8 +107,8 @@ def layout():
             dbc.Col(kpi("15 días", "Horizonte de predicción",
                         "Compromiso entre utilidad operativa y dificultad"), md=3, sm=6),
             dbc.Col(kpi(f"{orig.pr_auc_test:.3f}" if orig is not None else "—",
-                        "PR-AUC del modelo original",
-                        f"Mejor benchmark: {mejor_bench.nombre} {mejor_bench.pr_auc_test:.3f}",
+                        "PR-AUC del modelo propuesto",
+                        f"Mejor modelo de referencia: {mejor_bench.nombre} {mejor_bench.pr_auc_test:.3f}",
                         "alerta"), md=3, sm=6),
         ], className="g-3 mb-4"),
 
@@ -145,7 +145,7 @@ def layout():
                             "curva de gasto sólido."),
                     html.Li("Entrenar y comparar 140 combinaciones de modelos, balanceo y optimización "
                             "con validación anidada cronológica."),
-                    html.Li("Diseñar e implementar un modelo original que use el caudal futuro como "
+                    html.Li("Diseñar e implementar un modelo propio que use el caudal futuro como "
                             "supervisión continua y validarlo con al menos tres pruebas de hipótesis."),
                     html.Li("Poner los mejores modelos a disposición de usuarios no expertos mediante "
                             "este tablero."),
