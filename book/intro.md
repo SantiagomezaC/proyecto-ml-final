@@ -2,8 +2,17 @@
 
 **Predicción probabilística a quince días de la banda de caudales que más sedimento transporta**
 
-**Kevin Clemente Rosario · Manuel Santiago Meza Castro**
-Universidad del Norte, Barranquilla, Colombia
+<div class="autores-libro">
+  <div class="autor">
+    <img src="_static/autor_kevin.jpg" alt="Fotografía de Kevin Clemente Rosario">
+    <div><div class="nombre">Kevin Clemente Rosario</div><div class="rol">Geólogo · Estudiante de M.Sc.</div></div>
+  </div>
+  <div class="autor">
+    <img src="_static/autor_manuel.jpg" alt="Fotografía de Manuel Santiago Meza Castro">
+    <div><div class="nombre">Manuel Santiago Meza Castro</div><div class="rol">Estudiante de Geología y de M.Sc.</div></div>
+  </div>
+</div>
+<p class="afiliacion">Universidad del Norte, Barranquilla, Colombia</p>
 
 ```{admonition} Recursos del estudio
 :class: tip
