@@ -179,7 +179,7 @@ html, body { overflow-x: hidden; max-width: 100%; }
 }
 
 /* ---------- Autores ---------- */
-.autores { margin-top: .5rem; }
+.autores { margin-top: 0; }
 .titulo-seccion { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
   color: var(--neutro); margin: 0 0 .75rem .2rem; }
 .autor { display: flex; align-items: center; gap: 1.1rem; background: var(--tarjeta);
