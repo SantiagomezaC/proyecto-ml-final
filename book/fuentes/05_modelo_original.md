@@ -9,12 +9,18 @@ kernelspec:
   name: ml-final
 ---
 
-# Modelo original: Band-Likelihood Gradient Boosting
+# Modelo propuesto: Band-Likelihood Gradient Boosting
+
+Este capítulo presenta el modelo propuesto: su motivación, su formulación, los gradientes y el
+algoritmo de aprendizaje, dos propiedades teóricas con su demostración, la implementación y su
+verificación, un experimento sintético con solución conocida y un estudio de ablación. Su
+validación sobre los datos del Magdalena se presenta en {doc}`06_validacion`.
 
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Configuración común del capítulo
 import sys, json, warnings, pickle
 sys.path.insert(0, "..")
 warnings.filterwarnings("ignore")
@@ -27,7 +33,7 @@ from src.config import RESULTADOS, DATOS_PROC, SEED
 
 ## Motivación
 
-Los modelos benchmark del capítulo anterior reciben como objetivo una etiqueta binaria: el día
+Los modelos de referencia de {doc}`03_benchmarks` reciben como objetivo una etiqueta binaria: el día
 *t* + 15 estuvo o no dentro de la banda de descarga efectiva. Esa etiqueta resulta de aplicar
 una condición de intervalo a una variable continua que también se observa, el caudal
 $Q_{t+15}$, y al binarizarla se descarta información. Dos días negativos son indistinguibles
@@ -256,7 +262,7 @@ tiempo empírico al variar $n$ se presenta en la sección de optimización compu
 La implementación completa está en `src/original_model.py`. La clase
 `BandLikelihoodBoosting` hereda de `BaseEstimator` y `ClassifierMixin`, expone `fit`,
 `predict_proba` y `predict`, y añade `predict_distribucion`, que devuelve la mediana y un
-intervalo de predicción del caudal futuro: el dashboard lo usa para mostrar, junto con la
+intervalo de predicción del caudal futuro: la aplicación interactiva lo usa para mostrar, junto con la
 probabilidad de banda, el rango de caudales esperado. Las dependencias numéricas se limitan a
 numpy y a `scipy.special.ndtr` para la función de distribución normal.
 
@@ -268,6 +274,7 @@ híbrida {eq}`eq-perdida` y los gradientes y hessianos {eq}`eq-gbce` y {eq}`eq-g
 ---
 tags: [remove-input]
 ---
+# Código fuente: probabilidad de banda, pérdida híbrida, gradientes y hessianos
 import inspect
 from IPython.display import Code
 from src import original_model as om
@@ -283,6 +290,7 @@ paso de Newton regularizado.
 ---
 tags: [remove-input]
 ---
+# Código fuente: construcción de un árbol de segundo orden por histogramas
 Code(inspect.getsource(om.construir_arbol), language="python")
 ```
 
@@ -294,15 +302,24 @@ con la entropía cruzada del tramo cronológico de validación.
 ---
 tags: [remove-input]
 ---
+# Código fuente: ciclo de boosting con búsqueda lineal de Armijo y parada temprana
 Code(inspect.getsource(om.BandLikelihoodBoosting._boosting), language="python")
 ```
 
+Cada bloque corresponde a una parte de la formulación: el primero, a las ecuaciones de la
+probabilidad, la pérdida y sus derivadas; el segundo, a la ganancia {eq}`eq-ganancia` y al valor
+de hoja; el tercero, a las líneas 5 a 15 del pseudocódigo.
+
 ## Pruebas unitarias
+
+La implementación se verifica con pruebas unitarias que se ejecutan al construir este capítulo;
+la salida siguiente es su resultado.
 
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Ejecución de la batería de pruebas unitarias del repositorio
 import subprocess
 salida = subprocess.run([sys.executable, "-m", "pytest", "tests", "-q", "--color=no", "-p", "no:cacheprovider"],
                         capture_output=True, text=True, cwd="..")
@@ -312,8 +329,8 @@ _r = re.search(r"(\d+) passed", salida.stdout); _f = re.search(r"(\d+) failed", 
 glue("pytest_resumen", f"{_r.group(1) if _r else 0} pruebas superadas y {_f.group(1) if _f else 0} fallidas", display=False)
 ```
 
-La batería de pruebas (resultado: {glue:text}`pytest_resumen`) cubre los cuatro requisitos
-mínimos del entregable y añade verificaciones de las propiedades del algoritmo. El modelo
+La batería de pruebas (resultado: {glue:text}`pytest_resumen`) verifica el comportamiento del
+estimador y las propiedades del algoritmo. El modelo
 aprende un proceso sintético con solución conocida, recupera la media latente con una
 correlación superior a 0,9 y detecta la heterocedasticidad simulada. Es reproducible con la
 misma semilla y cambia con otra, porque la semilla gobierna el submuestreo. Rechaza
@@ -322,6 +339,12 @@ hiperparámetros y entradas inválidas con mensajes explícitos y es compatible 
 pérdida desciende en cada ronda y σ respeta sus cotas.
 
 ## Ejemplo sintético: por qué la supervisión continua ayuda
+
+Para aislar el efecto de la supervisión continua se construyó un problema sintético con la misma
+estructura que el real: un caudal de referencia, un cambio logarítmico que depende de seis
+predictores con dispersión heterocedástica y una banda fija. La {numref}`fig-sintetico` compara,
+para tamaños de entrenamiento crecientes, el modelo con y sin supervisión continua y un
+clasificador XGBoost.
 
 ```{code-cell} ipython3
 ---
@@ -332,6 +355,7 @@ mystnb:
       continua (λ = 0) y de BLGB con λ = 1, en función del tamaño de entrenamiento (media de cinco semillas).
     name: fig-sintetico
 ---
+# Problema sintético con solución conocida: PR-AUC en prueba según el tamaño de entrenamiento (5 semillas)
 from sklearn.metrics import average_precision_score
 from xgboost import XGBClassifier
 def sintetico(n, seed):
@@ -360,21 +384,32 @@ ax.set_title("Eficiencia muestral en un problema con solución conocida")
 plt.show()
 ganancia = (sint["BLGB λ = 1"] - sint["XGBoost (clasificador)"])
 glue("gan_250", float(ganancia.iloc[0]), display=False); glue("gan_4000", float(ganancia.iloc[-1]), display=False)
+gan_lam = (sint["BLGB λ = 1"] - sint["BLGB λ = 0 (solo etiqueta)"])
+glue("gan_lam_250", float(gan_lam.iloc[0]), display=False); glue("gan_lam_4000", float(gan_lam.iloc[-1]), display=False)
 ```
 
-En el problema sintético la ventaja de la supervisión continua es mayor cuanto menor es la
-muestra: con 250 observaciones BLGB supera al clasificador XGBoost en
-{glue:text}`gan_250:.3f` puntos de PR-AUC y con 4.000, en {glue:text}`gan_4000:.3f`. El patrón
-es el esperado si el beneficio proviene de la información que la etiqueta binaria descarta, y
-anticipa que la ganancia en el Magdalena será relevante, porque la autocorrelación reduce el
-tamaño efectivo de la muestra a una fracción de sus días.
+La comparación que aísla la supervisión continua es la del mismo algoritmo con y sin el término
+del caudal futuro. Esa ventaja es mayor cuanto menor es la muestra: con 250 observaciones,
+$\lambda = 1$ supera a $\lambda = 0$ en {glue:text}`gan_lam_250:.3f` puntos de PR-AUC, y con 4.000,
+en {glue:text}`gan_lam_4000:.3f`. El patrón es el esperado si el beneficio proviene de la
+información que la etiqueta binaria descarta, cuyo valor relativo disminuye cuando abundan las
+etiquetas. Frente al clasificador XGBoost la ventaja es mayor y no se reduce con la muestra
+({glue:text}`gan_250:.3f` puntos con 250 observaciones y {glue:text}`gan_4000:.3f` con 4.000),
+porque XGBoost tampoco aprovecha que los límites de la banda se desplazan con el caudal de
+referencia: en este problema, el modelo los recibe en forma explícita y el clasificador debe
+aprenderlos. Ambos efectos anticipan una ganancia relevante en el Magdalena, donde la
+autocorrelación reduce el tamaño efectivo de la muestra a una fracción de sus días.
 
 ## Estudio de ablación
+
+Para saber qué componente explica el desempeño, la ablación retira cada uno por separado y mide
+su efecto en los doce bloques de la validación externa. La tabla resume el resultado.
 
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Ablación: PR-AUC externa de cada variante frente al modelo completo, Wilcoxon-Holm y δ de Cliff
 rob = pd.read_csv(RESULTADOS / "robustez" / "robustez.csv")
 ab = rob[rob.tipo == "ablacion"]
 tab = ab.groupby("variante").pr_auc.agg(["mean", "std"])
@@ -402,14 +437,17 @@ pura ($\lambda = 100$, equivalente al enfoque de dos etapas dentro del mismo alg
 
 La lectura de estas cifras es nítida en un punto y matizada en los demás. La supervisión continua
 es el componente que más aporta: sin ella el modelo pierde más de dos centésimas de PR-AUC y su
-desviación entre bloques casi se duplica, lo que confirma que la ganancia del modelo proviene de
-la información del caudal futuro que la etiqueta binaria descarta. La verosimilitud pura, en
+desviación entre bloques aumenta cerca de un 60 % (de 0,053 a 0,086), lo que confirma que la
+ganancia del modelo proviene de la información del caudal futuro que la etiqueta binaria
+descarta. La verosimilitud pura, en
 cambio, queda cerca del modelo completo: el término de la tarea añade una mejora pequeña sobre la
 regresión distribucional, coherente con el {ref}`teorema 1 <teo-propia-ref>`, según el cual
 ambos términos tienen el mismo minimizador cuando la familia gaussiana es adecuada, y solo
 divergen cuando está mal especificada. La dispersión heterocedástica casi no cambia la
-discriminación, pero su efecto está en la calibración, que se examina en el capítulo 6. Por
-último, retirar la búsqueda lineal de Armijo no altera ningún resultado: en todos los pliegues el
-primer paso propuesto cumplió la condición de descenso, de modo que la búsqueda nunca redujo el
+discriminación, pero su efecto está en la calibración, que se examina en {doc}`06_validacion`.
+Retirar el reajuste final tras la parada temprana tampoco empeora el modelo (la PR-AUC media sube
+dos milésimas, una diferencia sin significancia), de modo que ese paso podría omitirse sin costo.
+Por último, retirar la búsqueda lineal de Armijo no altera ningún resultado: en todos los pliegues
+el primer paso propuesto cumplió la condición de descenso, de modo que la búsqueda nunca redujo el
 paso. Su papel es el de una salvaguarda que garantiza la monotonía del {ref}`teorema 2
-<teo-descenso-ref>`, no el de una fuente de desempeño, y así se declara.
+<teo-descenso-ref>`, no el de una fuente de desempeño.

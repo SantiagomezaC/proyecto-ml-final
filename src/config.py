@@ -44,7 +44,7 @@ FIGURAS = RAIZ / "book" / "figuras"
 # ---------------------------------------------------------------------------
 # Delimitación temporal
 # ---------------------------------------------------------------------------
-# Corrección del Entregable 1: ningún predictor se imputa en años en que su
+# Ningún predictor se imputa en años en que su
 # estación no existía. La tarea principal usa Calamar y Puerto Salgar (registro
 # desde 1946) y empieza en 1947, lo que da más de 20.000 observaciones. Las
 # estaciones del bajo Magdalena (instaladas en 1972-1975) solo intervienen en el

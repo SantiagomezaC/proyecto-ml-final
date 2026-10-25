@@ -9,17 +9,20 @@ kernelspec:
   name: ml-final
 ---
 
-# Comparación estadística de los benchmarks
+# Comparación estadística de los modelos de referencia
 
 Con 140 modelos, el número de comparaciones pareadas posibles es 9.730, y aplicarlas sin control
 produciría cerca de 487 falsos positivos al 5 %. La comparación sigue por eso una secuencia
 jerárquica: una prueba global, un análisis post-hoc con control del error familiar, comparaciones
-dirigidas entre finalistas con corrección de Holm y tamaños del efecto.
+dirigidas entre finalistas con corrección de Holm y tamaños del efecto. Como los bloques de
+validación comparten entrenamiento y los días de prueba no son independientes, se privilegian
+las pruebas que respetan esa dependencia.
 
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Resultados por bloque, modelos finales y resultados de scripts/estadistica.py
 import sys, json, pickle, warnings
 sys.path.insert(0, "..")
 warnings.filterwarnings("ignore")
@@ -44,10 +47,14 @@ fin = {r["modelo"]: r for r in pickle.load(open(RESULTADOS / "final_clf.pkl", "r
 
 ### Etapa 1: prueba global sobre las 112 combinaciones
 
+La tabla muestra los quince mejores rangos medios entre las 112 combinaciones, ordenadas dentro
+de cada uno de los doce bloques externos.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Friedman y Nemenyi sobre las 112 combinaciones: rangos medios de las quince primeras
 c112 = json.loads((E / "cd_112.json").read_text(encoding="utf-8"))
 for k in ("chi2", "p", "cd", "pares_signif", "pares_total", "gl"):
     glue(f"c112_{k}", c112[k], display=False)
@@ -65,6 +72,9 @@ finalistas.
 
 ### Etapa 2: diagrama de diferencia crítica entre los mejores de cada modelo
 
+La {numref}`fig-cd-bench` repite la prueba solo con la mejor combinación de cada modelo, que es
+la comparación de interés.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
@@ -74,6 +84,7 @@ mystnb:
       barras grises unen modelos cuya diferencia de rango medio no supera la CD de Nemenyi.
     name: fig-cd-bench
 ---
+# Diagrama de diferencia crítica de los siete modelos de referencia
 tabla = pd.read_csv(E / "universo_pliegues.csv", index_col=0).drop(columns="original")
 fr = friedman(tabla); ne = nemenyi(fr["rangos"], fr["n_bloques"])
 from src.estilo import dibujar_cd
@@ -82,10 +93,13 @@ glue("fr7_chi2", fr["chi2"], display=False); glue("fr7_p", fr["p"], display=Fals
 glue("fr7_ff", fr["F_iman_davenport"], display=False); glue("fr7_pff", fr["p_iman_davenport"], display=False)
 ```
 
+La tabla siguiente detalla cada comparación por pares.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Comparaciones por pares de Nemenyi entre los siete modelos
 ne["pares"].assign(modelo_a=lambda d: d.modelo_a.map(NOMBRES_MODELO), modelo_b=lambda d: d.modelo_b.map(NOMBRES_MODELO)).sort_values("p_nemenyi").round(4)
 ```
 
@@ -94,15 +108,19 @@ Entre las mejores combinaciones de los siete modelos, Friedman rechaza la iguald
 da {glue:text}`fr7_ff:.1f`), pero la diferencia crítica de {glue:text}`cd7:.2f` rangos solo separa
 a Naive Bayes de los cuatro mejores modelos. Random Forest, XGBoost, SVM y KNN forman un grupo
 estadísticamente indistinguible, al que se suman la regresión logística y el árbol en el límite
-de la significancia. El ordenamiento de los benchmarks es, por tanto, robusto en sus extremos y
-difuso en el centro.
+de la significancia. El ordenamiento de los modelos de referencia es, por tanto, robusto en sus
+extremos y difuso en el centro.
 
 ### Comparaciones dirigidas en la prueba reservada: DeLong con Holm
+
+La tabla compara los tres mejores modelos en la prueba reservada con la prueba de DeLong y, en
+paralelo, con un intervalo de bootstrap por bloques para la misma diferencia de AUC.
 
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# DeLong frente a bootstrap estacionario para la diferencia de ROC-AUC entre los tres mejores modelos
 y = D.y_clf_test.values
 top = mejores.sort_values("pr_auc_mean", ascending=False).modelo.head(3).tolist()
 filas = []
@@ -133,10 +151,15 @@ días) y en las pruebas sobre bloques externos.
 
 ### Intervalos de confianza y tamaños del efecto
 
+Las dos tablas siguientes muestran los intervalos de confianza por bloques de las métricas de
+cada modelo en la prueba y la comparación del mejor modelo con cada uno de los demás sobre los
+doce bloques externos.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# IC 95 % por bootstrap estacionario en la prueba; Wilcoxon-Holm y δ de Cliff sobre los 12 bloques
 filas = []
 for m in mejores.sort_values("pr_auc_mean", ascending=False).modelo:
     s = fin[m]["pred_test"]
@@ -154,22 +177,26 @@ w[["modelo", "dif_media", "victorias", "p", "p_holm", "delta_cliff", "magnitud"]
 ```
 
 Los intervalos de la PR-AUC en la prueba se solapan ampliamente entre los cuatro mejores modelos.
-La comparación de {glue:text}`ref_bench` con cada benchmark mediante Wilcoxon con Holm sobre los
+La comparación de {glue:text}`ref_bench` con cada modelo mediante Wilcoxon con Holm sobre los
 doce bloques confirma la estructura del diagrama de diferencia crítica: la ventaja es
 significativa y de tamaño no despreciable frente a Naive Bayes (δ de Cliff grande), el árbol de
 decisión y la regresión logística (pequeño), y no lo es frente a KNN, XGBoost ni SVM, con tamaños
-del efecto despreciables. Entre los mejores benchmarks, por tanto, las diferencias observadas son
+del efecto despreciables. Entre los mejores modelos, por tanto, las diferencias observadas son
 menores que la variabilidad entre bloques, y elegir a Random Forest como referencia para el modelo
-original es una decisión por media, no una superioridad demostrada.
+propuesto es una decisión por media, no una superioridad demostrada.
 
 ## Regresión: secuencia jerárquica
 
 ### Model Confidence Set
 
+La tabla muestra, para cada una de las 28 combinaciones de regresión, su error, su rango medio de
+pérdida y si pertenece al conjunto de modelos que no pueden distinguirse del mejor.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Model Confidence Set de Hansen (α = 0,10) sobre la pérdida cuadrática fuera de muestra
 mcs = pd.read_csv(E / "mcs_regresion.csv")
 glue("mcs_n", int((mcs["¿En el conjunto?"] == "Sí").sum()), display=False)
 glue("mcs_mejor", mcs.iloc[0]["Combinación"], display=False)
@@ -179,7 +206,8 @@ mcs
 El Model Confidence Set {cite}`hansen2011` parte de las 28 combinaciones y, con un bootstrap
 estacionario sobre la pérdida cuadrática diaria de las predicciones fuera de muestra
 (1986-2009), elimina iterativamente la peor mientras la hipótesis de igual capacidad predictiva
-se rechace. Con α = 0,10, el conjunto de confianza retiene {glue:text}`mcs_n` combinaciones.
+se rechace. Con α = 0,10, el conjunto de confianza retiene {glue:text}`mcs_n` combinaciones. Las
+tablas siguientes comparan después a los finalistas entre sí y con la persistencia.
 
 ### Comparaciones dirigidas: Giacomini-White, Clark-West y Diebold-Mariano
 
@@ -187,6 +215,7 @@ se rechace. Con α = 0,10, el conjunto de confianza retiene {glue:text}`mcs_n` c
 ---
 tags: [hide-input]
 ---
+# Diebold-Mariano (HLN) y Giacomini-White entre finalistas; Clark-West frente a la persistencia; SPA frente a Ridge
 dirig = pd.read_csv(E / "regresion_dirigidas.csv")
 cw = pd.read_csv(E / "regresion_clark_west.csv")
 sp = json.loads((E / "spa_regresion.json").read_text(encoding="utf-8"))
@@ -206,6 +235,6 @@ tamaños de efecto despreciables (|d| < 0,08). La prueba de Clark-West, aplicada
 anidamiento natural del problema, el de la persistencia ($\hat Q_{t+15} = Q_t$) dentro de los
 modelos que usan el caudal actual, rechaza con claridad que los finalistas no mejoren sobre ella
 {cite}`clark2007`. Finalmente, la prueba SPA de Hansen {cite}`hansen2005` con Ridge como
-benchmark da un p-valor consistente de 0,0005: hay al menos un modelo que supera de forma genuina
+referencia da un p-valor consistente de 0,0005: hay al menos un modelo que supera de forma genuina
 a la regresión lineal regularizada, y esa conclusión no es producto de haber probado muchos
 modelos.

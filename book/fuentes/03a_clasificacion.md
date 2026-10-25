@@ -11,10 +11,15 @@ kernelspec:
 
 # Resultados de clasificación
 
+Esta sección presenta los resultados de las 112 combinaciones de clasificación: su desempeño en
+la validación externa, el efecto de las técnicas de balanceo, el desempeño de los modelos finales
+en la prueba reservada, la calidad de sus probabilidades y su estabilidad frente a la semilla.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Resultados de la validación anidada de clasificación y modelos finales reentrenados
 import sys, json, pickle, warnings
 sys.path.insert(0, "..")
 warnings.filterwarnings("ignore")
@@ -43,12 +48,13 @@ glue("n_tareas", len(pl), display=False)
 Las {glue:text}`n_combos` combinaciones se evaluaron en los doce bloques externos
 ({glue:text}`n_tareas` optimizaciones). La tabla muestra las veinte mejores según la PR-AUC
 media del bucle externo; la tabla completa, con los hiperparámetros de cada pliegue, el tiempo
-y la semilla, está en `results/tabla_maestra.csv` (capítulo 9).
+y la semilla, está en `results/tabla_maestra.csv` y se describe en {doc}`09_reproducibilidad`.
 
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Veinte mejores combinaciones según la PR-AUC media de los 12 bloques externos (media ± desviación)
 fmt = lambda m, s: f"{m:.3f} ± {s:.3f}"
 vista = res.sort_values("pr_auc_mean", ascending=False).head(20)
 pd.DataFrame({"Modelo": vista.nombre, "Balanceo": vista.balanceo_nombre, "Optimizador": vista.optimizador_nombre,
@@ -60,6 +66,10 @@ pd.DataFrame({"Modelo": vista.nombre, "Balanceo": vista.balanceo_nombre, "Optimi
               "Tiempo total (s)": vista.t_total.round(0)}).reset_index(drop=True)
 ```
 
+La tabla muestra medias muy próximas entre las mejores combinaciones y desviaciones mucho
+mayores que esas diferencias. La {numref}`fig-cajas-modelos` muestra esa dispersión bloque por
+bloque para la mejor combinación de cada modelo.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
@@ -69,6 +79,7 @@ mystnb:
       un bloque de dos años; la caja resume los doce bloques.
     name: fig-cajas-modelos
 ---
+# PR-AUC de cada bloque externo para la mejor combinación de cada modelo
 orden = mejores.sort_values("pr_auc_mean", ascending=False).modelo.tolist()
 fig, ax = plt.subplots(figsize=(10, 3.9))
 datos_caja = []
@@ -101,6 +112,11 @@ búsqueda aleatoria, y su desviación entre bloques es la menor de las mejores c
 otro extremo, {glue:text}`peor_modelo` ({glue:text}`peor_pr:.3f`) paga el supuesto de
 independencia condicional entre predictores que son, en buena parte, rezagos casi idénticos de la
 misma serie.
+
+La dispersión de la figura es mayor entre bloques que entre modelos, y todos los modelos tienen
+sus peores resultados en los mismos bloques. Para identificar qué hace difícil a un bloque, la
+tabla siguiente lo caracteriza por su prevalencia, por la proporción de positivos que exigen
+anticipar una entrada a la banda y por su caudal máximo.
 
 ```{code-cell} ipython3
 ---
@@ -156,6 +172,10 @@ pareados y no en comparaciones de medias.
 
 ## Efecto del balanceo de clases
 
+Con un 26 % de días positivos, cabe preguntarse si el sobremuestreo o la ponderación de la clase
+minoritaria mejoran los modelos. La {numref}`fig-balanceo` muestra el cambio medio de tres
+métricas respecto de no balancear, para cada modelo y técnica.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
@@ -165,6 +185,7 @@ mystnb:
       optimizadores y bloques). Valores positivos indican mejora.
     name: fig-balanceo
 ---
+# Diferencia de cada métrica entre cada técnica de balanceo y no balancear, pareada por modelo, optimizador y bloque
 base = pl[pl.balanceo == "ninguno"].set_index(["modelo", "optimizador", "pliegue"])
 filas = []
 for b in ("smote", "adasyn", "balanced"):
@@ -199,10 +220,14 @@ for b in ("SMOTE", "ADASYN", "class_weight"):
         glue(f"bal_{b}_{metr}", float(tab_b[(tab_b.balanceo == b) & (tab_b["métrica"] == metr)]["Δ media"].iloc[0]), display=False)
 ```
 
+La tabla siguiente resume esas diferencias para todos los modelos juntos, con la prueba de
+Wilcoxon sobre las diferencias pareadas y la corrección de Holm.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Cambio medio, fracción de casos con mejora y significancia de cada técnica de balanceo
 tab_b.round(4)
 ```
 
@@ -215,7 +240,9 @@ cambia es el punto de operación con el umbral de 0,5: la exhaustividad sube ent
 precisión, y el F1 queda igual o baja. Este comportamiento es el esperado para un desbalance
 moderado (26 % de positivos): las tres técnicas desplazan el umbral efectivo hacia la clase minoritaria, lo
 que equivale a cambiar el costo relativo de los errores, pero no aportan información nueva sobre
-qué días están en la banda.
+qué días están en la banda. Para entender por qué ADASYN, en particular, empeora la
+discriminación, la tabla siguiente examina dónde concentra sus sintéticos en el entrenamiento del
+último bloque.
 
 ```{code-cell} ipython3
 ---
@@ -263,12 +290,14 @@ positivos, no presenta esa concentración, y su efecto sobre la PR-AUC no es sig
 ## Desempeño en la prueba reservada
 
 Con la combinación ganadora de cada modelo se repitió la optimización sobre todo el
-entrenamiento (1947-2009), se reentrenó el pipeline y se evaluó una única vez en 2010-2026.
+entrenamiento (1947-2009), se reentrenó el pipeline y se evaluó una única vez en 2010-2026. La
+tabla reúne las métricas de los siete modelos finales.
 
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Métricas de los siete modelos finales en la prueba reservada 2010-2026 (umbral 0,5 donde aplica)
 y = D.y_clf_test.values
 filas = []
 for m in orden:
@@ -284,6 +313,9 @@ glue("test_mejor_modelo", tabla_test.loc[tabla_test["PR-AUC"].idxmax(), "Modelo"
 tabla_test.round(4)
 ```
 
+La {numref}`fig-roc-pr` muestra las curvas completas, que no dependen del umbral, y la
+{numref}`fig-confusion`, los aciertos y errores con el umbral de 0,5.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
@@ -292,6 +324,7 @@ mystnb:
     caption: Curvas ROC y de precisión-exhaustividad en la prueba 2010-2026 de la mejor combinación de cada modelo.
     name: fig-roc-pr
 ---
+# Curvas ROC y precisión-exhaustividad en la prueba reservada
 fig, axs = plt.subplots(1, 2, figsize=(11, 4.2))
 for i, m in enumerate(orden):
     s = fin[m]["pred_test"]
@@ -314,7 +347,10 @@ mystnb:
     caption: Matrices de confusión en la prueba (umbral 0,5) de la mejor combinación de cada modelo.
     name: fig-confusion
 ---
+# Matrices de confusión en la prueba reservada con umbral 0,5
 fig, axs = plt.subplots(1, len(orden), figsize=(14, 2.6))
+cm_ref = confusion_matrix(y, (fin[orden[0]]["pred_test"] >= .5).astype(int))
+glue("cm_fp", int(cm_ref[0, 1]), display=False); glue("cm_fn", int(cm_ref[1, 0]), display=False)
 for ax, m in zip(axs, orden):
     cm = confusion_matrix(y, (fin[m]["pred_test"] >= .5).astype(int))
     ax.imshow(cm, cmap=estilo.mapa_seq()); ax.grid(False)
@@ -331,9 +367,12 @@ seguidos de XGBoost y KNN; Random Forest obtiene además el mejor F1 y el menor 
 de la prueba superan a las medias externas porque el periodo 2010-2026 no contiene un tramo tan
 desfavorable como el bloque 2008-2009, lo que refuerza la conveniencia de evaluar sobre muchos
 bloques y no sobre una única partición. Todos los modelos superan con amplitud a la persistencia
-(PR-AUC de 0,65 en el capítulo 2), que es la referencia exigente en una serie con autocorrelación
-de 0,92 a quince días. Los tiempos de inferencia son del orden de milésimas de milisegundo por
-día, salvo KNN, que debe calcular distancias a todo el entrenamiento.
+(PR-AUC de 0,65, {doc}`02_datos`), que es la referencia exigente en una serie con autocorrelación
+de 0,92 a quince días. Con el umbral de 0,5, Random Forest comete {glue:text}`cm_fp` falsos
+positivos (días que anuncia en la banda y no lo están) y {glue:text}`cm_fn` falsos negativos (días
+en la banda que no anticipa); como usa ponderación por clase, su punto de operación favorece la
+exhaustividad. Los tiempos de inferencia son del orden de milésimas de milisegundo por día, salvo
+KNN, que debe calcular distancias a todo el entrenamiento.
 
 ### Justificación de la métrica principal
 
@@ -348,7 +387,8 @@ mientras que un falso positivo cuesta una movilización innecesaria; en ese esce
 privilegiar la exhaustividad, y el umbral puede bajarse a partir de la curva de la
 {numref}`fig-roc-pr`. Para la planificación de dragados, en cambio, las falsas alarmas tienen un
 costo directo y conviene la precisión. Al reportar la PR-AUC, que integra todos los umbrales, la
-comparación entre modelos no depende de esa elección, que se deja al usuario del dashboard.
+comparación entre modelos no depende de esa elección, que corresponde a cada usuario según su
+aplicación.
 
 Las métricas de todas las combinaciones se calculan con `metricas_clf` (`src/experiment.py`) a
 partir del puntaje continuo de la clase positiva; la PR-AUC es la precisión promedio de
@@ -358,6 +398,7 @@ scikit-learn. El error de calibración se calcula con `ece` (`src/evaluation.py`
 ---
 tags: [remove-input]
 ---
+# Código fuente de las métricas de clasificación y del error de calibración
 import inspect
 from IPython.display import Code
 from src import experiment as exp_mod, evaluation as ev_mod
@@ -365,6 +406,10 @@ Code(inspect.getsource(exp_mod.metricas_clf) + "\n\n" + inspect.getsource(ev_mod
 ```
 
 ## Calibración de probabilidades
+
+Una probabilidad útil debe ser también confiable: si el modelo anuncia un 70 %, el evento debería
+ocurrir cerca del 70 % de las veces. La {numref}`fig-calibracion` compara la probabilidad predicha
+con la frecuencia observada, antes y después de recalibrar.
 
 ```{code-cell} ipython3
 ---
@@ -375,6 +420,7 @@ mystnb:
       recalibración de Platt ajustada con las predicciones fuera de muestra del bucle externo.
     name: fig-calibracion
 ---
+# Diagramas de confiabilidad y recalibración de Platt e isotónica ajustadas con predicciones fuera de muestra
 filas = []
 fig, axs = plt.subplots(1, 2, figsize=(11, 4.2))
 for i, m in enumerate(orden):
@@ -401,10 +447,14 @@ glue("cal_peor", peor.Modelo, display=False); glue("cal_peor_ece", float(peor.EC
 glue("cal_peor_ece_platt", float(peor["ECE Platt"]), display=False)
 ```
 
+La tabla cuantifica la calibración de cada modelo con el puntaje de Brier y el error de
+calibración esperado (ECE), con y sin recalibración.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Brier y ECE en la prueba, sin recalibrar y con las dos recalibraciones
 cal.round(4)
 ```
 
@@ -419,15 +469,20 @@ los modelos salvo la regresión logística, que ya estaba bien calibrada por con
 pérdida logarítmica es una regla propia y la decisión tomada en las predicciones fuera de muestra
 fue, correctamente, no recalibrarla. La regresión isotónica logra reducciones similares; se
 prefirió Platt por tener solo dos parámetros, menos propensos a sobreajustar con la dependencia
-temporal de las predicciones. El dashboard usa la versión recalibrada cuando la decisión en las
-predicciones fuera de muestra fue favorable.
+temporal de las predicciones. Los modelos finales y la aplicación interactiva usan la versión
+recalibrada cuando la decisión en las predicciones fuera de muestra fue favorable.
 
 ## Robustez y estabilidad
+
+Una diferencia entre modelos solo es interpretable si supera la variación que produce el azar del
+propio algoritmo. La tabla siguiente compara, para el mejor modelo de referencia y para el modelo
+propuesto, la variación entre cinco semillas de inicialización con la variación entre bloques.
 
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Desviación de la PR-AUC entre semillas (mismo bloque) frente a la desviación entre bloques (misma semilla)
 rob = pd.read_csv(RESULTADOS / "robustez" / "robustez.csv")
 sem = rob[rob.tipo == "semilla"]
 var_sem = sem.groupby(["modelo", "pliegue"]).pr_auc.std().groupby("modelo").mean()
@@ -435,7 +490,7 @@ var_blq = sem.groupby(["modelo", "seed"]).pr_auc.std().groupby("modelo").mean()
 ref = mejores.sort_values("pr_auc_mean", ascending=False).iloc[0].modelo
 tab_sem = pd.DataFrame({"desviación entre semillas (media por bloque)": var_sem,
                         "desviación entre bloques (media por semilla)": var_blq})
-tab_sem.index = [NOMBRES_MODELO["original"] if i == "original" else f"{NOMBRES_MODELO[ref]} (mejor benchmark)" for i in tab_sem.index]
+tab_sem.index = [NOMBRES_MODELO["original"] if i == "original" else f"{NOMBRES_MODELO[ref]} (mejor modelo de referencia)" for i in tab_sem.index]
 glue("sd_sem_bench", float(var_sem["benchmark"]), display=False); glue("sd_blq_bench", float(var_blq["benchmark"]), display=False)
 dif_top = res.sort_values("pr_auc_mean", ascending=False).pr_auc_mean.head(10)
 glue("rango_top10", float(dif_top.max() - dif_top.min()), display=False)
@@ -443,7 +498,7 @@ tab_sem.round(4)
 ```
 
 Todas las métricas de este capítulo se reportan como media ± desviación estándar sobre los doce
-bloques externos y no como valores puntuales. Para el mejor benchmark, la sensibilidad a la
+bloques externos y no como valores puntuales. Para el mejor modelo de referencia, la sensibilidad a la
 semilla de inicialización (cinco semillas, con los hiperparámetros elegidos en cada bloque) es
 pequeña: la desviación media entre semillas dentro de un bloque es de {glue:text}`sd_sem_bench:.4f`,
 frente a una desviación entre bloques de {glue:text}`sd_blq_bench:.4f`. La aleatoriedad del
@@ -451,5 +506,6 @@ algoritmo pesa, por tanto, mucho menos que la variabilidad hidrológica entre pe
 tiempo, las diez mejores combinaciones de la tabla maestra se separan en apenas
 {glue:text}`rango_top10:.4f` de PR-AUC media, una diferencia del mismo orden que la variabilidad
 entre semillas y muy inferior a la variabilidad entre bloques. Las diferencias entre los mejores
-benchmarks no son, por tanto, mayores que la variabilidad intrínseca de cada uno, y decidir entre
-ellos exige las pruebas formales de la sección de comparación estadística.
+modelos de referencia no son, por tanto, mayores que la variabilidad intrínseca de cada uno, y
+decidir entre ellos exige las pruebas formales de {doc}`03e_comparacion`. La estabilidad del
+modelo propuesto se discute en {doc}`06_validacion`.

@@ -1,6 +1,6 @@
-# Dashboard y despliegue
+# Aplicación interactiva
 
-El dashboard pone los resultados del proyecto a disposición de una persona no experta: un
+La aplicación interactiva pone los resultados del estudio a disposición de una persona no especialista: un
 operador de embalse, un ingeniero de la autoridad del canal navegable o un investigador del
 delta. Cada elemento responde a una pregunta concreta de ese usuario: qué es la descarga
 efectiva y por qué importa (Contexto), cómo se comporta el río y qué datos sostienen el modelo
@@ -26,12 +26,12 @@ proyecto-ml-final/
 ├── pages/
 │   ├── contexto.py        sección 1: problema, pregunta, datos, metodología, limitaciones
 │   ├── eda.py             sección 2: filtros globales y figuras con callbacks
-│   └── modelos.py         sección 3: líderes, predicción, diagnóstico, estadística, modelo original
+│   └── modelos.py         sección 3: líderes, predicción, diagnóstico, estadística, modelo propuesto
 ├── src/
 │   ├── data.py            carga única y caché (lru_cache) de tablas y artefactos
 │   ├── plots.py           funciones de graficación con una plantilla Plotly unificada
 │   ├── evaluation.py      calibración y valores de Shapley por permutaciones
-│   ├── original_model.py  clase del modelo original
+│   ├── original_model.py  clase del modelo propuesto
 │   └── ...                ETL, modelos, optimizadores, pruebas estadísticas
 ├── artifacts/             modelos serializados (joblib) y metadata.json
 ├── data/dashboard/        tablas livianas precalculadas que consume la aplicación
@@ -43,7 +43,7 @@ proyecto-ml-final/
 ```
 
 El servidor nunca entrena ni optimiza modelos. `scripts/final_models.py` reentrena las mejores
-combinaciones y el modelo original, los serializa en `artifacts/` y verifica la prueba de ida y
+combinaciones y el modelo propuesto, los serializa en `artifacts/` y verifica la prueba de ida y
 vuelta; `scripts/exportar_dashboard.py` precalcula las tablas y curvas de `data/dashboard/`. Al
 arrancar, `src/data.py` carga cada recurso una sola vez y lo conserva en memoria; los callbacks
 solo filtran tablas ya cargadas o llaman a `predict_proba` de un artefacto.
@@ -78,13 +78,13 @@ El formulario se genera a partir del esquema de entrada guardado en el `metadata
 artefacto (nombre, tipo, rango observado y mediana de cada variable). Para que un usuario no
 experto no tenga que escribir 43 valores, puede elegir un día del periodo de prueba y el
 formulario se llena con las condiciones observadas ese día; las ocho variables de mayor
-contribución media al modelo original quedan visibles y las demás, en un acordeón. Los valores
+contribución media al modelo propuesto quedan visibles y las demás, en un acordeón. Los valores
 fuera del rango de entrenamiento producen una advertencia de extrapolación, y una entrada
 inválida produce un mensaje de error en lugar de detener la aplicación.
 
 La salida combina tres elementos. La probabilidad de banda del modelo elegido, con la
 recalibración de Platt cuando mejora el error de calibración. El intervalo de predicción del
-caudal a quince días, que proviene del modelo original porque es el único que modela la
+caudal a quince días, que proviene del modelo propuesto porque es el único de los modelos desplegados que modela la
 distribución del caudal futuro. Y una explicación local por valores de Shapley, calculada en el
 servidor con el estimador por permutaciones de `src/evaluation.py`, que funciona con cualquier
 modelo sin cargar la biblioteca `shap` y cumple la propiedad de eficiencia (las contribuciones
@@ -99,7 +99,8 @@ Predicción en vivo: probabilidad de banda, intervalo del caudal previsto y expl
 
 ## Despliegue en Render
 
-El dashboard está desplegado en <https://descarga-efectiva-magdalena.onrender.com>. El repositorio incluye `render.yaml`, que define un servicio web de Python con
+La aplicación está desplegada en <https://descarga-efectiva-magdalena.onrender.com>. El repositorio
+incluye `render.yaml`, que define un servicio web de Python con
 `pip install -r requirements.txt` como comando de construcción y `gunicorn app:server` como
 comando de inicio, y fija la versión de Python. El procedimiento es el siguiente:
 
@@ -115,5 +116,5 @@ comando de inicio, y fija la versión de Python. El procedimiento es el siguient
 
 El plan gratuito suspende el servicio tras un periodo de inactividad y limita la memoria. Para
 respetar ese límite, los artefactos se comprimen con `joblib.dump(..., compress=3)`, las tablas
-del dashboard se reducen a lo que cada figura necesita y los Random Forest se serializan con el
+de la aplicación se reducen a lo que cada figura necesita y los Random Forest se serializan con el
 número de árboles que eligió la optimización, sin ampliaciones.

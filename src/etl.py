@@ -1,6 +1,6 @@
 """Extracción y transformación de las series diarias del IDEAM (portal DHIME).
 
-El módulo reproduce el ETL del Entregable 1 en forma de funciones reutilizables:
+El módulo implementa el ETL en forma de funciones reutilizables:
 lectura de los archivos crudos, consolidación en una tabla diaria por estación,
 auditoría de la serie de transporte, descarga efectiva y tiempos de tránsito.
 """

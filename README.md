@@ -2,27 +2,29 @@
 
 Predicción, con quince días de anticipación, de si el caudal del río Magdalena en Calamar caerá
 dentro de la banda de **descarga efectiva**: el rango de caudales que, a lo largo de las décadas,
-transporta la mayor fracción del sedimento. Proyecto final del curso de Machine Learning
-(maestría, Universidad del Norte), entregables 2 y 3.
+transporta la mayor fracción del sedimento. Universidad del Norte, Barranquilla, 2026.
 
 **Autores:** Kevin Clemente Rosario y Manuel Santiago Meza Castro
 
 | Producto | Enlace |
 |---|---|
-| Dashboard (Render) | https://descarga-efectiva-magdalena.onrender.com |
-| Informe técnico (Jupyter Book) | https://santiagomezac.github.io/proyecto-ml-final/ |
+| Aplicación interactiva (Render) | https://descarga-efectiva-magdalena.onrender.com |
+| Documento del estudio (Jupyter Book) | https://santiagomezac.github.io/proyecto-ml-final/ |
 | Repositorio | https://github.com/SantiagomezaC/proyecto-ml-final |
 
 ## Contenido
 
 - **ETL y EDA** de siete series diarias del IDEAM (1940-2026), con auditoría de la serie de
   transporte de sedimentos, análisis magnitud-frecuencia y estudio del mecanismo de los faltantes.
-- **140 modelos benchmark** con validación anidada cronológica: 7 clasificadores × 4 técnicas de
+- **140 modelos de referencia** con validación anidada cronológica: 7 clasificadores × 4 técnicas de
   balanceo × 4 optimizadores (rejilla, aleatorio, bayesiano con Optuna-TPE y genético con DEAP),
   más 7 regresores × 4 optimizadores.
-- **Modelo original, Band-Likelihood Gradient Boosting (BLGB)**: boosting de segundo orden
+- **Modelo propuesto, Band-Likelihood Gradient Boosting (BLGB)**: boosting de segundo orden
   programado en numpy que modela la distribución del caudal futuro y optimiza una pérdida híbrida
   (entropía cruzada de la banda + verosimilitud gaussiana), con búsqueda lineal de Armijo.
+- **Métodos recientes de comparación**: NGBoost, un enfoque distribucional de dos etapas y la
+  familia LTSF-Linear de pronóstico de largo plazo (Linear, NLinear y DLinear; Zeng et al., 2023),
+  implementada en `src/dlinear.py`.
 - **Comparación estadística**: Friedman-Nemenyi, Wilcoxon-Holm, t corregida de Nadeau-Bengio,
   prueba bayesiana de rangos con signo, bootstrap estacionario BCa, DeLong y McNemar; en
   regresión, MCS, Giacomini-White, Clark-West, Diebold-Mariano (HLN) y SPA.
@@ -44,15 +46,16 @@ transporta la mayor fracción del sedimento. Proyecto final del curso de Machine
 │   ├── models.py           catálogo de modelos, balanceo y pipelines
 │   ├── optim.py            Grid, Random, TPE (Optuna) y genético (DEAP)
 │   ├── experiment.py       motor de la validación anidada (resumible)
-│   ├── original_model.py   modelo original BLGB
-│   ├── experiment_original.py  validación del modelo original y métodos distribucionales
+│   ├── original_model.py   modelo propuesto BLGB
+│   ├── experiment_original.py  validación del modelo propuesto y métodos de comparación
+│   ├── dlinear.py          LTSF-Linear: Linear, NLinear y DLinear
 │   ├── stats_tests.py      pruebas estadísticas y bootstrap por bloques
 │   ├── evaluation.py       calibración y valores de Shapley por permutaciones
 │   ├── artifacts.py        serialización, metadata y prueba de ida y vuelta
 │   ├── analysis.py         tablas de resultados para el libro
 │   ├── data.py, plots.py   carga en caché y figuras del dashboard
 │   └── estilo.py           estilo de las figuras del libro
-├── scripts/                etl, run_benchmarks, run_original, run_extra, final_models,
+├── scripts/                etl, run_benchmarks, run_original, run_dlinear, run_extra, final_models,
 │                           robustez, computational, estadistica, exportar_dashboard,
 │                           revision_literatura, ejecutar_libro
 ├── artifacts/              modelos finales (.joblib) y metadata.json
@@ -93,15 +96,16 @@ consume el dashboard sí se incluyen en `data/`.
 python -m scripts.etl                      # tablas de modelado y particiones
 python -m scripts.run_benchmarks clf       # 112 combinaciones (validación anidada)
 python -m scripts.run_benchmarks reg       # 28 combinaciones
-python -m scripts.run_original             # modelo original y métodos distribucionales
+python -m scripts.run_original             # modelo propuesto y métodos distribucionales
+python -m scripts.run_dlinear              # Linear, NLinear y DLinear con el mismo protocolo
 python -m scripts.final_models clf         # selección, reentrenamiento y artefactos
 python -m scripts.final_models reg
 python -m scripts.final_models original
 python -m scripts.run_extra                # tres tareas adicionales
 python -m scripts.robustez                 # ablación, semillas, ruido, desbalance
 python -m scripts.computational            # complejidad, variantes eficientes, perfiles
-python -m scripts.estadistica              # pruebas y veredicto R3
-python -m scripts.exportar_dashboard       # tablas del dashboard
+python -m scripts.estadistica              # pruebas y veredicto de superioridad
+python -m scripts.exportar_dashboard       # tablas de la aplicación
 python -m pytest                           # pruebas unitarias
 python -m scripts.ejecutar_libro           # ejecuta los cuadernos del libro
 jupyter-book build book/
@@ -112,7 +116,7 @@ Los resultados por pliegue se guardan uno por archivo, de modo que una corrida i
 reanuda sin repetir trabajo. En un Intel Core i7-1255U con diez procesos, el bloque de
 clasificación tarda unas cuatro horas.
 
-## Dashboard
+## Aplicación interactiva
 
 ```bash
 python app.py                 # local, http://127.0.0.1:8050

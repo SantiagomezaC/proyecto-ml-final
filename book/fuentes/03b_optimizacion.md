@@ -11,10 +11,15 @@ kernelspec:
 
 # Comparación de los métodos de optimización
 
+Los cuatro métodos de búsqueda de hiperparámetros (rejilla, búsqueda aleatoria, TPE y algoritmo
+genético) se aplicaron con el mismo presupuesto a los mismos problemas. Esta sección responde dos
+preguntas: si alguno encuentra mejores configuraciones y si alguno las encuentra antes.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Resultados por pliegue e historial de cada evaluación de los cuatro optimizadores
 import sys, warnings
 sys.path.insert(0, "..")
 warnings.filterwarnings("ignore")
@@ -35,10 +40,14 @@ COL = dict(zip(OPT, (NEU, CAU, RIO, SED)))
 
 ## Métricas, tiempos y presupuesto
 
+La tabla resume, para cada método, la calidad final (PR-AUC del bloque externo), el número de
+evaluaciones y el tiempo empleado.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Calidad final, evaluaciones y tiempo por optimizador; prueba de Friedman pareada por problema
 g = pl.groupby("optimizador")
 tab = pd.DataFrame({
     "PR-AUC externa (media)": g.pr_auc.mean(), "PR-AUC externa (desv.)": g.pr_auc.std(),
@@ -69,12 +78,13 @@ problemas. La prueba de Friedman da χ² = {glue:text}`fr_opt_chi2:.1f`
 (p = {glue:text}`fr_opt_p:.2g`), con rangos medios de {glue:text}`rango_grid:.2f` para la rejilla,
 {glue:text}`rango_random:.2f` para la búsqueda aleatoria, {glue:text}`rango_bayes:.2f` para TPE y
 {glue:text}`rango_genetico:.2f` para el algoritmo genético; la diferencia crítica de Nemenyi es
-{glue:text}`cd_opt:.3f`.
+{glue:text}`cd_opt:.3f`. La tabla siguiente muestra la comparación de cada par de métodos.
 
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Comparaciones por pares de Nemenyi entre los cuatro optimizadores
 ne["pares"].assign(modelo_a=lambda d: d.modelo_a.map(NOMBRES_OPT), modelo_b=lambda d: d.modelo_b.map(NOMBRES_OPT)).round(4)
 ```
 
@@ -92,6 +102,9 @@ llega antes, que responde la curva de convergencia.
 
 ## Convergencia: desempeño en cualquier momento
 
+La {numref}`fig-anytime` mide cuánto de la mejora alcanzable ha conseguido cada método después de
+cada evaluación (a) y en cada fracción del tiempo de la optimización (b).
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
@@ -102,6 +115,7 @@ mystnb:
       los cuatro métodos en ese mismo problema; se promedia sobre los 336 problemas.
     name: fig-anytime
 ---
+# Progreso normalizado de cada optimizador por evaluación y por tiempo; contraste a mitad del presupuesto
 h2 = h.copy()
 clave = ["modelo", "balanceo", "pliegue"]
 techo = h2.groupby(clave).puntaje.max().rename("techo")
@@ -138,10 +152,14 @@ for a, b in (("bayes", "grid"), ("bayes", "random"), ("genetico", "grid"), ("gen
 ef = pd.DataFrame(filas); ef["p (Holm)"] = holm(ef["p (Wilcoxon, unilateral)"].values)
 ```
 
+La tabla siguiente contrasta formalmente el progreso a mitad del presupuesto (ocho evaluaciones)
+entre los métodos guiados por el historial y los que no lo usan.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Diferencia de progreso en t = 8, prueba de Wilcoxon unilateral con Holm y δ de Cliff
 ef.round(4)
 ```
 
@@ -177,6 +195,9 @@ búsqueda aleatoria.
 
 ## Diversidad genética y convergencia prematura
 
+Un algoritmo genético puede converger antes de explorar el espacio si su población pierde
+diversidad. La {numref}`fig-diversidad` muestra cómo evoluciona esa diversidad entre generaciones.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
@@ -186,6 +207,7 @@ mystnb:
       espacio de genes) por generación, promediada por modelo.
     name: fig-diversidad
 ---
+# Distancia media entre individuos de la población en cada generación
 ga = h[(h.optimizador == "genetico")].dropna(subset=["generacion"])
 div = ga.groupby(["modelo", "generacion"]).diversidad.mean().unstack(0)
 fig, ax = plt.subplots(figsize=(8, 3.5))
@@ -209,10 +231,15 @@ a costa de presupuesto.
 
 ## Optimización multifidelidad
 
+Una alternativa para reducir el costo de la búsqueda es evaluar muchas configuraciones con un
+presupuesto parcial y reservar el presupuesto completo para las prometedoras. La tabla compara
+esa estrategia con la búsqueda aleatoria de fidelidad completa sobre los mismos candidatos.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Successive Halving frente a búsqueda aleatoria con fidelidad completa (XGBoost y Random Forest)
 mf = pd.read_csv(RESULTADOS / "computacional" / "multifidelidad.csv")
 for m in mf.modelo.unique():
     a = mf[(mf.modelo == m) & mf.metodo.str.startswith("halving")].iloc[0]

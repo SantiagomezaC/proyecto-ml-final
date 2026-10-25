@@ -1,4 +1,4 @@
-"""Ejecuta la validación anidada de los modelos benchmark (Entregable 2).
+"""Ejecuta la validación anidada de los modelos de referencia.
 
 Uso:  python -m scripts.run_benchmarks clf|reg [presupuesto] [n_jobs]
 Clasificación: 7 modelos × 4 balanceos × 4 optimizadores = 112 combinaciones.

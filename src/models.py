@@ -133,7 +133,7 @@ def _clasificador(modelo: str, params: dict, balanceo: str, prevalencia: float, 
                              scale_pos_weight=spw, eval_metric="logloss", **params)
     if modelo == "svm":
         # Núcleo RBF aproximado por Nyström (600 componentes) y SVM lineal en ese espacio:
-        # costo lineal en n en lugar del O(n²)-O(n³) de la SVC exacta (Sección 4 del Entregable 2).
+        # costo lineal en n en lugar del O(n²)-O(n³) de la SVC exacta.
         return Pipeline([("nystroem", Nystroem(kernel="rbf", gamma=params["gamma"], n_components=600,
                                                 random_state=seed)),
                          ("svc", LinearSVC(C=params["C"], class_weight=cw, dual=False, max_iter=5000))])

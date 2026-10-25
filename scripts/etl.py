@@ -20,11 +20,11 @@ from src.etl import auditoria_transporte, cargar_red, descarga_efectiva, tiempos
 from src.features import construir_tarea
 from src.splits import guardar_pliegues, pliegues_externos, separar_prueba
 
-# Tiempos de tránsito hacia Calamar estimados y verificados geográficamente en el Entregable 1
+# Tiempos de tránsito hacia Calamar estimados y verificados geográficamente
 TRANSITOS_CALAMAR = {"arrancaplumas": 20, "coyongal": 7, "el_banco": 12, "pto_salgar": 21,
                      "san_roque": 10, "tres_cruces": 16}
 
-# Tareas adicionales para la evaluación amplia del modelo original (Entregable 3):
+# Tareas adicionales para la evaluación amplia del modelo propuesto:
 # la misma tarea en otras estaciones del cauce, con regímenes hidrológicos distintos.
 TAREAS_ADICIONALES = {
     "el_banco": ["tres_cruces", "pto_salgar"],

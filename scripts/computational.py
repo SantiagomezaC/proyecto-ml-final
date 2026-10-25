@@ -1,4 +1,4 @@
-"""Optimización computacional (Entregable 2, Sección 4).
+"""Optimización computacional de los modelos de referencia.
 
 1. Escalamiento empírico del tiempo de entrenamiento e inferencia al variar n y p, y
    estimación del exponente por regresión log-log, para contrastarlo con la complejidad

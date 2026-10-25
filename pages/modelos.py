@@ -72,7 +72,7 @@ def tab_lideres():
                       "de dos años, 1986-2009) y de la prueba reservada 2010-2026. Ordenable y filtrable.",
             insight=P.get("texto_lideres", "")),
         html.Div(className="mb-3"),
-        tarjeta("Las 112 combinaciones del Entregable 2", dcc.Graph(
+        tarjeta("Las 112 combinaciones de modelos de referencia", dcc.Graph(
             figure=_fig_combinaciones(maestra), config={"displayModeBar": False}),
             subtitulo="PR-AUC externa media de cada combinación modelo × balanceo × optimizador",
             insight="La elección del algoritmo pesa mucho más que la del balanceo o el optimizador: las "
@@ -374,6 +374,7 @@ def tab_original():
     lit = tabla("literatura_cercana.csv")
     conv = tabla("conv_boosting.csv")
     anytime = tabla("anytime_original.csv")
+    recientes = _es_tabla(tabla("metodos_recientes.csv").astype(str))
     ver = json_dash("veredicto.json")
     return html.Div([
         dbc.Row([
@@ -395,11 +396,22 @@ def tab_original():
             dbc.Col(tarjeta("Pseudocódigo", html.Pre(PSEUDO, className="pseudo mb-0")), lg=6),
         ], className="g-3 mb-3"),
         html.Div(es(ver["texto"]), className=f"veredicto {'ok' if ver['superior'] else 'no'} mb-3"),
-        tarjeta("Pruebas de hipótesis frente al mejor benchmark", dash_table.DataTable(
+        tarjeta("Pruebas de hipótesis frente al mejor modelo de referencia", dash_table.DataTable(
             data=pr.to_dict("records"), columns=[{"name": c, "id": c} for c in pr.columns],
             style_cell={"padding": "6px 10px", "whiteSpace": "normal", "textAlign": "left",
                         "minWidth": "90px"}, style_table={"overflowX": "auto"}),
             subtitulo="p-valores crudos y ajustados por Holm; tamaño del efecto con δ de Cliff o d de Cohen"),
+        html.Div(className="mb-3"),
+        tarjeta("Comparación con métodos recientes", dash_table.DataTable(
+            data=recientes.to_dict("records"), columns=[{"name": c, "id": c} for c in recientes.columns],
+            style_cell={"padding": "6px 10px", "whiteSpace": "normal", "textAlign": "left",
+                        "minWidth": "90px"}, style_table={"overflowX": "auto"}),
+            subtitulo="Mismo protocolo y presupuesto de búsqueda; PR-AUC externa en 12 bloques y en la prueba "
+                      "2010-2026; Wilcoxon unilateral con ajuste de Holm",
+            insight="Los métodos distribucionales (NGBoost y dos etapas) empatan con BLGB: la ganancia proviene "
+                    "sobre todo de modelar la distribución del caudal futuro. La familia LTSF-Linear de "
+                    "pronóstico de series de tiempo pierde en los 12 bloques, porque una respuesta lineal con "
+                    "dispersión constante no capta que la dinámica del río depende de su estado."),
         html.Div(className="mb-3"),
         dbc.Row([
             dbc.Col(tarjeta("Convergencia del boosting", dcc.Graph(
@@ -407,11 +419,11 @@ def tab_original():
                 insight="La pérdida de entrenamiento decrece de forma monótona, como garantiza la búsqueda de "
                         "Armijo; la parada temprana corta donde la entropía cruzada de validación deja de "
                         "mejorar."), lg=6),
-            dbc.Col(tarjeta("Optimización bayesiana del modelo original", dcc.Graph(
+            dbc.Col(tarjeta("Optimización de hiperparámetros del modelo propuesto", dcc.Graph(
                 figure=convergencia(anytime, "Mejor PR-AUC interna hasta la evaluación t", "eval",
-                                    {"mejor": "BLGB (TPE)"}).update_xaxes(title="Evaluación").update_yaxes(
+                                    {"mejor": "BLGB (algoritmo genético)"}).update_xaxes(title="Evaluación").update_yaxes(
                     title="PR-AUC interna"), config={"displayModeBar": False}),
-                insight="Curva de desempeño en cualquier momento (anytime) del pliegue más reciente."), lg=6),
+                insight="Mejor PR-AUC interna alcanzada tras cada evaluación del algoritmo genético en el pliegue externo más reciente (curva anytime)."), lg=6),
         ], className="g-3 mb-3"),
         dbc.Row([
             dbc.Col(tarjeta("Ablación", dash_table.DataTable(

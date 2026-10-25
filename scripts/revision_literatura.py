@@ -1,4 +1,4 @@
-"""Revisión sistemática de literatura para la declaración de novedad (Entregable 3, Sección 5.2).
+"""Revisión sistemática de literatura para la declaración de novedad.
 
 Consulta cuatro bases de datos bibliográficas con APIs públicas, registra la fecha, el
 número de resultados y los primeros registros de cada cadena de búsqueda, y guarda la

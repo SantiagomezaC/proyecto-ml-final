@@ -1,6 +1,6 @@
-"""Pruebas unitarias del modelo original (BLGB).
+"""Pruebas unitarias del modelo propuesto (BLGB).
 
-Cubren los cuatro requisitos mínimos del Entregable 3: aprendizaje en un problema
+Cubren cuatro propiedades básicas: aprendizaje en un problema
 sintético con solución conocida, reproducibilidad con la misma semilla, manejo de
 entradas inválidas y compatibilidad con ``sklearn.base.clone``. Se añaden pruebas de las
 propiedades del algoritmo: gradientes analíticos, descenso monótono y cotas de σ.

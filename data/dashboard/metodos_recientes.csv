@@ -1,0 +1,7 @@
+Modelo,PR-AUC externa,PR-AUC prueba,Victorias de BLGB,p Wilcoxon (Holm)
+BLGB (propuesto),0.943 ± 0.053,0.965,—,—
+NGBoost,0.941 ± 0.045,—,10 de 12,0.1514
+Dos etapas (XGBoost + gaussiana),0.940 ± 0.045,—,5 de 12,0.3667
+Linear (LTSF),0.871 ± 0.087,0.900,12 de 12,0.0012
+NLinear (LTSF),0.847 ± 0.102,0.904,12 de 12,0.0012
+DLinear (LTSF),0.855 ± 0.092,0.907,12 de 12,0.0012

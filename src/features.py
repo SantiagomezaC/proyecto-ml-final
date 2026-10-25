@@ -13,7 +13,7 @@ from .config import HORIZONTE, INICIO_MODELADO
 
 def construir_features(caudales: pd.DataFrame, objetivo: str, predictoras: list[str],
                        transitos: dict[str, int], q_ef: float) -> tuple[pd.DataFrame, list[str], list[str]]:
-    """Construye los predictores del Entregable 1 para una estación objetivo.
+    """Construye los predictores para una estación objetivo.
 
     Parameters
     ----------

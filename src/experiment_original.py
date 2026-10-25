@@ -1,7 +1,7 @@
 """Validación anidada del modelo original y de los métodos distribucionales de referencia.
 
 Usa exactamente las mismas particiones externas, la misma validación interna, la misma
-semilla y el mismo presupuesto de evaluaciones que los benchmarks del Entregable 2.
+semilla y el mismo presupuesto de evaluaciones que los modelos de referencia.
 
 Variantes evaluadas
 -------------------
@@ -56,7 +56,19 @@ ESPACIO_DOS_ETAPAS = [
     Param("min_child_weight", "float", 1.0, 30.0, log=True),
 ]
 
-ESPACIOS = {"blgb": ESPACIO_BLGB, "ngboost": ESPACIO_NGBOOST, "dos_etapas": ESPACIO_DOS_ETAPAS}
+ESPACIO_DLINEAR = [
+    Param("longitud", "int", 15, 365, log=True),
+    Param("kernel", "int", 5, 61),
+    Param("alpha", "float", 1e-4, 10.0, log=True),
+    Param("canales", "cat", opciones=("calamar", "ambos")),
+]
+
+# Linear y NLinear no descomponen la ventana, por lo que no tienen tamaño de media móvil
+ESPACIO_LINEAR = [p for p in ESPACIO_DLINEAR if p.nombre != "kernel"]
+
+ESPACIOS = {"blgb": ESPACIO_BLGB, "ngboost": ESPACIO_NGBOOST, "dos_etapas": ESPACIO_DOS_ETAPAS,
+            "dlinear": ESPACIO_DLINEAR, "nlinear": ESPACIO_LINEAR, "linear": ESPACIO_LINEAR}
+LTSF = ("dlinear", "nlinear", "linear")
 
 
 def parametros_banda(estacion: str) -> dict:
@@ -80,6 +92,16 @@ class ModeloDistribucional:
             return self
         qref = np.sqrt(X[b["ref"]].values)
         z = np.log(np.asarray(q_futuro) / qref)
+        if self.variante in LTSF:
+            from .dlinear import MODELOS_LTSF
+            Modelo = MODELOS_LTSF[self.variante]
+            corte = int(len(z) * 0.85)
+            # Como en el enfoque de dos etapas, la dispersión del residuo se estima fuera de
+            # muestra, en el último 15 % cronológico del entrenamiento.
+            aux = Modelo(**self.params).fit(X.iloc[:corte], z[:corte])
+            self.sigma_ = float(np.std(z[corte:] - aux.predict(X.iloc[corte:])))
+            self.m_ = Modelo(**self.params).fit(X, z)
+            return self
         self.mediana_ = np.nanmedian(X.values, axis=0)
         Xi = np.where(np.isnan(X.values), self.mediana_, X.values)
         if self.variante == "ngboost":
@@ -108,6 +130,11 @@ class ModeloDistribucional:
             return self.m_.predict_proba(X)
         b = self.banda
         qref = np.sqrt(X[b["ref"]].values)
+        if self.variante in LTSF:
+            mu, sig = self.m_.predict(X), np.full(len(X), self.sigma_)
+            l, u = np.log(b["L"] / qref), np.log(b["U"] / qref)
+            p = np.clip(norm.cdf((u - mu) / sig) - norm.cdf((l - mu) / sig), 1e-7, 1 - 1e-7)
+            return np.column_stack([1 - p, p])
         Xi = np.where(np.isnan(X.values), self.mediana_, X.values)
         if self.variante == "ngboost":
             d = self.m_.pred_dist(Xi)
@@ -167,6 +194,11 @@ def ejecutar(variantes: list, metodos: list, estacion: str = "calamar", presupue
              n_jobs: int = 10, pliegues_sel: list | None = None, subcarpeta: str | None = None):
     """Lanza en paralelo las variantes × métodos × pliegues externos."""
     datos = cargar_datos(estacion)
+    if set(variantes) & set(LTSF):
+        if not set(variantes) <= set(LTSF):
+            raise ValueError("Los modelos LTSF-Linear usan ventanas de historia como entrada; ejecútelos por separado.")
+        from .dlinear import datos_con_ventanas
+        datos = datos_con_ventanas(datos)
     destino = RESULTADOS / (subcarpeta or f"original_{estacion}")
     pl = [p for p in datos.pliegues if pliegues_sel is None or p["pliegue"] in pliegues_sel]
     tareas = [(v, m, p) for v in variantes for m in metodos for p in pl]

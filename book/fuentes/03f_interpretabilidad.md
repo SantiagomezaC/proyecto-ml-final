@@ -15,6 +15,7 @@ kernelspec:
 ---
 tags: [hide-input]
 ---
+# Modelo XGBoost final, datos de prueba transformados por su pipeline y valores SHAP exactos (TreeSHAP)
 import sys, pickle, warnings
 sys.path.insert(0, "..")
 warnings.filterwarnings("ignore")
@@ -30,8 +31,7 @@ from src.experiment import cargar_datos
 D = cargar_datos()
 mejores = pd.read_csv(RESULTADOS / "mejores_clf.csv")
 fin = {r["modelo"]: r for r in pickle.load(open(RESULTADOS / "final_clf.pkl", "rb"))}
-# Para SHAP se usa el mejor modelo de árboles (explicación exacta con TreeSHAP); XGBoost además es el
-# modelo que la guía pide comparar con LIME.
+# Se explica XGBoost: es un modelo de árboles (explicación exacta con TreeSHAP) y el que se compara con LIME.
 arboles = [m for m in mejores.sort_values("pr_auc_mean", ascending=False).modelo if m in ("xgboost", "random_forest", "arbol")]
 M = "xgboost"
 pipe = joblib.load(ARTEFACTOS / f"{M}.joblib")
@@ -50,15 +50,18 @@ glue("modelo_shap", NOMBRES_MODELO[M], display=False)
 glue("rango_xgb", int(mejores.sort_values("pr_auc_mean", ascending=False).modelo.tolist().index(M) + 1), display=False)
 ```
 
-Este capítulo analiza el modelo de clasificación con SHAP {cite}`lundberg2017` y compara sus
-explicaciones con las de LIME. El modelo explicado es {glue:text}`modelo_shap`, que
-ocupa el puesto {glue:text}`rango_xgb` entre los benchmarks de clasificación y admite el
+Esta sección analiza qué aprendió un modelo de clasificación con SHAP {cite}`lundberg2017` y
+compara sus explicaciones con las de LIME. El modelo explicado es {glue:text}`modelo_shap`, que
+ocupa el puesto {glue:text}`rango_xgb` entre los modelos de referencia de clasificación y admite el
 algoritmo TreeSHAP {cite}`lundberg2020`, que calcula los valores de Shapley de forma exacta y en
 tiempo polinómico recorriendo los caminos de cada árbol. Los valores se expresan en log-odds de
-la clase positiva, la escala aditiva del modelo. La interpretabilidad del modelo original y su
-comparación con la de este benchmark se presentan en el capítulo 6.
+la clase positiva, la escala aditiva del modelo. La interpretabilidad del modelo propuesto y su
+comparación con la de los modelos de referencia se presentan en {doc}`06_validacion`.
 
 ## Interpretabilidad global
+
+La {numref}`fig-shap-resumen` muestra, para cada variable, la contribución de cada día de la prueba
+a su predicción, coloreada por el valor de la variable.
 
 ```{code-cell} ipython3
 ---
@@ -69,6 +72,7 @@ mystnb:
       contribución a la predicción (log-odds) y el color, el valor de la variable (rojo alto, azul bajo).
     name: fig-shap-resumen
 ---
+# Gráfico resumen de SHAP e importancia media absoluta por variable
 shap.plots.beeswarm(sv, max_display=15, show=False, plot_size=(9.5, 6))
 plt.title("Contribuciones SHAP por variable", loc="left", fontweight="bold"); plt.show()
 imp = pd.Series(np.abs(sv.values).mean(0), index=Xte.columns).sort_values(ascending=False)
@@ -92,10 +96,13 @@ tendencia de corto plazo: un río que sube se acerca a la banda desde abajo. Los
 estacionales contribuyen con signo coherente con el régimen bimodal. Puerto Salgar, en cambio,
 aporta apenas el {glue:text}`shap_frac_arriba:.1%` de la importancia: con un horizonte de quince
 días y un tránsito de veintiuno, su señal anticipada existe pero queda en buena parte contenida en
-el estado reciente de Calamar, lo que confirma lo observado en la comparación de diseños del
-capítulo 2.
+el estado reciente de Calamar, lo que confirma lo observado en la comparación de diseños de
+{doc}`02_datos`.
 
 ## Interpretabilidad local
+
+La {numref}`fig-shap-local` descompone la predicción de dos días concretos: el acierto con mayor
+confianza y el error más grande de la prueba.
 
 ```{code-cell} ipython3
 ---
@@ -106,6 +113,7 @@ mystnb:
       confianza; (b) día con el mayor error absoluto entre la probabilidad predicha y la clase observada.
     name: fig-shap-local
 ---
+# Explicaciones en cascada del acierto más confiado y del error más grande de la prueba
 p = fin[M]["pred_test"]; y = D.y_clf_test.values
 err = np.abs(y - p)
 i_ok = int(np.argmax(np.where((y == 1) & (p > .5), p, -1)))
@@ -134,17 +142,22 @@ ya estaba cerca de la descarga efectiva; las contribuciones dominantes son
 por encima del límite inferior de la banda (8.461 m³/s). Las variables que explican el error
 («{glue:text}`top_mal`») describen un río todavía lejos de la banda, y el modelo no tenía cómo
 anticipar un ascenso de más de 1.500 m³/s en quince días que lo dejaría en el borde. Es un tipo
-de error característico de un objetivo definido por umbrales, que el capítulo 6 cuantifica por
-régimen hidrológico: los días que cruzan el límite por un margen pequeño, donde la etiqueta binaria trata igual un caudal de 8.500 m³/s que uno de
-10.000 m³/s. Esta observación es la motivación directa del modelo original del capítulo 5, que
-modela cuán lejos de los límites quedará el caudal y no solo de qué lado.
+de error característico de un objetivo definido por umbrales, que {doc}`06_validacion` cuantifica
+por régimen hidrológico: los días que cruzan el límite por un margen pequeño, donde la etiqueta
+binaria trata igual un caudal de 8.500 m³/s que uno de 10.000 m³/s. Esta observación es la
+motivación directa del modelo propuesto en {doc}`05_modelo_original`, que modela cuán lejos de los
+límites quedará el caudal y no solo de qué lado.
 
 ## Comparación con LIME
+
+LIME explica una predicción con un modelo lineal ajustado a perturbaciones de la observación. La
+tabla compara sus explicaciones con las de SHAP en los mismos dos días.
 
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# LIME en los dos días de la figura anterior: ajuste del sustituto local y concordancia con SHAP
 from lime.lime_tabular import LimeTabularExplainer
 from scipy.stats import spearmanr
 Xtr = D.X.fillna(D.X.median())
@@ -174,6 +187,9 @@ for r in cmp.itertuples():
     glue(f"lime_rho_{k}", float(r[4]), display=False)
 cmp.round(3)
 ```
+
+Para comprobar si lo observado en esos dos días es general, la tabla siguiente repite la
+comparación en una muestra de cien días próximos a un límite de la banda y cien alejados.
 
 ```{code-cell} ipython3
 ---

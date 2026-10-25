@@ -1,4 +1,4 @@
-"""Evaluación del modelo original en tres tareas adicionales (Entregable 3, evaluación amplia).
+"""Evaluación del modelo propuesto en tres tareas adicionales.
 
 La misma tarea (banda de descarga efectiva a 15 días) en El Banco, Coyongal y Tres Cruces,
 con su propia descarga efectiva, sus estaciones aguas arriba y sus particiones externas.

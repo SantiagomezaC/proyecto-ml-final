@@ -152,9 +152,38 @@ def exportar_modelos():
           "| mejor benchmark", lid_b.iloc[0].modelo)
 
 
+def exportar_metodos_recientes():
+    """Comparación bloque a bloque del modelo propuesto con los métodos recientes."""
+    from scipy.stats import wilcoxon
+    from src.stats_tests import holm
+
+    fo = pickle.load(open(RESULTADOS / "final_original.pkl", "rb"))[0]
+    s = tabla_pliegues("original_calamar").pivot_table(index="pliegue", columns=["modelo", "optimizador"],
+                                                       values="pr_auc")
+    base = s[("blgb", fo["optimizador"])]
+    metodos = {"ngboost": "NGBoost", "dos_etapas": "Dos etapas (XGBoost + gaussiana)",
+               "linear": "Linear (LTSF)", "nlinear": "NLinear (LTSF)", "dlinear": "DLinear (LTSF)"}
+    filas = [{"Modelo": "BLGB (propuesto)", "PR-AUC externa": f"{base.mean():.3f} ± {base.std():.3f}",
+              "PR-AUC prueba": f"{fo['metricas_test']['pr_auc']:.3f}", "Victorias de BLGB": "—", "p": np.nan}]
+    for m, nombre in metodos.items():
+        c = s[(m, "bayes")]
+        archivo = RESULTADOS / f"final_{m}.pkl"
+        prueba = f"{pickle.load(open(archivo, 'rb'))['metricas_test']['pr_auc']:.3f}" if archivo.exists() else "—"
+        filas.append({"Modelo": nombre, "PR-AUC externa": f"{c.mean():.3f} ± {c.std():.3f}", "PR-AUC prueba": prueba,
+                      "Victorias de BLGB": f"{int((base > c).sum())} de {len(c)}",
+                      "p": wilcoxon(base, c, alternative="greater", zero_method="zsplit").pvalue})
+    t = pd.DataFrame(filas)
+    t.loc[1:, "p"] = holm(t.loc[1:, "p"].values)
+    t["p Wilcoxon (Holm)"] = t.pop("p").map(lambda v: "—" if pd.isna(v) else f"{v:.4f}")
+    t.to_csv(DASH / "metodos_recientes.csv", index=False)
+    print(t.to_string(index=False))
+
+
 if __name__ == "__main__":
     fase = sys.argv[1] if len(sys.argv) > 1 else "todo"
     if fase in ("eda", "todo"):
         exportar_eda()
     if fase in ("modelos", "todo"):
         exportar_modelos()
+    if fase in ("recientes", "modelos", "todo"):
+        exportar_metodos_recientes()

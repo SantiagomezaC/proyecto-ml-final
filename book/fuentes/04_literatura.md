@@ -11,16 +11,17 @@ kernelspec:
 
 # Revisión de literatura y novedad
 
-La condición R1 exige que el modelo propuesto no haya sido usado en la literatura para el mismo
-fenómeno y la misma tarea de predicción, y que la novedad se demuestre con una búsqueda
-documentada. Este capítulo describe el protocolo, presenta la matriz de novedad, analiza los
-trabajos más cercanos por familia algorítmica y concluye con una declaración de novedad
-acotada a lo que la búsqueda permite afirmar.
+Antes de proponer un modelo es necesario establecer si el problema y el mecanismo ya fueron
+abordados en la literatura. Este capítulo describe una búsqueda bibliográfica sistemática y
+reproducible, presenta la matriz de resultados, analiza los trabajos más cercanos por familia
+algorítmica y concluye con una declaración de novedad acotada a lo que la búsqueda permite
+afirmar.
 
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Registros de la búsqueda bibliográfica guardados por scripts/revision_literatura.py
 import sys; sys.path.insert(0, "..")
 import pandas as pd
 from myst_nb import glue
@@ -47,15 +48,17 @@ cumple el papel de índice multidisciplinario general. El script guarda la fecha
 resultados de cada cadena en cada base y los quince primeros registros por relevancia, cuyo
 título y resumen se revisaron manualmente.
 
-Las {glue:text}`n_cadenas` cadenas combinan los tres ejes que pide la guía: el problema de
-aplicación (descarga efectiva, caudal dominante, río Magdalena), la familia y el mecanismo del
+Las {glue:text}`n_cadenas` cadenas combinan tres ejes: el problema de aplicación (descarga efectiva, caudal dominante, río Magdalena), la familia y el mecanismo del
 modelo (boosting distribucional, NGBoost, probabilidad de intervalo, pérdida híbrida con
 objetivo auxiliar) y sinónimos en español. Semantic Scholar devolvió errores por límite de
 solicitudes en la mayoría de las consultas pese a los reintentos con espera creciente; el
-fallo queda registrado en la matriz en lugar de ocultarse, y las otras tres bases cumplen el
-mínimo exigido. En total se revisaron {glue:text}`n_revisados` registros.
+fallo queda registrado en la matriz en lugar de ocultarse, y las otras tres bases cubren las
+fuentes principales del área. En total se revisaron {glue:text}`n_revisados` registros.
 
 ## Matriz de novedad
+
+La tabla siguiente registra, para cada cadena y cada base, el número de resultados, los registros
+revisados, cuántos resultaron relevantes y la observación de la revisión manual.
 
 ```{code-cell} ipython3
 ---
@@ -106,10 +109,14 @@ de la pertenencia del caudal a la banda de descarga efectiva.
 
 ## Trabajos más cercanos
 
+La tabla lista los trabajos que la revisión manual identificó como más próximos al problema o al
+mecanismo.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Trabajos más cercanos identificados en la revisión manual
 cerc[["anio", "titulo", "fuente", "doi"]].rename(columns={"anio": "año", "titulo": "título"})
 ```
 
@@ -121,8 +128,7 @@ régimen de caudal que domina su transporte, y no tienen componente temporal de 
 La segunda línea estudia la propia descarga efectiva: un trabajo publicado en 2015 en
 *Geophysical Research Letters* relaciona su
 cociente con el caudal medio con el exponente de la curva de gasto y la variabilidad del
-régimen mediante un marco analítico, una caracterización de largo plazo como la de los
-antecedentes del capítulo 1, sin predicción. La tercera línea, la más próxima en lo metodológico,
+régimen mediante un marco analítico: una caracterización de largo plazo, sin predicción. La tercera línea, la más próxima en lo metodológico,
 es la regresión probabilística de caudales y sedimentos con boosting: NGBoost y PGBM combinados
 con predicción conforme para la carga suspendida y para el caudal de un embalse en Irán
 (ambos de 2026), y XGBoost acoplado a mezclas gaussianas para pronóstico de caudales. En todos
@@ -131,12 +137,17 @@ derivan después del ajuste.
 
 ## Diferenciación por familia algorítmica
 
+La tabla siguiente sitúa la propuesta frente a las familias de métodos afines: qué hace cada una,
+qué le falta para este problema y qué relación guarda con el modelo propuesto.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Familias de métodos afines y su relación con el modelo propuesto
 familias = pd.DataFrame([
-    ("NGBoost (Duan et al., 2020)", "Boosting distribucional", "Árboles para los parámetros de una distribución; gradiente natural", "Ajusta solo la verosimilitud del continuo; la probabilidad de banda se obtiene después, sin incentivo en los límites", "Se incluye como competidor en el capítulo 6"),
+    ("NGBoost (Duan et al., 2020)", "Boosting distribucional", "Árboles para los parámetros de una distribución; gradiente natural", "Ajusta solo la verosimilitud del continuo; la probabilidad de banda se obtiene después, sin incentivo en los límites", "Se incluye como competidor en el capítulo de validación"),
+    ("LTSF-Linear: Linear, NLinear y DLinear (Zeng et al., 2023)", "Pronóstico lineal de largo plazo de series de tiempo", "Capa lineal sobre la ventana de historia, sin transformar, normalizada por su último valor o descompuesta en tendencia y estacionalidad", "Pronóstico puntual y lineal; la probabilidad de banda exige suponer un residuo de dispersión constante", "Los tres se incluyen como referencia de pronóstico en el capítulo de validación"),
     ("DGBM / XGBoostLSS (März y Kneib, 2022)", "Boosting distribucional", "Newton multiparámetro con hessianos observados", "Igual objetivo de verosimilitud; no contempla un evento definido por la variable", "BLGB añade la entropía cruzada del evento y límites por observación"),
     ("GAMLSS por boosting (Mayr et al., 2012)", "Regresión distribucional aditiva", "Media, escala y forma como funciones aditivas", "Componentes aditivos sin interacciones de árbol; pérdida de verosimilitud", "Se conserva la parametrización de la escala en logaritmo"),
     ("XGBoost AFT con censura en intervalo (Barnwal et al., 2022)", "Supervivencia / censura", "Verosimilitud de intervalos censurados", "Requiere conocer el intervalo que contiene la respuesta; no modela el complemento de una banda, que es la unión de dos semirrectas", "La probabilidad de intervalo de BLGB coincide con su término para los positivos"),
@@ -144,7 +155,7 @@ familias = pd.DataFrame([
     ("EMOS y BFS en hidrometeorología (Gneiting et al., 2005; Krzysztofowicz, 1999)", "Posprocesamiento probabilístico", "Distribución predictiva calibrada a partir de un pronóstico determinista", "Requieren un pronóstico físico previo; se ajustan con CRPS o verosimilitud, no con la pérdida del evento", "BLGB aprende la distribución directamente de los predictores"),
     ("Aprendizaje multitarea (Caruana, 1997)", "Supervisión auxiliar", "Una tarea auxiliar regulariza la principal", "Usualmente con representaciones compartidas en redes; sin regla de puntuación propia que conecte ambas tareas", "En BLGB ambas tareas comparten la misma distribución predictiva"),
     ("Regresión cuantílica (Koenker y Bassett, 1978)", "Regresión de cuantiles", "Cuantiles condicionales sin supuesto distribucional", "Estimar la masa de un intervalo exige muchos cuantiles y no garantiza monotonía", "BLGB obtiene la masa de la banda en forma cerrada"),
-    ("XGBoost + mezcla gaussiana para caudales (2020)", "Dos etapas", "Regresión de caudal y modelado del residuo", "La dispersión no depende del estado del río en el ajuste conjunto; sin pérdida del evento", "Se evalúa como 'dos etapas' en el capítulo 6"),
+    ("XGBoost + mezcla gaussiana para caudales (2020)", "Dos etapas", "Regresión de caudal y modelado del residuo", "La dispersión no depende del estado del río en el ajuste conjunto; sin pérdida del evento", "Se evalúa como 'dos etapas' en el capítulo de validación"),
 ], columns=["Método afín", "Familia", "Qué hace", "Limitación frente al problema", "Relación con BLGB"])
 familias
 ```

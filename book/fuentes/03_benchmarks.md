@@ -9,18 +9,25 @@ kernelspec:
   name: ml-final
 ---
 
-# Modelos benchmark: diseño experimental
+# Modelos de referencia: diseño experimental
 
-Este capítulo y sus secciones desarrollan el Entregable 2. Aquí se fija el diseño común a las
-140 combinaciones (validación anidada, espacios de búsqueda, optimizadores y técnicas de
-balanceo); las secciones siguientes presentan los resultados de clasificación, la comparación
-de los optimizadores, la optimización computacional, la tarea de regresión, la comparación
-estadística y la interpretabilidad.
+Antes de proponer un modelo nuevo es necesario saber qué tan bien resuelven el problema los
+métodos establecidos. Este capítulo fija el diseño común con que se entrenan y evalúan los
+modelos de referencia: 140 combinaciones de algoritmos, técnicas de balanceo y métodos de
+optimización de hiperparámetros, todas con la misma validación anidada cronológica. Las
+secciones siguientes presentan los resultados de clasificación, la comparación de los
+optimizadores, la optimización computacional, la tarea de regresión, la comparación estadística y
+la interpretabilidad. El mismo protocolo se aplica después al modelo propuesto, de modo que todas
+las comparaciones se hacen sobre los mismos datos y las mismas particiones.
+
+La tabla siguiente muestra las doce particiones de la validación externa: el bloque de dos años
+que se predice y el número de días disponibles para entrenar en cada caso.
 
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Particiones externas de la validación anidada, leídas del archivo común a todos los modelos
 import sys, json; sys.path.insert(0, "..")
 import numpy as np, pandas as pd
 from myst_nb import glue
@@ -36,6 +43,11 @@ glue("ntr_min", int(tabla_pl["n entrenamiento"].min()), display=False)
 glue("ntr_max", int(tabla_pl["n entrenamiento"].max()), display=False)
 tabla_pl
 ```
+
+El entrenamiento crece con cada bloque, de {glue:text}`ntr_min:,` a {glue:text}`ntr_max:,` días,
+porque cada bloque se predice con todo el pasado disponible; el tamaño del bloque de prueba es
+casi constante, unos 730 días. Las particiones se calculan una sola vez y se guardan en disco, de
+modo que todos los modelos de este estudio se evalúan exactamente en los mismos días.
 
 ## El pipeline combinatorio
 
@@ -63,7 +75,8 @@ para cada bloque, el entrenamiento comprende todos los días anteriores menos un
 {glue:text}`ntr_max:,` días. El bucle interno,
 que ejecuta cada optimizador, aplica `TimeSeriesSplit` con tres pliegues y la misma separación
 dentro del entrenamiento externo. La métrica que se reporta proviene siempre del bloque externo,
-que el optimizador nunca vio.
+que el optimizador nunca vio, y la prueba reservada 2010-2026 queda fuera de todo el
+procedimiento.
 
 La elección de los bloques responde a tres hallazgos del análisis exploratorio. La
 autocorrelación (0,92 a quince días) impide cualquier partición aleatoria, que dejaría días
@@ -82,10 +95,14 @@ cuadrático medio.
 
 ## Espacios de búsqueda
 
+La tabla siguiente lista los hiperparámetros que se optimizan en cada modelo, con su rango, su
+escala y el número de niveles que recibe la rejilla con un presupuesto de 16 evaluaciones.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Espacios de búsqueda de cada modelo, tal como se declaran en src/models.py
 filas = []
 for tarea, esp in (("clasificación", ESPACIOS_CLF), ("regresión", ESPACIOS_REG)):
     for m, params in esp.items():
@@ -104,7 +121,8 @@ el mismo dominio. Los rangos se fijaron con criterios del problema y no de forma
 KNN, el número de vecinos va de 5 a 200 en escala logarítmica: con la autocorrelación del caudal,
 los vecinos más cercanos de un día son sus propios días contiguos, y valores pequeños sobreajustan.
 En la regresión logística y la SVM, C y γ recorren cuatro o cinco órdenes de magnitud en escala
-logarítmica, como recomienda la guía para parámetros de regularización y de escala. En los
+logarítmica, porque su efecto es multiplicativo y los valores útiles se reparten en varios
+órdenes de magnitud. En los
 árboles, la profundidad máxima (2 a 16) y el tamaño mínimo de hoja (5 a 300 días, logarítmico)
 controlan la complejidad frente a un tamaño efectivo reducido. En Random Forest se fijó
 `max_samples = 0,3`, con un efecto doble: la submuestra decorrelaciona los árboles y reduce el
@@ -188,7 +206,7 @@ modelo original, recalibración de probabilidades) se ajusta dentro del pliegue 
 el bucle interno con la porción interna de entrenamiento, el reentrenamiento externo con el
 entrenamiento del bloque, y el modelo final con 1947-2009. Las particiones externas se
 calculan una vez y se guardan en `data/processed/pliegues_calamar.json`; todos los modelos,
-incluido el modelo original del capítulo 5, leen ese mismo archivo.
+incluido el modelo propuesto en {doc}`05_modelo_original`, leen ese mismo archivo.
 
 ## Implementación del protocolo
 
@@ -202,6 +220,7 @@ bucle interno.
 ---
 tags: [remove-input]
 ---
+# Código fuente: variable objetivo y particiones
 import inspect
 from IPython.display import Code
 from src import features, splits, models, optim, experiment
@@ -220,7 +239,12 @@ el bucle interno, reentrena con el entrenamiento externo y evalúa una sola vez 
 ---
 tags: [remove-input]
 ---
+# Código fuente: pipeline sin fuga, función objetivo de los optimizadores y tarea de la validación anidada
 Code("\n\n".join(inspect.getsource(f) for f in (models.construir_pipeline, optim.evaluar_config,
                                                  experiment.ejecutar_tarea)), language="python")
 ```
 
+En conjunto, estas funciones garantizan las tres propiedades en que descansan las comparaciones
+de los capítulos siguientes: la etiqueta de cada día solo depende de su caudal quince días
+después, ningún paso que aprende de los datos ve la validación o la prueba, y todos los modelos se
+evalúan con las mismas particiones, la misma semilla y el mismo presupuesto de búsqueda.

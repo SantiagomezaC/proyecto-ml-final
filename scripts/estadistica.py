@@ -1,8 +1,8 @@
-"""Comparación estadística del Entregable 2 y verificación de superioridad (Entregable 3).
+"""Comparación estadística de los modelos de referencia y verificación de superioridad del modelo propuesto.
 
 Uso:  python -m scripts.estadistica
 Genera results/estadistica/: diagramas de diferencia crítica, tabla de pruebas del modelo
-original, veredicto R3, ablación, MCS de regresión y textos del dashboard.
+propuesto, veredicto de superioridad, ablación, MCS de regresión y textos del dashboard.
 """
 from __future__ import annotations
 
@@ -60,13 +60,13 @@ def pruebas_original(tabla, mejores, n_tr, n_te):
                   "supuestos": f"Bloques externos pareados ({fr['n_bloques']}); particiones cronológicas walk-forward",
                   "estadístico": f"χ² = {fr['chi2']:.2f} (gl = {fr['gl']}); F_ID = {fr['F_iman_davenport']:.2f}",
                   "p crudo": fr["p"], "p ajustado": fr["p"], "efecto": f"rango medio del original = {fr['rangos']['original']:.2f}",
-                  "conclusión": "Se rechaza H0" if fr["p"] < ALFA else "No se rechaza H0", "cuenta_r3": False})
+                  "conclusión": "Se rechaza H0" if fr["p"] < ALFA else "No se rechaza H0", "confirmatoria": False})
     filas.append({"prueba": f"Nemenyi: original frente a {NOMBRES_MODELO[ref]}", "hipótesis nula": "Igual rango medio",
                   "supuestos": "Post-hoc de Friedman, control del error familiar",
                   "estadístico": f"|Δ rango| = {par_ref.dif_rangos:.2f}; CD = {ne['cd']:.2f}",
                   "p crudo": par_ref.p_nemenyi, "p ajustado": par_ref.p_nemenyi,
                   "efecto": "—", "conclusión": "Diferencia significativa" if par_ref.significativo else "No significativa (CD)",
-                  "cuenta_r3": bool(par_ref.significativo)})
+                  "confirmatoria": bool(par_ref.significativo)})
     # 2. Wilcoxon-Holm del original contra los 7 benchmarks
     wh = wilcoxon_holm(tabla, "original")
     w_ref = wh.set_index("modelo").loc[ref]
@@ -78,7 +78,7 @@ def pruebas_original(tabla, mejores, n_tr, n_te):
                   "p crudo": w_ref.p, "p ajustado": w_ref.p_holm,
                   "efecto": f"δ de Cliff = {w_ref.delta_cliff:.3f} ({magnitud_cliff(w_ref.delta_cliff)})",
                   "conclusión": "Se rechaza H0" if w_ref.p_holm < ALFA else "No se rechaza H0",
-                  "cuenta_r3": bool(w_ref.p_holm < ALFA)})
+                  "confirmatoria": bool(w_ref.p_holm < ALFA)})
     # 3. t corregida de Nadeau-Bengio contra los 7, con Holm
     nb = {m: nadeau_bengio(tabla["original"], tabla[m], n_tr, n_te) for m in tabla.columns if m != "original"}
     p_nb = holm(np.array([v["p"] for v in nb.values()]))
@@ -90,7 +90,7 @@ def pruebas_original(tabla, mejores, n_tr, n_te):
                   "p crudo": nb[ref]["p"], "p ajustado": nb_adj[ref],
                   "efecto": f"d de Cohen (pareado) = {nb[ref]['d_cohen']:.2f}",
                   "conclusión": "Se rechaza H0" if nb_adj[ref] < ALFA else "No se rechaza H0",
-                  "cuenta_r3": bool(nb_adj[ref] < ALFA)})
+                  "confirmatoria": bool(nb_adj[ref] < ALFA)})
     # 4. Prueba bayesiana de rangos con signo (ROPE = 0.01 de PR-AUC)
     bs = bayes_signed_rank(tabla["original"], tabla[ref], rope=0.01)
     filas.append({"prueba": "Bayesiana de rangos con signo (ROPE ±0,01)",
@@ -99,7 +99,7 @@ def pruebas_original(tabla, mejores, n_tr, n_te):
                   "estadístico": f"P(original mejor) = {bs['p_A_mejor']:.3f}; P(equiv.) = {bs['p_equivalentes']:.3f}",
                   "p crudo": np.nan, "p ajustado": np.nan, "efecto": f"P(benchmark mejor) = {bs['p_B_mejor']:.3f}",
                   "conclusión": "Superioridad práctica (P > 0,95)" if bs["p_A_mejor"] > 0.95 else "No concluyente",
-                  "cuenta_r3": False})
+                  "confirmatoria": False})
     # 5. Bootstrap estacionario BCa de la diferencia de PR-AUC en la prueba 2010-2026
     fin = {r["modelo"]: r for r in pickle.load(open(RESULTADOS / "final_clf.pkl", "rb"))}
     fo = pickle.load(open(RESULTADOS / "final_original.pkl", "rb"))[0]
@@ -121,27 +121,27 @@ def pruebas_original(tabla, mejores, n_tr, n_te):
                   "estadístico": f"Δ = {ic['estimacion']:.4f}; IC 95 % [{ic['ic_inf']:.4f}; {ic['ic_sup']:.4f}]",
                   "p crudo": p_boot, "p ajustado": p_boot, "efecto": f"Δ PR-AUC = {ic['estimacion']:.4f}",
                   "conclusión": "Se rechaza H0" if (p_boot < ALFA and ic["ic_inf"] > 0) else "No se rechaza H0",
-                  "cuenta_r3": bool(p_boot < ALFA and ic["ic_inf"] > 0)})
+                  "confirmatoria": bool(p_boot < ALFA and ic["ic_inf"] > 0)})
     # 6. DeLong en la prueba (complementaria por la dependencia temporal)
     dl = delong(y, s_o, s_r)
     filas.append({"prueba": "DeLong (AUC-ROC, prueba 2010-2026; complementaria)",
                   "hipótesis nula": "AUC del original ≤ AUC del benchmark",
-                  "supuestos": "Supone independencia entre días: se reporta como complemento, no cuenta para R3",
+                  "supuestos": "Supone independencia entre días: se reporta como complemento, no se incluye entre las confirmatorias",
                   "estadístico": f"z = {dl['z']:.2f}; AUC {dl['auc_a']:.4f} frente a {dl['auc_b']:.4f}",
                   "p crudo": dl["p_unilateral"], "p ajustado": dl["p_unilateral"], "efecto": f"Δ AUC = {dl['dif']:.4f}",
-                  "conclusión": "Se rechaza H0" if dl["p_unilateral"] < ALFA else "No se rechaza H0", "cuenta_r3": False})
+                  "conclusión": "Se rechaza H0" if dl["p_unilateral"] < ALFA else "No se rechaza H0", "confirmatoria": False})
     mc = mcnemar(y, (s_o >= .5).astype(int), (s_r >= .5).astype(int))
     filas.append({"prueba": "McNemar (umbral 0,5, prueba 2010-2026; complementaria)",
                   "hipótesis nula": "Igual tasa de error", "supuestos": "Supone independencia entre días: complementaria",
                   "estadístico": f"χ² = {mc['chi2']:.2f}; discordantes {mc['a_acierta_b_falla']} / {mc['b_acierta_a_falla']}",
                   "p crudo": mc["p"], "p ajustado": mc["p"], "efecto": "—",
-                  "conclusión": "Se rechaza H0" if mc["p"] < ALFA else "No se rechaza H0", "cuenta_r3": False})
+                  "conclusión": "Se rechaza H0" if mc["p"] < ALFA else "No se rechaza H0", "confirmatoria": False})
     pr = pd.DataFrame(filas)
-    # Ajuste de Holm sobre la familia de pruebas confirmatorias que cuentan para R3
+    # Ajuste de Holm sobre la familia de pruebas confirmatorias
     conf = pr.prueba.str.startswith(("Wilcoxon", "t corregida", "Bootstrap"))
-    pr.loc[conf, "p ajustado (familia R3, Holm)"] = holm(pr.loc[conf, "p ajustado"].values)
-    pr["cuenta_r3"] = pr["cuenta_r3"] & (pr["p ajustado (familia R3, Holm)"].fillna(1) < ALFA) | (
-        pr.prueba.str.startswith("Nemenyi") & pr.cuenta_r3)
+    pr.loc[conf, "p ajustado (familia confirmatoria, Holm)"] = holm(pr.loc[conf, "p ajustado"].values)
+    pr["confirmatoria"] = pr["confirmatoria"] & (pr["p ajustado (familia confirmatoria, Holm)"].fillna(1) < ALFA) | (
+        pr.prueba.str.startswith("Nemenyi") & pr.confirmatoria)
     detalle = {"ref": ref, "friedman": fr, "nemenyi": ne, "wilcoxon": wh, "nadeau_bengio": nb,
                "nb_holm": nb_adj, "bayes": bs, "bootstrap": ic, "p_boot": p_boot, "delong": dl, "mcnemar": mc,
                "dif": dif}
@@ -156,22 +156,22 @@ def main():
     pr, det = pruebas_original(tabla, mejores, n_tr, n_te)
     pr.to_csv(E / "pruebas_original_detalle.csv", index=False)
     vista = pr[["prueba", "hipótesis nula", "supuestos", "estadístico", "p crudo", "p ajustado",
-                "p ajustado (familia R3, Holm)", "efecto", "conclusión"]].copy()
-    for c in ("p crudo", "p ajustado", "p ajustado (familia R3, Holm)"):
+                "p ajustado (familia confirmatoria, Holm)", "efecto", "conclusión"]].copy()
+    for c in ("p crudo", "p ajustado", "p ajustado (familia confirmatoria, Holm)"):
         vista[c] = vista[c].map(lambda v: "—" if pd.isna(v) else (f"{v:.2e}" if v < 1e-3 else f"{v:.4f}"))
     vista.to_csv(E / "pruebas_original.csv", index=False)
 
-    # Veredicto de superioridad (Sección 6.1 del Entregable 3)
+    # Veredicto de superioridad con el criterio fijado de antemano
     medias = tabla.mean()
     cond1 = bool(medias["original"] > medias.drop("original").max())
-    n_rechazos = int(pr.cuenta_r3.sum())
+    n_rechazos = int(pr.confirmatoria.sum())
     d_cohen = det["nadeau_bengio"][det["ref"]]["d_cohen"]
     cliff = delta_cliff(tabla["original"], tabla[det["ref"]])
     cond3 = bool(abs(cliff) >= 0.147 or abs(d_cohen) >= 0.2)
     superior = cond1 and n_rechazos >= 3 and cond3
     ref = det["ref"]
-    texto = (f"Veredicto R3: {'SUPERIOR' if superior else 'NO SUPERIOR'}. PR-AUC externa media "
-             f"{medias['original']:.4f} frente a {medias[ref]:.4f} del mejor benchmark ({NOMBRES_MODELO[ref]}); "
+    texto = (f"Veredicto de superioridad: {'SUPERIOR' if superior else 'NO SUPERIOR'}. PR-AUC externa media "
+             f"{medias['original']:.4f} frente a {medias[ref]:.4f} del mejor modelo de referencia ({NOMBRES_MODELO[ref]}); "
              f"{n_rechazos} pruebas confirmatorias rechazan la igualdad con p ajustado < 0,05; δ de Cliff = {cliff:.3f} "
              f"y d de Cohen pareado = {d_cohen:.2f}.")
     guardar_json({"superior": superior, "texto": texto, "cond_media": cond1, "n_rechazos": n_rechazos,

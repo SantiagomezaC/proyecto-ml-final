@@ -1,8 +1,8 @@
-"""Validación anidada del modelo original y de las referencias distribucionales (Entregable 3).
+"""Validación anidada del modelo original y de las referencias distribucionales.
 
 Uso:  python -m scripts.run_original [n_jobs]
 Mismas particiones externas, validación interna, semilla y presupuesto (16 evaluaciones)
-que los benchmarks del Entregable 2. El modelo original se optimiza con TPE y con el
+que los modelos de referencia. El modelo propuesto se optimiza con TPE y con el
 algoritmo genético; NGBoost y el enfoque de dos etapas, con TPE.
 """
 import sys

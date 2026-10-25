@@ -1,11 +1,10 @@
 format: jb-book
 root: intro
 parts:
-  - caption: Proyecto
+  - caption: Problema y datos
     chapters:
-      - file: 01_correcciones
       - file: 02_datos
-  - caption: Modelos benchmark (Entregable 2)
+  - caption: Modelos de referencia
     chapters:
       - file: 03_benchmarks
         sections:
@@ -15,13 +14,16 @@ parts:
           - file: 03d_regresion
           - file: 03e_comparacion
           - file: 03f_interpretabilidad
-  - caption: Modelo original (Entregable 3)
+  - caption: Modelo propuesto
     chapters:
       - file: 04_literatura
       - file: 05_modelo_original
       - file: 06_validacion
-  - caption: Producto y cierre
+  - caption: Aplicación y cierre
     chapters:
       - file: 07_dashboard
       - file: 08_conclusiones
       - file: 09_reproducibilidad
+  - caption: Apéndices
+    chapters:
+      - file: A_revisiones

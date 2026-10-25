@@ -12,15 +12,16 @@ kernelspec:
 # Regresión del caudal a quince días
 
 La tarea auxiliar de regresión predice el caudal de Calamar en *t* + 15 (m³/s) con los mismos
-predictores, las mismas particiones y el mismo motor de experimentos. Además de cumplir la parte
-de regresión del Entregable 2, ofrece una lectura complementaria del problema: una regresión
-precisa del caudal no garantiza una clasificación precisa de la banda, porque los errores que
-importan para la clase son los que ocurren cerca de los límites.
+predictores, las mismas particiones y el mismo motor de experimentos. Ofrece una lectura
+complementaria del problema: una regresión precisa del caudal no garantiza una clasificación
+precisa de la banda, porque los errores que importan para la clase son los que ocurren cerca de
+los límites.
 
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Resultados de la validación anidada de regresión y modelos finales reentrenados
 import sys, pickle, warnings
 sys.path.insert(0, "..")
 warnings.filterwarnings("ignore")
@@ -51,10 +52,14 @@ pd.DataFrame({"Modelo": vista.nombre, "Optimizador": vista.optimizador_nombre,
 
 ## Métricas en la prueba reservada
 
+La tabla siguiente compara los siete regresores finales con la persistencia en la prueba
+reservada, junto con las pruebas de los supuestos del residuo.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Métricas de los regresores finales y de la persistencia en 2010-2026, con pruebas de supuestos del residuo
 yte = D.y_reg_test.values
 q_pers = np.sqrt(D.X_test.calamar_cuad.values)
 filas = [{"Modelo": "Persistencia (Q(t+15) = Q(t))", "Optimizador": "—",
@@ -87,6 +92,7 @@ tab_test.round(3)
 ---
 tags: [hide-input]
 ---
+# Pruebas de homocedasticidad, independencia y normalidad del residuo de cada modelo
 tab_prue.round(4)
 ```
 
@@ -97,7 +103,7 @@ modelos reducen el error de predicción a quince días en alrededor de un tercio
 lineales (Ridge y Lasso) quedan cerca, a unos 40 m³/s, lo que indica que buena parte de la
 señal del caudal futuro es lineal en el estado reciente; la no linealidad pesa mucho más en la
 clasificación de la banda que en la regresión del caudal, y esa asimetría es la que motiva el
-modelo original.
+modelo propuesto en {doc}`05_modelo_original`.
 
 Las pruebas de supuestos rechazan la homocedasticidad (White), la independencia (BDS y
 Ljung-Box) y la normalidad (Jarque-Bera) en todos los modelos, y la autocorrelación de orden uno
@@ -111,6 +117,10 @@ de largo plazo y bootstrap estacionario.
 
 ## Entrenamiento, validación y prueba
 
+La {numref}`fig-reg-series` superpone el caudal observado y el predicho por el mejor regresor en
+los tres segmentos del registro: el ajuste dentro de muestra, las predicciones fuera de muestra de
+la validación externa y la prueba reservada.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
@@ -121,6 +131,7 @@ mystnb:
       prueba reservada (2010-2026). Para legibilidad se muestran medias semanales.
     name: fig-reg-series
 ---
+# Serie observada y predicha (medias semanales) en entrenamiento, validación externa y prueba
 r = fin[mejor_reg]
 fmej = mej.set_index("modelo").loc[mejor_reg]
 from src.analysis import cargar_carpeta
@@ -144,6 +155,8 @@ ax.axhspan(*LIM, color=ALE, alpha=.07, label="Banda de descarga efectiva")
 ax.set(ylabel="Caudal en t+15 (m³/s)", title=f"{NOMBRES_MODELO[mejor_reg]}: observado frente a predicho")
 ax.legend(ncol=4, fontsize=8, loc="upper left"); plt.show()
 ```
+
+La tabla siguiente cuantifica el error de cada segmento y lo compara con la persistencia.
 
 ```{code-cell} ipython3
 ---
@@ -197,6 +210,9 @@ se concentran los errores de todos los clasificadores.
 
 ## Análisis de residuos
 
+La {numref}`fig-residuos` examina el residuo del mejor regresor en la prueba: su relación con la
+predicción, su distribución y su autocorrelación.
+
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
@@ -206,6 +222,7 @@ mystnb:
       histograma con la densidad normal de igual media y desviación; (c) función de autocorrelación.
     name: fig-residuos
 ---
+# Residuo del mejor regresor en la prueba: frente a la predicción, histograma y autocorrelación
 e = yte - r["pred_test"]
 fig, axs = plt.subplots(1, 3, figsize=(12, 3.5))
 axs[0].scatter(r["pred_test"], e, s=4, alpha=.3, color=RIO); axs[0].axhline(0, color=ALE, lw=1)
@@ -231,6 +248,7 @@ heterocedasticidad: la correlación de Spearman entre el error absoluto y la pre
 {glue:text}`corr_het:.2f`, de modo que los errores grandes se concentran en caudales previstos
 bajos e intermedios, que corresponden a los ascensos rápidos desde el estiaje que el estado actual
 anticipa mal. La curtosis en exceso del residuo es {glue:text}`kurt_res:.2f`, con colas algo más
-pesadas que la normal. Ambos rasgos son relevantes para el modelo original: una dispersión que
-cambia con el estado del río es justamente lo que BLGB modela con su segundo ensamble, el del
-logaritmo de σ.
+pesadas que la normal. Ambos rasgos indican que la incertidumbre del pronóstico depende del
+estado del río, de modo que un intervalo de predicción de ancho constante sería inadecuado. Una
+dispersión que cambia con el estado del río es justamente lo que el modelo propuesto representa
+con su segundo ensamble, el del logaritmo de σ.

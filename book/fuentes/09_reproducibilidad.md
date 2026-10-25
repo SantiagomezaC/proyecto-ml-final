@@ -11,12 +11,18 @@ kernelspec:
 
 # Reproducibilidad y bibliografía
 
+Este capítulo documenta lo necesario para reproducir los resultados: el entorno de software,
+la semilla, la tabla maestra de experimentos y el orden de ejecución.
+
 ## Entorno
+
+La tabla lista las versiones de las bibliotecas principales con que se obtuvieron los resultados.
 
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Versiones de Python y de las bibliotecas principales
 import sys, platform, json
 sys.path.insert(0, "..")
 from importlib.metadata import version
@@ -28,24 +34,29 @@ pd.DataFrame({"versión": {l: version(l) for l in libs} | {"python": platform.py
 ```
 
 Todas las versiones están fijadas en `requirements-dev.txt` (experimentación y libro) y en
-`requirements.txt` (dashboard en producción). Los resultados se obtuvieron en Windows 11 con un
+`requirements.txt` (aplicación interactiva en producción). Los resultados se obtuvieron en Windows 11 con un
 procesador Intel Core i7-1255U y 15,7 GB de memoria, sin GPU.
 
 ## Semillas
 
 La semilla global es `SEED = 42`, definida una sola vez en `src/config.py`. La función
 `fijar_semillas` la propaga a los generadores de Python y numpy; cada estimador la recibe en
-`random_state` (scikit-learn, XGBoost, imbalanced-learn y el modelo original), el muestreador
+`random_state` (scikit-learn, XGBoost, imbalanced-learn y el modelo propuesto), el muestreador
 TPE de Optuna en `seed` y el algoritmo genético la usa tanto en el generador de numpy que crea
 la población inicial como en el módulo `random` que emplea DEAP en la selección, el cruce y la
-mutación. La sensibilidad a la semilla se evaluó explícitamente con cinco semillas (capítulo 6).
+mutación. La sensibilidad a la semilla se evaluó explícitamente con cinco semillas ({doc}`03a_clasificacion` y
+{doc}`06_validacion`).
 
 ## Tabla maestra de experimentos
+
+La celda siguiente reúne los resultados de todas las optimizaciones en una tabla maestra, la
+guarda en disco y muestra sus primeras filas.
 
 ```{code-cell} ipython3
 ---
 tags: [hide-input]
 ---
+# Tabla maestra: una fila por combinación con media y desviación de cada métrica, tiempo y semilla
 from src.analysis import tabla_pliegues
 partes = []
 for carpeta, tarea in (("clf_calamar", "clasificación"), ("reg_calamar", "regresión"), ("original_calamar", "clasificación")):
@@ -73,12 +84,12 @@ La tabla maestra (`results/tabla_maestra.csv`) contiene una fila por combinació
 la desviación de cada métrica del bucle externo, el tiempo total, el número de evaluaciones y la
 semilla; `results/tabla_maestra_por_pliegue.csv` agrega los hiperparámetros elegidos en cada
 pliegue externo. Las 112 combinaciones de clasificación, las 28 de regresión y las variantes del
-modelo original y de los métodos distribucionales comparten el mismo esquema.
+modelo propuesto, de los métodos distribucionales y de los modelos LTSF-Linear comparten el mismo esquema.
 
 ## Cómo reproducir los resultados
 
 El README del repositorio enumera los comandos en orden. Los cómputos costosos (la validación
-anidada de los 140 modelos y del modelo original) se guardan como resultados versionados en
+anidada de los 140 modelos, del modelo propuesto y de los métodos recientes) se guardan como resultados versionados en
 `results/`, y los cuadernos de este libro los leen y regeneran tablas y figuras; el código que
 los produce está en `scripts/` y `src/` y se ejecuta de principio a fin con los comandos del
 README. Las pruebas unitarias se ejecutan con `python -m pytest`.
