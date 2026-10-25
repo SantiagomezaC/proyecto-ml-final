@@ -202,7 +202,7 @@ evalúa empíricamente en la sección siguiente.
 ## Regla de ausencia de fuga
 
 Todo paso que aprende de los datos (imputación, escalado, sobremuestreo, discretización del
-modelo original, recalibración de probabilidades) se ajusta dentro del pliegue que corresponde:
+modelo propuesto, recalibración de probabilidades) se ajusta dentro del pliegue que corresponde:
 el bucle interno con la porción interna de entrenamiento, el reentrenamiento externo con el
 entrenamiento del bloque, y el modelo final con 1947-2009. Las particiones externas se
 calculan una vez y se guardan en `data/processed/pliegues_calamar.json`; todos los modelos,

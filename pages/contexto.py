@@ -59,7 +59,7 @@ PASOS = [
     ("03", "140 modelos", "7 algoritmos × 4 balanceos × 4 optimizadores, más 28 de regresión"),
     ("04", "Validación anidada", "12 bloques externos de 2 años, validación interna cronológica"),
     ("05", "Comparación estadística", "Friedman-Nemenyi, Wilcoxon-Holm, Nadeau-Bengio, MCS"),
-    ("06", "Modelo propuesto", "Boosting de verosimilitud de banda (BLGB), programado en numpy"),
+    ("06", "Modelo propuesto", "BLGB, programado en numpy y comparado con NGBoost y la familia LTSF-Linear"),
     ("07", "Producción", "Artefactos serializados, dashboard y despliegue en Render"),
 ]
 
@@ -141,7 +141,8 @@ def layout():
                     html.Li("Entrenar y comparar 140 combinaciones de modelos, balanceo y optimización "
                             "con validación anidada cronológica."),
                     html.Li("Diseñar e implementar un modelo propio que use el caudal futuro como "
-                            "supervisión continua y validarlo con al menos tres pruebas de hipótesis."),
+                            "supervisión continua y contrastar estadísticamente si supera a los modelos "
+                            "de referencia y a métodos recientes."),
                     html.Li("Poner los mejores modelos a disposición de usuarios no expertos mediante "
                             "este tablero."),
                 ], className="mb-0"),
@@ -204,9 +205,11 @@ def layout():
         dbc.Row([
             dbc.Col(tarjeta("Limitaciones y consideraciones éticas", html.Ul([
                 html.Li("El 89,6 % del registro de Calamar tiene nivel de aprobación preliminar."),
-                html.Li("La autocorrelación diaria (0,999) reduce el tamaño efectivo de muestra; por eso "
-                        "toda partición es cronológica y los intervalos usan bootstrap por bloques."),
-                html.Li("Sin precipitación ni índices ENSO, el desempeño cae en horizontes largos."),
+                html.Li("La autocorrelación del caudal (0,999 a un día y 0,92 a quince) reduce el tamaño "
+                        "efectivo de muestra; por eso toda partición es cronológica y los intervalos usan "
+                        "bootstrap por bloques."),
+                html.Li("Sin precipitación ni índices ENSO, ningún modelo anticipa bien los ascensos "
+                        "rápidos desde el estiaje, que concentran los errores."),
                 html.Li("La regulación por embalses y el cambio de uso del suelo pueden hacer que el pasado "
                         "no represente el futuro (deriva)."),
                 html.Li("No hay datos personales; el riesgo ético principal es el uso operativo de una "

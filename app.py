@@ -45,7 +45,7 @@ p = parametros()
 pie = html.Footer(dbc.Container([
     html.Div([
         html.Span("Kevin Clemente Rosario · Manuel Santiago Meza Castro · Universidad del Norte · "
-                  "Machine Learning 2026-30"),
+                  "Barranquilla, 2026"),
         html.Span(f" · Datos: IDEAM (DHIME) · Actualizado {p.get('fecha_actualizacion', '')} · {VERSION}"),
     ]),
 ], fluid="xl"), className="pie")
