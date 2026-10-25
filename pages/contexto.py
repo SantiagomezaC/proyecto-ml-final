@@ -99,12 +99,6 @@ def layout():
             ], className="hero-figura mb-0"), lg=6),
         ], className="align-items-center g-4"), className="hero mb-4"),
 
-        html.Section([
-            html.Div("Autores", className="titulo-seccion"),
-            dbc.Row([dbc.Col(autor(*a), md=6) for a in AUTORES], className="g-3"),
-            html.P("Universidad del Norte, Barranquilla, Colombia", className="autores-pie"),
-        ], className="autores mb-4"),
-
         dbc.Row([
             dbc.Col(kpi(f"{P['Q_EF']:,.0f} m³/s", "Descarga efectiva",
                         f"Banda ±15 %: {P['LIM'][0]:,.0f}–{P['LIM'][1]:,.0f} m³/s"), md=3, sm=6),
@@ -117,6 +111,12 @@ def layout():
                         f"Mejor benchmark: {mejor_bench.nombre} {mejor_bench.pr_auc_test:.3f}",
                         "alerta"), md=3, sm=6),
         ], className="g-3 mb-4"),
+
+        html.Section([
+            html.Div("Autores", className="titulo-seccion"),
+            dbc.Row([dbc.Col(autor(*a), md=6) for a in AUTORES], className="g-3"),
+            html.P("Universidad del Norte, Barranquilla, Colombia", className="autores-pie"),
+        ], className="autores mb-4"),
 
         dbc.Row([
             dbc.Col(tarjeta(
