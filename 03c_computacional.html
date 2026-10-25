@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Optimización computacional &#8212; Descarga efectiva en el río Magdalena</title>
+    <title>Optimización computacional &#8212; Descarga efectiva en el río Magdalena: predicción probabilística a quince días</title>
   
   
   
@@ -73,7 +73,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="es"/>
   <meta name="docsearch:version" content="" />
-    <meta name="docbuild:last-update" content="2026-10-24"/>
+    <meta name="docbuild:last-update" content="2026-10-25"/>
   
     
     <script src="_static/searchtools.js"></script>
@@ -202,8 +202,8 @@
       
     
     
-    <img src="_static/logo.png" class="logo__image only-light" alt="Descarga efectiva en el río Magdalena - Home"/>
-    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Descarga efectiva en el río Magdalena - Home"/>
+    <img src="_static/logo.png" class="logo__image only-light" alt="Descarga efectiva en el río Magdalena: predicción probabilística a quince días - Home"/>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Descarga efectiva en el río Magdalena: predicción probabilística a quince días - Home"/>
   
   
 </a></div>
@@ -224,34 +224,37 @@
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Proyecto</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Problema y datos</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_correcciones.html">Respuesta a la evaluación del Entregable 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_datos.html">Datos: ETL y análisis exploratorio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_datos.html">Datos, análisis exploratorio y preparación</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos benchmark (Entregable 2)</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelos de referencia</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="03_benchmarks.html">Modelos benchmark: diseño experimental</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="03_benchmarks.html">Modelos de referencia: diseño experimental</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="03a_clasificacion.html">Resultados de clasificación</a></li>
 <li class="toctree-l2"><a class="reference internal" href="03b_optimizacion.html">Comparación de los métodos de optimización</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Optimización computacional</a></li>
 <li class="toctree-l2"><a class="reference internal" href="03d_regresion.html">Regresión del caudal a quince días</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03e_comparacion.html">Comparación estadística de los benchmarks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03e_comparacion.html">Comparación estadística de los modelos de referencia</a></li>
 <li class="toctree-l2"><a class="reference internal" href="03f_interpretabilidad.html">Interpretabilidad global y local</a></li>
 </ul>
 </details></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelo original (Entregable 3)</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Modelo propuesto</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="04_literatura.html">Revisión de literatura y novedad</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05_modelo_original.html">Modelo original: Band-Likelihood Gradient Boosting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_validacion.html">Validación estadística del modelo original</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_modelo_original.html">Modelo propuesto: Band-Likelihood Gradient Boosting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_validacion.html">Validación estadística del modelo propuesto</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Producto y cierre</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Aplicación y cierre</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="07_dashboard.html">Dashboard y despliegue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_dashboard.html">Aplicación interactiva</a></li>
 <li class="toctree-l1"><a class="reference internal" href="08_conclusiones.html">Conclusiones y limitaciones</a></li>
 <li class="toctree-l1"><a class="reference internal" href="09_reproducibilidad.html">Reproducibilidad y bibliografía</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Apéndices</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="A_revisiones.html">Apéndice A. Revisiones respecto de la versión preliminar</a></li>
 </ul>
 
     </div>
@@ -440,8 +443,10 @@
 <p>El experimento completo exigió del orden de 82.000 ajustes de modelos en un portátil con un
 procesador Intel Core i7-1255U (dos núcleos de rendimiento y ocho de eficiencia, doce hilos) y
 15,7 GB de memoria, sin GPU. Esta sección contrasta la complejidad teórica de cada modelo con su
-tiempo empírico, evalúa las variantes eficientes que propone la guía y documenta la
-paralelización y el perfilamiento que hicieron viable el experimento.</p>
+tiempo empírico, evalúa variantes eficientes de cada familia de modelos y documenta la
+paralelización y el perfilamiento que hicieron viable el experimento. Los tiempos los mide
+<code class="docutils literal notranslate"><span class="pre">scripts/computational.py</span></code> en condiciones controladas (mismos datos, un solo hilo salvo que se
+indique lo contrario) y este capítulo los analiza.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -449,7 +454,8 @@ paralelización y el perfilamiento que hicieron viable el experimento.</p>
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">warnings</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mediciones de tiempo, memoria y exactitud producidas por scripts/computational.py</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span><span class="o">,</span><span class="w"> </span><span class="nn">warnings</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">".."</span><span class="p">)</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span><span class="o">,</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span><span class="o">,</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -467,6 +473,9 @@ paralelización y el perfilamiento que hicieron viable el experimento.</p>
 </div>
 <section id="complejidad-teorica-frente-a-tiempo-empirico">
 <h2>Complejidad teórica frente a tiempo empírico<a class="headerlink" href="#complejidad-teorica-frente-a-tiempo-empirico" title="Link to this heading">#</a></h2>
+<p>La <a class="reference internal" href="#fig-escalamiento"><span class="std std-numref">Figura 14</span></a> muestra cómo crece el tiempo de entrenamiento de cada modelo con el
+número de observaciones (a) y de variables (b), en escala logarítmica, de modo que la pendiente
+de cada recta es el exponente empírico de su complejidad.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -474,7 +483,8 @@ paralelización y el perfilamiento que hicieron viable el experimento.</p>
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tiempo de entrenamiento frente a n y frente a p, y exponentes empíricos por regresión log-log</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">esc</span><span class="p">[</span><span class="n">esc</span><span class="o">.</span><span class="n">variable</span> <span class="o">==</span> <span class="s2">"n"</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"modelo"</span><span class="p">)):</span>
     <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">COLORES</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"#7a5c99"</span><span class="p">,</span> <span class="s2">"#2f6b3a"</span><span class="p">,</span> <span class="s2">"#9c6b30"</span><span class="p">])[</span><span class="n">i</span><span class="p">]</span>
     <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">t_fit</span><span class="p">,</span> <span class="s2">"-o"</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">NOMBRES_MODELO</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
@@ -505,6 +515,8 @@ paralelización y el perfilamiento que hicieron viable el experimento.</p>
 </figure>
 </div>
 </div>
+<p>La tabla siguiente compara esos exponentes con el orden teórico del entrenamiento y de la
+inferencia de cada modelo.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -512,7 +524,8 @@ paralelización y el perfilamiento que hicieron viable el experimento.</p>
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Exponentes empíricos en n y en p frente a la complejidad teórica</span>
+<span class="n">t</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -611,9 +624,9 @@ esperado para el problema dual de libsvm, y es la razón por la que en el experi
 aproximación de Nyström. El árbol de decisión (<span class="pasted-text">1,12</span>) y Random Forest
 (<span class="pasted-text">0,98</span>) siguen el orden <span class="math notranslate nohighlight">\(n\log n\)</span> del ordenamiento de los cortes, y
 la regresión logística (<span class="pasted-text">1,12</span>) el orden lineal por iteración más un
-número de iteraciones que crece levemente con n. El modelo original escala con un exponente de
+número de iteraciones que crece levemente con n. El modelo propuesto escala con un exponente de
 <span class="pasted-text">1,09</span>, lineal como predice la <a class="reference internal" href="05_modelo_original.html#prop-complejidad-ref"><span class="std std-ref">proposición 1</span></a>
-del capítulo 5. Los exponentes menores que uno de KNN (<span class="pasted-text">0,43</span>), que en el
+de <a class="reference internal" href="05_modelo_original.html"><span class="doc">Modelo propuesto: Band-Likelihood Gradient Boosting</span></a>. Los exponentes menores que uno de KNN (<span class="pasted-text">0,43</span>), que en el
 entrenamiento solo almacena los datos, y de XGBoost con histogramas (<span class="pasted-text">0,48</span>)
 no contradicen la teoría: reflejan costos fijos (validación de datos, construcción de los
 histogramas, gestión de hilos) que dominan a tamaños pequeños, de modo que la pendiente en este
@@ -755,6 +768,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <h2>Variantes eficientes por modelo<a class="headerlink" href="#variantes-eficientes-por-modelo" title="Link to this heading">#</a></h2>
 <section id="knn-estructuras-de-indexacion-y-vecinos-aproximados">
 <h3>KNN: estructuras de indexación y vecinos aproximados<a class="headerlink" href="#knn-estructuras-de-indexacion-y-vecinos-aproximados" title="Link to this heading">#</a></h3>
+<p>La tabla compara el tiempo por consulta, la memoria y la exactitud de cinco formas de buscar los
+vecinos más cercanos.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -762,7 +777,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">knn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"knn.csv"</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Búsqueda de vecinos: fuerza bruta, KD-Tree, Ball Tree, FAISS exacto y FAISS HNSW aproximado</span>
+<span class="n">knn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"knn.csv"</span><span class="p">)</span>
 <span class="n">base</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"sklearn-brute"</span><span class="p">,</span> <span class="s2">"t_consulta_ms"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">knn</span><span class="p">[</span><span class="s2">"aceleración vs fuerza bruta"</span><span class="p">]</span> <span class="o">=</span> <span class="n">base</span> <span class="o">/</span> <span class="n">knn</span><span class="o">.</span><span class="n">t_consulta_ms</span>
 <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">((</span><span class="s2">"faiss-hnsw (aprox.)"</span><span class="p">,</span> <span class="s2">"hnsw"</span><span class="p">),</span> <span class="p">(</span><span class="s2">"sklearn-kd_tree"</span><span class="p">,</span> <span class="s2">"kd"</span><span class="p">),</span> <span class="p">(</span><span class="s2">"faiss-flat (exacto)"</span><span class="p">,</span> <span class="s2">"flat"</span><span class="p">)):</span>
@@ -867,6 +883,8 @@ reemplazarlos por otros casi igual de cercanos apenas cambia la proporción de p
 </section>
 <section id="ridge-y-lasso-solvers">
 <h3>Ridge y Lasso: solvers<a class="headerlink" href="#ridge-y-lasso-solvers" title="Link to this heading">#</a></h3>
+<p>La tabla compara el tiempo y el error de los solvers disponibles para los modelos lineales
+regularizados.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -874,7 +892,8 @@ reemplazarlos por otros casi igual de cercanos apenas cambia la proporción de p
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"lineales.csv"</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Solver directo frente a solvers iterativos en Ridge y Lasso</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"lineales.csv"</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -940,6 +959,7 @@ dan aquí; la decisión de usar el solver por defecto se apoya en esta medición
 </section>
 <section id="naive-bayes-aprendizaje-incremental">
 <h3>Naive Bayes: aprendizaje incremental<a class="headerlink" href="#naive-bayes-aprendizaje-incremental" title="Link to this heading">#</a></h3>
+<p>La tabla compara el ajuste en un solo paso con el ajuste por lotes de distinto tamaño.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -947,7 +967,8 @@ dan aquí; la decisión de usar el solver por defecto se apoya en esta medición
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"naive_bayes.csv"</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># fit frente a partial_fit por lotes: tiempo, memoria pico y diferencia en las probabilidades</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"naive_bayes.csv"</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1017,6 +1038,8 @@ subdiarias de toda la red.</p>
 </section>
 <section id="xgboost-histogramas-y-parada-temprana">
 <h3>XGBoost: histogramas y parada temprana<a class="headerlink" href="#xgboost-histogramas-y-parada-temprana" title="Link to this heading">#</a></h3>
+<p>La tabla compara los tres métodos de construcción de árboles de XGBoost, la parada temprana y el
+efecto del número de hilos.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1024,7 +1047,8 @@ subdiarias de toda la red.</p>
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"xgboost.csv"</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># tree_method exact, approx e hist; parada temprana cronológica; número de hilos</span>
+<span class="n">xg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"xgboost.csv"</span><span class="p">)</span>
 <span class="n">t_exact</span> <span class="o">=</span> <span class="n">xg</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">xg</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"tree_method=exact"</span><span class="p">,</span> <span class="s2">"t_fit"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">t_hist</span> <span class="o">=</span> <span class="n">xg</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">xg</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"tree_method=hist"</span><span class="p">,</span> <span class="s2">"t_fit"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">glue</span><span class="p">(</span><span class="s2">"xgb_ac_hist"</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">t_exact</span> <span class="o">/</span> <span class="n">t_hist</span><span class="p">),</span> <span class="n">display</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -1135,11 +1159,12 @@ por histogramas discretiza una vez cada variable en un número fijo de bins y ac
 por bin, lo que reduce el costo por nivel de <span class="math notranslate nohighlight">\(O(n\,p\log n)\)</span> a <span class="math notranslate nohighlight">\(O(np + p\cdot\text{bins})\)</span>. La
 aceleración medida es de <span class="pasted-text">14,0</span> veces con PR-AUC prácticamente igual. La
 parada temprana sobre el último 15 % cronológico del entrenamiento detiene el ajuste en
-<span class="pasted-text">86</span> árboles. El modelo original usa la misma idea de histogramas,
+<span class="pasted-text">86</span> árboles. El modelo propuesto usa la misma idea de histogramas,
 programada desde cero.</p>
 </section>
 <section id="svm-nucleo-completo-frente-a-aproximaciones-lineales">
 <h3>SVM: núcleo completo frente a aproximaciones lineales<a class="headerlink" href="#svm-nucleo-completo-frente-a-aproximaciones-lineales" title="Link to this heading">#</a></h3>
+<p>La tabla compara la SVC con núcleo RBF completo con tres alternativas de costo lineal.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1147,7 +1172,8 @@ programada desde cero.</p>
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"svm.csv"</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># SVC RBF frente a LinearSVC, descenso estocástico y aproximación de Nyström</span>
+<span class="n">sv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"svm.csv"</span><span class="p">)</span>
 <span class="n">t_rbf</span> <span class="o">=</span> <span class="n">sv</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">sv</span><span class="o">.</span><span class="n">variante</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"SVC"</span><span class="p">),</span> <span class="s2">"t_fit"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">sv</span><span class="p">[</span><span class="s2">"aceleración vs SVC"</span><span class="p">]</span> <span class="o">=</span> <span class="n">t_rbf</span> <span class="o">/</span> <span class="n">sv</span><span class="o">.</span><span class="n">t_fit</span>
 <span class="n">ny</span> <span class="o">=</span> <span class="n">sv</span><span class="p">[</span><span class="n">sv</span><span class="o">.</span><span class="n">variante</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">"Nyström"</span><span class="p">)]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -1237,7 +1263,9 @@ rápida que la SVC con una diferencia de <span class="pasted-text">-0,0099</span
 un orden de magnitud más rápida porque no depende del número de vectores de soporte. El costo se
 traslada a la memoria: la matriz de características de Nyström (<span class="math notranslate nohighlight">\(n \times 500\)</span> en doble
 precisión) eleva la memoria pico del ajuste de unos 7 MB a <span class="pasted-text">175</span> MB, un
-compromiso aceptable en esta máquina pero que habría que vigilar con muestras mucho mayores.</p>
+compromiso aceptable en esta máquina pero que habría que vigilar con muestras mucho mayores. Esta
+comparación de velocidad usa 500 componentes; en la validación anidada se usaron 600, para perder
+menos exactitud frente al núcleo completo.</p>
 <p>Las variantes eficientes de KNN, XGBoost y la SVM se miden con las funciones siguientes del
 mismo script, que entrenan la versión estándar y la optimizada sobre los mismos datos y
 registran tiempo, memoria y PR-AUC.</p>
@@ -1396,6 +1424,9 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </section>
 <section id="paralelizacion">
 <h2>Paralelización<a class="headerlink" href="#paralelizacion" title="Link to this heading">#</a></h2>
+<p>La <a class="reference internal" href="#fig-paralelo"><span class="std std-numref">Figura 15</span></a> mide la aceleración que se obtiene al aumentar el número de procesos o
+hilos en dos escenarios: el paralelismo interno de Random Forest y el paralelismo entre ajustes
+independientes.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1403,7 +1434,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">par</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"paralelizacion.csv"</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Aceleración por número de trabajadores; horas de CPU y de reloj del experimento real</span>
+<span class="n">par</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"paralelizacion.csv"</span><span class="p">)</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">7.5</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">))</span>
 <span class="k">for</span> <span class="p">(</span><span class="n">esc_</span><span class="p">,</span> <span class="n">g</span><span class="p">),</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"escenario"</span><span class="p">),</span> <span class="p">(</span><span class="n">RIO</span><span class="p">,</span> <span class="n">SED</span><span class="p">)):</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">trabajadores</span><span class="p">,</span> <span class="n">g</span><span class="o">.</span><span class="n">aceleracion</span><span class="p">,</span> <span class="s2">"-o"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">esc_</span><span class="p">)</span>
@@ -1553,6 +1585,9 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </section>
 <section id="perfilamiento">
 <h2>Perfilamiento<a class="headerlink" href="#perfilamiento" title="Link to this heading">#</a></h2>
+<p>Para saber dónde se gasta el tiempo dentro de una tarea, se perfiló una tarea elemental con
+<code class="docutils literal notranslate"><span class="pre">cProfile</span></code> y se midió la memoria pico del ajuste de cada modelo. Las dos tablas siguientes
+muestran las funciones que más tiempo acumulan y la memoria por modelo.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1560,7 +1595,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">perf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"perfil.csv"</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Perfil de CPU de una tarea elemental y memoria pico del ajuste de cada modelo</span>
+<span class="n">perf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"perfil.csv"</span><span class="p">)</span>
 <span class="n">mem</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">C</span> <span class="o">/</span> <span class="s2">"memoria.csv"</span><span class="p">);</span> <span class="n">mem</span><span class="p">[</span><span class="s2">"modelo"</span><span class="p">]</span> <span class="o">=</span> <span class="n">mem</span><span class="o">.</span><span class="n">modelo</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">NOMBRES_MODELO</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">m</span><span class="p">))</span>
 <span class="n">display</span><span class="p">(</span><span class="n">perf</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
 <span class="n">mem</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
@@ -1753,6 +1789,9 @@ carga de los procesos.</p>
 </section>
 <section id="modelo-estandar-frente-a-optimizado">
 <h2>Modelo estándar frente a optimizado<a class="headerlink" href="#modelo-estandar-frente-a-optimizado" title="Link to this heading">#</a></h2>
+<p>La tabla final reúne, para los tres modelos en que la optimización computacional cambió la
+decisión de diseño, la versión estándar y la optimizada con su complejidad, sus tiempos, su
+memoria y su efecto sobre la PR-AUC.</p>
 <div class="cell tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -1760,7 +1799,8 @@ carga de los procesos.</p>
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">filas</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Resumen: versión estándar frente a optimizada en KNN, XGBoost y SVM</span>
+<span class="n">filas</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">(</span><span class="s2">"KNN"</span><span class="p">,</span> <span class="s2">"fuerza bruta"</span><span class="p">,</span> <span class="s2">"FAISS HNSW"</span><span class="p">,</span> <span class="s2">"O(n·p) por consulta"</span><span class="p">,</span> <span class="s2">"O(log n) aprox."</span><span class="p">,</span> <span class="n">knn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"sklearn-brute"</span><span class="p">,</span> <span class="s2">"t_consulta_ms"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
      <span class="n">knn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"faiss-hnsw (aprox.)"</span><span class="p">,</span> <span class="s2">"t_consulta_ms"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">"ms/consulta"</span><span class="p">,</span>
      <span class="n">knn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"faiss-hnsw (aprox.)"</span><span class="p">,</span> <span class="s2">"pr_auc"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">knn</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">knn</span><span class="o">.</span><span class="n">variante</span> <span class="o">==</span> <span class="s2">"sklearn-brute"</span><span class="p">,</span> <span class="s2">"pr_auc"</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
@@ -1873,6 +1913,12 @@ carga de los procesos.</p>
 </table>
 </div></div></div>
 </div>
+<p>En los tres casos la versión optimizada reduce el tiempo en uno o más órdenes de magnitud con un
+cambio de PR-AUC del orden de milésimas, que es menor que la variación entre semillas del propio
+modelo. El costo aparece en otra dimensión: HNSW cambia exactitud por velocidad al recuperar solo
+una parte de los vecinos exactos, y Nyström cambia memoria por tiempo. Ninguno de esos costos
+afectó las conclusiones del estudio, y sin estas optimizaciones la validación anidada de las 140
+combinaciones no habría sido viable en un computador portátil.</p>
 </section>
 </section>
 
@@ -1980,7 +2026,7 @@ Por Kevin Clemente Rosario y Manuel Santiago Meza Castro
   
   <div class="footer-item">
     <p class="last-updated">
-  Actualizado por última vez en 2026-10-24.
+  Actualizado por última vez en 2026-10-25.
   <br/>
 </p>
   </div>
@@ -1988,7 +2034,7 @@ Por Kevin Clemente Rosario y Manuel Santiago Meza Castro
   <div class="footer-item">
     
 <div class="extra_footer">
-  Universidad del Norte · Maestría · Machine Learning 2026-30
+  Kevin Clemente Rosario y Manuel Santiago Meza Castro · Universidad del Norte · Barranquilla, 2026
 </div>
   </div>
   
