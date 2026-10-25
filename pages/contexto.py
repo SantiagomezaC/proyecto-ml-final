@@ -48,9 +48,9 @@ AUTORES = [
 
 def autor(nombre, rol, foto):
     return html.Div([
-        html.Img(src=dash.get_asset_url(foto), alt=f"Fotografía de {nombre}", className="autor-foto"),
-        html.Div([html.Div(nombre, className="autor-nombre"), html.Div(rol, className="autor-rol")]),
-    ], className="autor")
+        html.Img(src=dash.get_asset_url(foto), alt=f"Fotografía de {nombre}", className="hero-autor-foto"),
+        html.Div([html.Div(nombre, className="hero-autor-nombre"), html.Div(rol, className="hero-autor-rol")]),
+    ], className="hero-autor")
 
 
 PASOS = [
@@ -88,6 +88,7 @@ def layout():
                     dbc.Col(dcc.Link(dbc.Button("Probar los modelos", outline=True, color="light",
                                                 className="mt-2"), href="/modelos"), width="auto"),
                 ], className="g-0"),
+                html.Div([autor(*a) for a in AUTORES], className="hero-autores"),
             ], lg=6, className="hero-texto"),
             dbc.Col(html.Figure([
                 html.Img(src=dash.get_asset_url("transporte_sedimentos.png"), className="hero-img",
@@ -111,12 +112,6 @@ def layout():
                         f"Mejor modelo de referencia: {mejor_bench.nombre} {mejor_bench.pr_auc_test:.3f}",
                         "alerta"), md=3, sm=6),
         ], className="g-3 mb-4"),
-
-        html.Section([
-            html.Div("Autores", className="titulo-seccion"),
-            dbc.Row([dbc.Col(autor(*a), md=6) for a in AUTORES], className="g-3"),
-            html.P("Universidad del Norte, Barranquilla, Colombia", className="autores-pie"),
-        ], className="autores mb-4"),
 
         dbc.Row([
             dbc.Col(tarjeta(

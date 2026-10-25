@@ -178,18 +178,14 @@ html, body { overflow-x: hidden; max-width: 100%; }
   .contenido { padding-left: 6px; padding-right: 6px; }
 }
 
-/* ---------- Autores ---------- */
-.autores { margin-top: 0; }
-.titulo-seccion { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--neutro); margin: 0 0 .75rem .2rem; }
-.autor { display: flex; align-items: center; gap: 1.1rem; background: var(--tarjeta);
-  border: 1px solid var(--borde); border-radius: var(--radio); box-shadow: var(--sombra);
-  padding: 1rem 1.25rem; height: 100%; }
-.autor-foto { width: 84px; height: 84px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
-  border: 3px solid #fff; box-shadow: 0 0 0 2px var(--caudal), 0 6px 14px rgba(11, 79, 108, .18); }
-.autor-nombre { font-weight: 700; font-size: 1.05rem; color: var(--tinta); letter-spacing: -.01em; }
-.autor-rol { color: var(--rio); font-size: .9rem; font-weight: 500; margin-top: .1rem; }
-.autores-pie { color: var(--neutro); font-size: .82rem; margin: .7rem 0 0 .2rem; }
+/* ---------- Autores (en la portada) ---------- */
+.hero-autores { display: flex; flex-wrap: wrap; gap: .9rem 1.8rem; margin-top: 1.5rem; padding-top: 1.1rem;
+  border-top: 1px solid rgba(255,255,255,.18); }
+.hero-autor { display: flex; align-items: center; gap: .65rem; }
+.hero-autor-foto { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,.9); box-shadow: 0 4px 10px rgba(0,0,0,.22); }
+.hero-autor-nombre { color: #fff; font-weight: 600; font-size: .92rem; line-height: 1.25; }
+.hero-autor-rol { color: rgba(255,255,255,.72); font-size: .78rem; line-height: 1.25; }
 
 /* ---------- Marca institucional del encabezado ---------- */
 .hero-marca { display: flex; align-items: center; gap: .85rem; }
