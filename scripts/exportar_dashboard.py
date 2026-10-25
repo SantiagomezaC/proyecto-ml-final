@@ -178,6 +178,22 @@ def exportar_metodos_recientes():
     t.to_csv(DASH / "metodos_recientes.csv", index=False)
     print(t.to_string(index=False))
 
+    # Filas de la tabla de líderes con las mismas métricas que los modelos de referencia; la
+    # prueba solo existe para los modelos LTSF-Linear, que se reentrenaron sobre 1947-2009
+    pl = tabla_pliegues("original_calamar")
+    filas = []
+    for m, nombre in metodos.items():
+        o = pl[(pl.modelo == m) & (pl.optimizador == "bayes")]
+        archivo = RESULTADOS / f"final_{m}.pkl"
+        mt = pickle.load(open(archivo, "rb"))["metricas_test"] if archivo.exists() else {}
+        filas.append({"modelo": m, "nombre": nombre, "balanceo_nombre": "Sin balanceo",
+                      "optimizador_nombre": NOMBRES_OPT["bayes"],
+                      **{f"{k}_{s}": getattr(o[k], s)() for k in ("pr_auc", "roc_auc", "f1", "brier")
+                         for s in ("mean", "std")},
+                      "pr_auc_test": mt.get("pr_auc", np.nan), "roc_auc_test": mt.get("roc_auc", np.nan),
+                      "t_inf_ms": np.nan})
+    pd.DataFrame(filas).to_csv(DASH / "lideres_recientes.csv", index=False)
+
 
 if __name__ == "__main__":
     fase = sys.argv[1] if len(sys.argv) > 1 else "todo"

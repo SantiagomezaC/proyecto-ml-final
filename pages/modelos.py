@@ -46,9 +46,24 @@ def grafico(id_):
 # ---------------------------------------------------------------------------
 def tab_lideres():
     lid = tabla("lideres.csv").copy()
+    lid["tipo"] = np.where(lid.modelo == "original", "Propuesto", "Referencia")
+    recientes = tabla("lideres_recientes.csv")
+    recientes["tipo"] = "Método reciente"
+    lid = pd.concat([lid, recientes], ignore_index=True)
+    pr = lid.set_index("modelo").pr_auc_mean
+    ref = lid[lid.tipo == "Referencia"].sort_values("pr_auc_mean").iloc[-1]
+    ltsf = pr[["linear", "nlinear", "dlinear"]]
+    c = lambda v: f"{v:.3f}"   # tarjeta() pasa el texto a formato español
+    lectura = (f"El modelo propuesto encabeza la tabla con PR-AUC externa de {c(pr['original'])}. NGBoost "
+                 f"({c(pr['ngboost'])}) y el enfoque de dos etapas ({c(pr['dos_etapas'])}), que también modelan "
+                 f"la distribución del caudal futuro, quedan muy cerca y no se distinguen estadísticamente de él. "
+                 f"El mejor modelo de referencia es {ref.nombre} ({c(ref.pr_auc_mean)}), y la familia LTSF-Linear "
+                 f"de pronóstico de series de tiempo queda por debajo ({c(ltsf.min())}-{c(ltsf.max())}). "
+                 "La desviación entre bloques refleja la variabilidad hidrológica interanual.")
     fmt = lambda m, s: f"{m:.3f} ± {s:.3f}"
     filas = pd.DataFrame({
-        "Modelo": lid.nombre, "Balanceo": lid.balanceo_nombre, "Optimizador": lid.optimizador_nombre,
+        "Modelo": lid.nombre, "Tipo": lid.tipo, "Balanceo": lid.balanceo_nombre,
+        "Optimizador": lid.optimizador_nombre,
         "PR-AUC externo": [fmt(a, b) for a, b in zip(lid.pr_auc_mean, lid.pr_auc_std)],
         "ROC-AUC externo": [fmt(a, b) for a, b in zip(lid.roc_auc_mean, lid.roc_auc_std)],
         "F1 externo": [fmt(a, b) for a, b in zip(lid.f1_mean, lid.f1_std)],
@@ -61,16 +76,18 @@ def tab_lideres():
                  "backgroundColor": "#f8efe5", "fontWeight": 700}]
     maestra = tabla("maestra_resumen.csv")
     return html.Div([
-        tarjeta("Mejores combinaciones por modelo", dash_table.DataTable(
+        tarjeta("Tabla de líderes: modelos de referencia, propuesto y métodos recientes", dash_table.DataTable(
             data=filas.to_dict("records"), columns=[{"name": c, "id": c} for c in filas.columns],
             sort_action="native", filter_action="native", style_data_conditional=est_cond,
             style_cell={"padding": "7px 10px", "textAlign": "center"},
             style_cell_conditional=[{"if": {"column_id": c}, "textAlign": "left"}
-                                    for c in ("Modelo", "Balanceo", "Optimizador")],
+                                    for c in ("Modelo", "Tipo", "Balanceo", "Optimizador")],
             style_table={"overflowX": "auto"}),
             subtitulo="Métricas del bucle externo de la validación anidada (media ± desviación en 12 bloques "
-                      "de dos años, 1986-2009) y de la prueba reservada 2010-2026. Ordenable y filtrable.",
-            insight=P.get("texto_lideres", "")),
+                      "de dos años, 1986-2009) y de la prueba reservada 2010-2026. Incluye los métodos "
+                      "recientes evaluados con el mismo protocolo: NGBoost, dos etapas y la familia "
+                      "LTSF-Linear. Ordenable y filtrable.",
+            insight=lectura),
         html.Div(className="mb-3"),
         tarjeta("Las 112 combinaciones de modelos de referencia", dcc.Graph(
             figure=_fig_combinaciones(maestra), config={"displayModeBar": False}),
